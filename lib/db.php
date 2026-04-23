@@ -41,4 +41,29 @@ function init_schema(Medoo $db): void {
         longitude  REAL,
         picture_id TEXT
     )");
+
+    $db->query("CREATE TABLE IF NOT EXISTS artists (
+        id        INTEGER PRIMARY KEY AUTOINCREMENT,
+        venue_id  INTEGER,
+        type      TEXT NOT NULL DEFAULT 'exhibition',
+        name      TEXT NOT NULL,
+        slug      TEXT NOT NULL UNIQUE,
+        body_html TEXT
+    )");
+
+    $db->query("CREATE TABLE IF NOT EXISTS images (
+        id        INTEGER PRIMARY KEY AUTOINCREMENT,
+        artist_id INTEGER NOT NULL,
+        main      INTEGER NOT NULL DEFAULT 0,
+        name      TEXT,
+        image_id  TEXT NOT NULL
+    )");
+
+    $db->query("CREATE TABLE IF NOT EXISTS event_dates (
+        id        INTEGER PRIMARY KEY AUTOINCREMENT,
+        artist_id INTEGER NOT NULL,
+        date      TEXT NOT NULL,
+        from_time TEXT,
+        to_time   TEXT
+    )");
 }

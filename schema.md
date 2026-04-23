@@ -27,11 +27,18 @@ artists
 - type enum: exhibition, special, workshop
 - name
 - body_html
-- images (list of Cloudinary public_ids)
 (belongs to venue)
 (has many event dates)
+(has many images)
 
-events (a time range and location)
+images
+- artist_id
+- main (boolean)
+- name
+- image_id (cloundinary)
+(belongs to artist)
+
+event_date (a time range and location)
 - artist_id
 - date
 - from_time
