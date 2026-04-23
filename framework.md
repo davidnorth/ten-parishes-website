@@ -1,71 +1,109 @@
-# How it works
+# Framework
 
-If no HTML file is found by the HTTP server, public.php will handle the request.
+File-system based routing similar to Razor Pages. No framework classes in page files — just `$req`, `$db`, and HTML.
 
-Fist a Request object is constructed e.g.
-$req->path
-$req->method
-$req->isGET()
-$req->params
+## Request lifecycle
 
-$req->params combines POST data, query string and dynamic path segments into a single array for ease of use in the page logic.
+1. Web server passes all non-static requests to `public/index.php`
+2. `public/index.php` requires `framework/bootstrap.php`, which:
+   - Builds a `Request` object as `$req`
+   - Instantiates a Medoo db connection as `$db`
+   - Matches the request path to a file in `pages/`
+   - Executes any `_init.php` files found along the path (root → page directory)
+   - Buffers the page output, then wraps it in a layout if one was set
 
+## Routing
 
-It looks at the request path and tries to find tha matching path within '@
+URL paths map directly to files in `pages/`:
 
-The value in this hash corresponds to a php file in @pages which is then executed
-e.g.
+```
+GET /                    → pages/index.php
+GET /about/team          → pages/about/team.php
+GET /admin               → pages/admin/index.php
+```
 
-request: /about/team
-matches @pages/about/team.php
+Dynamic segments use `[param_name]` in directory or file names:
 
-Dynamic path segments example:
-request: /parishes/wiveliscombe/artists/mary-smith
-matches @pages/parishes/[parish_slug]/artists/[artist_slug].php
+```
+GET /parishes/wiveliscombe/artists/mary-smith
+  → pages/parishes/[parish_slug]/artists/[artist_slug].php
+  → $req->params['parish_slug'] = 'wiveliscombe'
+  → $req->params['artist_slug'] = 'mary-smith'
+```
 
-And these values go into the $req->params 
+`$req->params` merges POST body, query string, and route params into one array.
 
-If no match, render @public/404.html
-If there is a match, 
+No match → `public/404.html`.
 
-That file is executed with $req made available to it.
+## Pages
 
-That file will include any page logic and for GET requests, the page template.
-The page may return a response, stopping execution of the page php file e.g.
+A page file contains logic followed by HTML output. POST handling uses an early return:
 
+```php
 <?php
 if ($req->isPost()) {
-    $newName = $req->params['name'];
-    $db->update("products", ["name" => $newName], ["id" => $request->id]);
+    $db->update('products', ['name' => $req->params['name']], ['id' => $req->params['id']]);
     return redirect("/products/{$req->params['id']}");
 }
-<h1>FOr post, I won't be rendered</h1>
+?>
+<h1>Edit product</h1>
+```
 
+`redirect()` sends a `Location` header and exits. The `return` is stylistic — it documents intent.
 
-_init.php files
-In the @pages directory, you can have _init.php files which are automatically included 
-before any page logic is executed for that directory and its subdirectories. THey are executed in order
-These can for example enforce auth rules (potentially cancelling the rest of the request) or 
-set the current layout
+## _init.php files
 
-All _init.php files encounted traversing the path are executed in order
-$req is made available to them also and they can return a response.
-So they are middleware essentially
+Placing a `_init.php` in any `pages/` subdirectory causes it to run before the page, for every request under that directory. All `_init.php` files along the path are executed root-first.
 
-Rendering
-If a layout has been set in an _init.php file, it will wrap whatever is rendered by the specific
-page php file.
+Common uses: setting `$layout`, enforcing auth, loading shared data.
 
+```php
+// pages/_init.php — sets layout and starts session for all pages
+$layout = 'default';
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+```
 
+```php
+// pages/admin/_init.php — auth guard + loads current user
+$layout = 'admin';
 
-# Directory structure
-@pages          <-- Logic & Templates
-@layouts        <-- php layout tempaltes
-@framework      <-- Reusable code, not specific to this app, like the router
-@lib            <-- Shared code for this app like utility functions
-@storage        <-- SQLite DB 
-@public         <-- Document Root. Cached HTML written here. Static assets
-@public/@pages  <-- Front Controller. Entry point
-@scripts <-- utility scripts. build tasks, maintainance etc
+if (!isset($_SESSION['user_id']) && $req->path !== '/admin/login') {
+    return redirect('/admin/login');
+}
 
+if (isset($_SESSION['user_id'])) {
+    $currentUser = $db->get('users', '*', ['id' => $_SESSION['user_id']]);
+}
+```
 
+`return redirect(...)` stops execution of the current `_init.php` and the page — subsequent `_init.php` files and the page are not executed.
+
+## Layouts
+
+A layout wraps the page output. Set `$layout` to a filename (without `.php`) from `layouts/`:
+
+```php
+$layout = 'admin'; // uses layouts/admin.php
+```
+
+Inside the layout file, `$content` contains the buffered page output:
+
+```php
+<main><?= $content ?></main>
+```
+
+`$req`, `$db`, and any variables set by `_init.php` files (e.g. `$currentUser`) are also available in layout files.
+
+## Directory structure
+
+```
+pages/          Page logic and templates
+layouts/        Layout wrappers (default.php, admin.php)
+framework/      Router, Request, helpers — not app-specific
+lib/            App-specific shared code (db.php etc.)
+storage/        SQLite database
+public/         Web root — static assets, cached HTML, index.php
+scripts/        CLI utilities (create-user.php etc.)
+```
