@@ -1,23 +1,21 @@
 <?php
 
-function get_db(): PDO {
+use Medoo\Medoo;
+
+function get_db(): Medoo {
     static $db = null;
     if ($db === null) {
-        $path = realpath(__DIR__ . '/../storage') . '/db.sqlite';
-        $db = new PDO('sqlite:' . $path);
-        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-        init_schema($db);
+        $db = new Medoo([
+            'type' => 'sqlite',
+            'database' => realpath(__DIR__ . '/../storage') . '/db.sqlite',
+        ]);
+        $db->query("CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            email TEXT NOT NULL UNIQUE,
+            password TEXT NOT NULL,
+            salt TEXT NOT NULL
+        )");
     }
     return $db;
-}
-
-function init_schema(PDO $db): void {
-    $db->exec("CREATE TABLE IF NOT EXISTS users (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL,
-        email TEXT NOT NULL UNIQUE,
-        password TEXT NOT NULL,
-        salt TEXT NOT NULL
-    )");
 }

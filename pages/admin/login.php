@@ -1,11 +1,7 @@
 <?php
 
-require_once __DIR__ . '/../../lib/db.php';
-
 if ($req->isPost()) {
-    $stmt = get_db()->prepare("SELECT * FROM users WHERE email = ?");
-    $stmt->execute([$req->params['email'] ?? '']);
-    $user = $stmt->fetch();
+    $user = $db->get('users', '*', ['email' => $req->params['email'] ?? '']);
 
     if ($user && password_verify($user['salt'] . ($req->params['password'] ?? ''), $user['password'])) {
         $_SESSION['user_id'] = $user['id'];

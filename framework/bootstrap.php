@@ -1,8 +1,12 @@
 <?php
 
+require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/Request.php';
 require_once __DIR__ . '/Router.php';
 require_once __DIR__ . '/helpers.php';
+require_once __DIR__ . '/../lib/db.php';
+
+$db = get_db();
 
 $req = new Request();
 $router = new Router(realpath(__DIR__ . '/../pages'));
