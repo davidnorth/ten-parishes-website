@@ -1,6 +1,6 @@
 <?php
 if ($req->isPost()) {
-    redirect('/contact?sent=1');
+    return redirect('/contact?sent=1');
 }
 ?>
 <h1>Contact Us</h1>
