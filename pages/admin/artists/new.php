@@ -40,7 +40,7 @@ if ($req->isPost()) {
 }
 ?>
 <h1 class="text-2xl font-semibold text-gray-900 mb-6">New Artist</h1>
-<form method="post" action="/admin/artists/new" enctype="multipart/form-data" class="max-w-2xl space-y-6">
+<form id="artist-form" method="post" action="/admin/artists/new" enctype="multipart/form-data" class="max-w-2xl space-y-6">
 
   <div class="space-y-4">
     <div>
@@ -68,9 +68,9 @@ if ($req->isPost()) {
              class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
     </div>
     <div>
-      <label class="block text-sm font-medium text-gray-700 mb-1">Body HTML</label>
-      <textarea name="body_html" rows="8"
-                class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono"></textarea>
+      <label class="block text-sm font-medium text-gray-700 mb-1">Body</label>
+      <div id="body-editor" class="bg-white" style="height:200px"></div>
+      <textarea name="body_html" id="body-html-input" class="hidden"></textarea>
     </div>
   </div>
 
@@ -117,6 +117,22 @@ function addEventDate() {
     `;
     document.getElementById('event-dates').appendChild(row);
 }
+
+const quill = new Quill('#body-editor', {
+    theme: 'snow',
+    modules: {
+        toolbar: [
+            ['bold', 'italic'],
+            [{ header: [2, 3, false] }],
+            [{ list: 'ordered' }, { list: 'bullet' }],
+            ['link'],
+            ['clean'],
+        ]
+    }
+});
+document.getElementById('artist-form').addEventListener('submit', () => {
+    document.getElementById('body-html-input').value = quill.root.innerHTML;
+});
 
 let imageIndex = 0;
 function addImage() {

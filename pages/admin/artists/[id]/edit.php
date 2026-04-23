@@ -73,7 +73,7 @@ $eventDates = $db->select('event_dates', '*', ['artist_id' => $artist['id'], 'OR
 $images     = $db->select('images', '*', ['artist_id' => $artist['id']]);
 ?>
 <h1 class="text-2xl font-semibold text-gray-900 mb-6">Edit Artist</h1>
-<form method="post" action="/admin/artists/<?= $artist['id'] ?>/edit" enctype="multipart/form-data" class="max-w-2xl space-y-6">
+<form id="artist-form" method="post" action="/admin/artists/<?= $artist['id'] ?>/edit" enctype="multipart/form-data" class="max-w-2xl space-y-6">
 
   <div class="space-y-4">
     <div>
@@ -103,9 +103,9 @@ $images     = $db->select('images', '*', ['artist_id' => $artist['id']]);
              class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
     </div>
     <div>
-      <label class="block text-sm font-medium text-gray-700 mb-1">Body HTML</label>
-      <textarea name="body_html" rows="8"
-                class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono"><?= htmlspecialchars($artist['body_html'] ?? '') ?></textarea>
+      <label class="block text-sm font-medium text-gray-700 mb-1">Body</label>
+      <div id="body-editor" class="bg-white" style="height:200px"></div>
+      <textarea name="body_html" id="body-html-input" class="hidden"><?= htmlspecialchars($artist['body_html'] ?? '') ?></textarea>
     </div>
   </div>
 
@@ -175,6 +175,24 @@ $images     = $db->select('images', '*', ['artist_id' => $artist['id']]);
 </div>
 
 <script>
+const quill = new Quill('#body-editor', {
+    theme: 'snow',
+    modules: {
+        toolbar: [
+            ['bold', 'italic'],
+            [{ header: [2, 3, false] }],
+            [{ list: 'ordered' }, { list: 'bullet' }],
+            ['link'],
+            ['clean'],
+        ]
+    }
+});
+const existingBody = document.getElementById('body-html-input').value;
+if (existingBody) quill.clipboard.dangerouslyPasteHTML(existingBody);
+document.getElementById('artist-form').addEventListener('submit', () => {
+    document.getElementById('body-html-input').value = quill.root.innerHTML;
+});
+
 let eventDateIndex = <?= count($eventDates) ?>;
 function addEventDate() {
     const idx = eventDateIndex++;
