@@ -1,13 +1,19 @@
 <?php
 
 require_once __DIR__ . '/../vendor/autoload.php';
+
+if (file_exists(__DIR__ . '/../config/config.php')) {
+    require_once __DIR__ . '/../config/config.php';
+}
+
+require_once __DIR__ . '/../lib/db.php';
+require_once __DIR__ . '/../lib/slug.php';
+require_once __DIR__ . '/../lib/cloudinary.php';
 require_once __DIR__ . '/Request.php';
 require_once __DIR__ . '/Router.php';
 require_once __DIR__ . '/helpers.php';
-require_once __DIR__ . '/../lib/db.php';
 
 $db = get_db();
-
 $req = new Request();
 $router = new Router(realpath(__DIR__ . '/../pages'));
 

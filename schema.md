@@ -1,6 +1,6 @@
 # Data structure
 
-user
+users
 - name
 - email
 - password (hashed)
@@ -8,23 +8,26 @@ user
 
 parishes
 - name
-- geopoint (allow open maps, gmaps etc to pinpoint)
-- image_id (Cloudinary image id)
+- latitude, longitude
+- image_id (Cloudinary public_id)
+- slug (auto-generated from name)
+- picture_id (Cloudinary public_id)
 (has many venues, has many artists through venues)
 
 venues
 - parish_id
 - name
-- geopoint
+- slug (auto-generated from name)
+- latitude, longitude
 (belongs to parish)
 (has many artists)
 
 artists
-- location_id
+- venue_id
 - type enum: exhibition, special, workshop
 - name
 - body_html
-- images (list of cloundinary image ids)
+- images (list of Cloudinary public_ids)
 (belongs to venue)
 (has many event dates)
 
@@ -34,6 +37,3 @@ events (a time range and location)
 - from_time
 - to_time
 (belongs to artist)
-
-
-
