@@ -1,4 +1,5 @@
 <?php
+$pageTitle = 'Artists';
 $artists = $db->query("
     SELECT artists.name, artists.slug, images.image_id
     FROM artists

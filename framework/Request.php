@@ -8,7 +8,7 @@ class Request {
     public function __construct() {
         $this->path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) ?? '/';
         $this->method = $_SERVER['REQUEST_METHOD'];
-        $this->params = array_merge($_GET, $_POST);
+        $this->params = $this->trimDeep(array_merge($_GET, $_POST));
     }
 
     public function isGET(): bool {
@@ -17,5 +17,12 @@ class Request {
 
     public function isPost(): bool {
         return $this->method === 'POST';
+    }
+
+    private function trimDeep(array $data): array {
+        return array_map(
+            fn($v) => is_array($v) ? $this->trimDeep($v) : (is_string($v) ? trim($v) : $v),
+            $data
+        );
     }
 }

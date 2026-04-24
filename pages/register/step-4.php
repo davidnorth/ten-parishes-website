@@ -3,6 +3,7 @@ if (empty($reg['artist'])) {
     return redirect('/register/step-1');
 }
 
+$pageTitle = 'Register: Images';
 if ($req->isPost()) {
     if ($req->params['action'] === 'back') {
         return redirect('/register/step-3');
@@ -23,8 +24,8 @@ if ($req->isPost()) {
         'refreshments'        => $venueData['refreshments'] ?: null,
         'accessibility'       => $venueData['accessibility'] ?: null,
         'dogs_allowed'        => $venueData['dogs_allowed'] ?? 0,
-        'venue_contact_name'  => $venueData['venue_contact_name'] ?: null,
-        'venue_contact_phone' => $venueData['venue_contact_phone'] ?: null,
+        'venue_contact_name'  => $venueData['contact_name'] ?: null,
+        'venue_contact_phone' => $venueData['contact_phone'] ?: null,
     ]);
     $venueId = $db->id();
 

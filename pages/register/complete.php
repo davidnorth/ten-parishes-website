@@ -1,4 +1,5 @@
 <?php
+$pageTitle = 'Registration Submitted';
 ?>
 <h1>Registration submitted</h1>
 

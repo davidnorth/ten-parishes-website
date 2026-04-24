@@ -1,3 +1,7 @@
+<?php
+$_latName = isset($locationFieldPrefix) ? "{$locationFieldPrefix}[latitude]" : 'latitude';
+$_lngName = isset($locationFieldPrefix) ? "{$locationFieldPrefix}[longitude]" : 'longitude';
+?>
 <div>
   <label for="location-search">Search for your location</label>
   <div class="flex top">
@@ -5,8 +9,8 @@
     <button class="small" type="button" id="location-search-btn">Search</button>
   </div>
   <div id="location-map" style="height:280px;margin-top:0.5rem"></div>
-  <input type="hidden" name="latitude" id="location-lat" value="<?= htmlspecialchars($locationLat ?? '') ?>">
-  <input type="hidden" name="longitude" id="location-lng" value="<?= htmlspecialchars($locationLng ?? '') ?>">
+  <input type="hidden" name="<?= $_latName ?>" id="location-lat" value="<?= htmlspecialchars($locationLat ?? '') ?>">
+  <input type="hidden" name="<?= $_lngName ?>" id="location-lng" value="<?= htmlspecialchars($locationLng ?? '') ?>">
 </div>
 <script>
 (function () {

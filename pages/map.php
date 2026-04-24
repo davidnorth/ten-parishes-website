@@ -1,4 +1,5 @@
 <?php
+$pageTitle = 'Map';
 $venues = $db->select('venues', ['id', 'name', 'latitude', 'longitude'], [
     'latitude[!]'  => null,
     'longitude[!]' => null,

@@ -151,6 +151,9 @@ form {
   .form-actions {
     display: flex;
     justify-content: space-between;
+    &.first {
+      justify-content: flex-end;
+    }
   }
 }
 

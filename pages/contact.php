@@ -1,4 +1,5 @@
 <?php
+$pageTitle = 'Contact Us';
 if ($req->isPost()) {
     return redirect('/contact?sent=1');
 }

@@ -1,4 +1,5 @@
 <?php
+$pageTitle = 'Parishes';
 $parishes = $db->select('parishes', '*', ['ORDER' => 'name']);
 ?>
 

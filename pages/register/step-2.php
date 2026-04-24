@@ -3,26 +3,13 @@ if (empty($reg['artist'])) {
     return redirect('/register/step-1');
 }
 
+$pageTitle = 'Register: Venue Details';
 $parishes = $db->select('parishes', ['id', 'name'], ['ORDER' => 'name']);
 $values   = $reg['venue'] ?? [];
 
 if ($req->isPost()) {
-    $venueData = [
-        'name'                => trim($req->params['venue_name'] ?? ''),
-        'parish_id'           => $req->params['parish_id'] ?: null,
-        'latitude'            => $req->params['latitude'] ?: null,
-        'longitude'           => $req->params['longitude'] ?: null,
-        'address'             => trim($req->params['address'] ?? ''),
-        'what_3_words'        => trim($req->params['what_3_words'] ?? ''),
-        'directions'          => trim($req->params['directions'] ?? ''),
-        'parking'             => trim($req->params['parking'] ?? ''),
-        'refreshments'        => trim($req->params['refreshments'] ?? ''),
-        'accessibility'       => trim($req->params['accessibility'] ?? ''),
-        'dogs_allowed'        => isset($req->params['dogs_allowed']) ? 1 : 0,
-        'venue_contact_name'  => trim($req->params['venue_contact_name'] ?? ''),
-        'venue_contact_phone' => trim($req->params['venue_contact_phone'] ?? ''),
-    ];
-
+    $venueData = $req->params['venue'] ?? [];
+    $venueData['dogs_allowed'] = empty($venueData['dogs_allowed']) ? 0 : 1;
     $reg['venue'] = $venueData;
 
     if ($req->params['action'] === 'back') {
@@ -34,6 +21,7 @@ if ($req->isPost()) {
 
 $locationLat = $values['latitude'] ?? null;
 $locationLng = $values['longitude'] ?? null;
+$locationFieldPrefix = 'venue';
 ?>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -51,12 +39,12 @@ $locationLng = $values['longitude'] ?? null;
 
   <div>
     <label for="venue_name">Venue or studio name *</label>
-    <input type="text" id="venue_name" name="venue_name" value="<?= htmlspecialchars($values['name'] ?? '') ?>" required>
+    <input type="text" id="venue_name" name="venue[name]" value="<?= htmlspecialchars($values['name'] ?? '') ?>" required>
   </div>
 
   <div>
     <label for="parish_id">Parish</label>
-    <select id="parish_id" name="parish_id">
+    <select id="parish_id" name="venue[parish_id]">
       <option value="">— Select parish —</option>
       <?php foreach ($parishes as $parish): ?>
       <option value="<?= $parish['id'] ?>" <?= ($values['parish_id'] ?? '') == $parish['id'] ? 'selected' : '' ?>>
@@ -74,49 +62,49 @@ $locationLng = $values['longitude'] ?? null;
 
   <div>
     <label for="address">Address</label>
-    <textarea id="address" name="address" rows="3"><?= htmlspecialchars($values['address'] ?? '') ?></textarea>
+    <textarea id="address" name="venue[address]" rows="3"><?= htmlspecialchars($values['address'] ?? '') ?></textarea>
   </div>
 
   <div>
     <label for="what_3_words">What3Words</label>
-    <input type="text" id="what_3_words" name="what_3_words" value="<?= htmlspecialchars($values['what_3_words'] ?? '') ?>" placeholder="e.g. ///word.word.word">
+    <input type="text" id="what_3_words" name="venue[what_3_words]" value="<?= htmlspecialchars($values['what_3_words'] ?? '') ?>" placeholder="e.g. ///word.word.word">
   </div>
 
   <div>
     <label for="directions">Directions</label>
-    <textarea id="directions" name="directions" rows="3"><?= htmlspecialchars($values['directions'] ?? '') ?></textarea>
+    <textarea id="directions" name="venue[directions]" rows="3"><?= htmlspecialchars($values['directions'] ?? '') ?></textarea>
   </div>
 
   <div>
     <label for="parking">Parking</label>
-    <input type="text" id="parking" name="parking" value="<?= htmlspecialchars($values['parking'] ?? '') ?>">
+    <input type="text" id="parking" name="venue[parking]" value="<?= htmlspecialchars($values['parking'] ?? '') ?>">
   </div>
 
   <div>
     <label for="refreshments">Refreshments</label>
-    <input type="text" id="refreshments" name="refreshments" value="<?= htmlspecialchars($values['refreshments'] ?? '') ?>">
+    <input type="text" id="refreshments" name="venue[refreshments]" value="<?= htmlspecialchars($values['refreshments'] ?? '') ?>">
   </div>
 
   <div>
     <label for="accessibility">Accessibility</label>
-    <input type="text" id="accessibility" name="accessibility" value="<?= htmlspecialchars($values['accessibility'] ?? '') ?>">
+    <input type="text" id="accessibility" name="venue[accessibility]" value="<?= htmlspecialchars($values['accessibility'] ?? '') ?>">
   </div>
 
   <div>
     <label>
-      <input type="checkbox" name="dogs_allowed" value="1" <?= ($values['dogs_allowed'] ?? 0) ? 'checked' : '' ?>>
+      <input type="checkbox" name="venue[dogs_allowed]" value="1" <?= ($values['dogs_allowed'] ?? 0) ? 'checked' : '' ?>>
       Dogs welcome
     </label>
   </div>
 
   <div>
     <label for="venue_contact_name">Venue contact name</label>
-    <input type="text" id="venue_contact_name" name="venue_contact_name" value="<?= htmlspecialchars($values['venue_contact_name'] ?? '') ?>">
+    <input type="text" id="venue_contact_name" name="venue[contact_name]" value="<?= htmlspecialchars($values['contact_name'] ?? '') ?>">
   </div>
 
   <div>
     <label for="venue_contact_phone">Venue contact phone</label>
-    <input type="tel" id="venue_contact_phone" name="venue_contact_phone" value="<?= htmlspecialchars($values['venue_contact_phone'] ?? '') ?>">
+    <input type="tel" id="venue_contact_phone" name="venue[contact_phone]" value="<?= htmlspecialchars($values['contact_phone'] ?? '') ?>">
   </div>
 
   <div class="form-actions">

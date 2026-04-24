@@ -1,4 +1,5 @@
 <?php
+$pageTitle = 'Register';
 ?>
 
 <div class="page-grid">

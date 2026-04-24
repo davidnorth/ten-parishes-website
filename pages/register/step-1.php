@@ -1,4 +1,5 @@
 <?php
+$pageTitle = 'Register: Artist Details';
 $errors = [];
 $values = $reg['artist'] ?? [];
 
@@ -8,19 +9,16 @@ if ($req->isPost()) {
         return redirect('/register/complete');
     }
 
-    // Rate limit: 60 seconds between submissions
     $lastSubmit = $reg['submitted_at'] ?? 0;
     if ($lastSubmit && (time() - $lastSubmit) < 60) {
         $errors[] = 'Please wait a moment before submitting again.';
     }
 
-    $name  = trim($req->params['name'] ?? '');
-    $email = trim($req->params['email'] ?? '');
-    $phone = trim($req->params['phone'] ?? '');
-    $body  = trim($req->params['body_html'] ?? '');
+    $artist = $req->params['artist'] ?? [];
 
     if (!$errors) {
-        if ($name === '') $errors[] = 'Name is required.';
+        if (($artist['name'] ?? '') === '') $errors[] = 'Name is required.';
+        $email = $artist['email'] ?? '';
         if ($email === '') {
             $errors[] = 'Email is required.';
         } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -36,19 +34,13 @@ if ($req->isPost()) {
             $pictureId = cloudinary_upload($_FILES['picture_file']['tmp_name'], $_FILES['picture_file']['name']);
         }
 
-        $reg['artist'] = [
-            'name'       => $name,
-            'email'      => $email,
-            'phone'      => $phone,
-            'body_html'  => $body,
-            'picture_id' => $pictureId,
-        ];
+        $reg['artist'] = $artist + ['picture_id' => $pictureId];
         $reg['submitted_at'] = time();
 
         return redirect('/register/step-2');
     }
 
-    $values = ['name' => $name, 'email' => $email, 'phone' => $phone, 'body_html' => $body];
+    $values = $artist;
 }
 ?>
 
@@ -68,22 +60,22 @@ if ($req->isPost()) {
 
   <div>
     <label for="name">Name *</label>
-    <input type="text" id="name" name="name" value="<?= htmlspecialchars($values['name'] ?? '') ?>" required>
+    <input type="text" id="name" name="artist[name]" value="<?= htmlspecialchars($values['name'] ?? '') ?>" required>
   </div>
 
   <div>
     <label for="email">Email *</label>
-    <input type="email" id="email" name="email" value="<?= htmlspecialchars($values['email'] ?? '') ?>" required>
+    <input type="email" id="email" name="artist[email]" value="<?= htmlspecialchars($values['email'] ?? '') ?>" required>
   </div>
 
   <div>
     <label for="phone">Phone</label>
-    <input type="tel" id="phone" name="phone" value="<?= htmlspecialchars($values['phone'] ?? '') ?>">
+    <input type="tel" id="phone" name="artist[phone]" value="<?= htmlspecialchars($values['phone'] ?? '') ?>">
   </div>
 
   <div>
     <label for="body_html">Tell us about work</label>
-    <textarea id="body_html" name="body_html" rows="6"><?= htmlspecialchars($values['body_html'] ?? '') ?></textarea>
+    <textarea id="body_html" name="artist[body_html]" rows="6"><?= htmlspecialchars($values['body_html'] ?? '') ?></textarea>
   </div>
 
   <div>
@@ -95,7 +87,7 @@ if ($req->isPost()) {
     <input type="file" id="picture_file" name="picture_file" accept="image/*">
   </div>
 
-  <div class="form-actions">
+  <div class="form-actions first">
     <button type="submit">Next &rarr;</button>
   </div>
 </form>

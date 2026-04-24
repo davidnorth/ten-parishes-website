@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Ten Parishes Festival</title>
+  <title><?= isset($pageTitle) ? htmlspecialchars($pageTitle) . ' — Ten Parishes Festival' : 'Ten Parishes Festival' ?></title>
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>

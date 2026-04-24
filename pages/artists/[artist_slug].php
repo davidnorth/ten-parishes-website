@@ -12,6 +12,8 @@ if (!$artist || !$artist['approved']) {
     return;
 }
 
+$pageTitle = $artist['name'];
+
 $eventDates = $db->select('event_dates', '*', [
     'artist_id' => $artist['id'],
     'ORDER'     => ['date', 'from_time'],

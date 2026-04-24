@@ -6,6 +6,8 @@ if (!$parish) {
     return;
 }
 
+$pageTitle = $parish['name'];
+
 $artists = $db->query("
     SELECT artists.name, artists.slug
     FROM artists

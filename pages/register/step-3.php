@@ -3,6 +3,7 @@ if (empty($reg['artist'])) {
     return redirect('/register/step-1');
 }
 
+$pageTitle = 'Register: Event Dates';
 $eventDates = $reg['event_dates'] ?? [];
 
 if ($req->isPost()) {
