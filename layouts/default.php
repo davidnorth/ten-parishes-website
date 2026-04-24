@@ -13,7 +13,6 @@
       <a href="/parishes">Parishes</a>
       <a href="/artists">Artists</a>
       <a href="/events">Events</a>
-      <a href="/map">Map</a>
       <a href="/about-us">About</a>
     </nav>
   </header>

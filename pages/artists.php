@@ -6,7 +6,21 @@ $artists = $db->query("
     ORDER BY artists.name
 ")->fetchAll(PDO::FETCH_ASSOC);
 ?>
+
+
+<div class="page-grid">
+<section>
+
+
 <h1>Artists</h1>
+
+
+<nav>
+  <a href="/artists">List view</a>
+  <a href="/map">Map view</a>
+</nav>
+
+<div class="image-grid">
 <?php foreach ($artists as $artist): ?>
 <article>
   <?php if ($artist['image_id']): ?>
@@ -17,3 +31,13 @@ $artists = $db->query("
   <a href="/artists/<?= htmlspecialchars($artist['slug']) ?>"><?= htmlspecialchars($artist['name']) ?></a>
 </article>
 <?php endforeach ?>
+</div>
+
+
+</section>
+</div>
+
+
+
+
+

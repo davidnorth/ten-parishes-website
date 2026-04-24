@@ -22,8 +22,29 @@ foreach ($venues as $v) {
     ];
 }
 ?>
+
+<div class="page-grid">
+<section>
+
+<h1>Artists</h1>
+
+<nav>
+  <a href="/artists">List view</a>
+  <a href="/map">Map view</a>
+</nav>
+
+
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <div id="map" style="height:600px"></div>
+
+
+</section>
+</div>
+
+
+
+
+
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 const venues = <?= json_encode($mapData, JSON_HEX_TAG) ?>;
@@ -51,3 +72,4 @@ if (bounds.length > 0) {
     map.setView([51.0, -3.5], 12);
 }
 </script>
+
