@@ -38,6 +38,11 @@ $locationLng = $values['longitude'] ?? null;
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
+
+<div class="page-grid">
+  <section>
+
+
 <h1>Register: Step 2 of 4 — Venue Details</h1>
 
 <p>Please enter the details of the venue where your event will take place. Any details you don't have yet, leave blank.</p>
@@ -119,3 +124,6 @@ $locationLng = $values['longitude'] ?? null;
     <button type="submit" name="action" value="next">Next &rarr;</button>
   </div>
 </form>
+
+  </section>
+</div>

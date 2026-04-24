@@ -79,6 +79,12 @@ if ($req->isPost()) {
 $artist = $reg['artist'] ?? [];
 $venue  = $reg['venue'] ?? [];
 ?>
+
+
+
+<div class="page-grid">
+  <section>
+
 <h1>Register: Step 4 of 4 — Images</h1>
 
 <p>Upload images of your work here. Please ensure the image size is at least 800&times;600px and the file size is less than 5MB. You can add more images later.</p>
@@ -99,6 +105,10 @@ $venue  = $reg['venue'] ?? [];
     <button type="submit" name="action" value="next">Submit registration</button>
   </div>
 </form>
+
+  </section>
+</div>
+
 
 <script>
 let imageIndex = 0;

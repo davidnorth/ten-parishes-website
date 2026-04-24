@@ -20,6 +20,12 @@ if ($req->isPost()) {
 
 $existingCount = count($eventDates);
 ?>
+
+
+
+<div class="page-grid">
+  <section>
+
 <h1>Register: Step 3 of 4 — Event Dates</h1>
 
 <p>Please add the dates your event will be open to the public.</p>
@@ -47,6 +53,11 @@ $existingCount = count($eventDates);
     <button type="submit" name="action" value="next">Next &rarr;</button>
   </div>
 </form>
+
+  </section>
+</div>
+
+
 
 <script>
 let eventDateIndex = <?= $existingCount ?>;
