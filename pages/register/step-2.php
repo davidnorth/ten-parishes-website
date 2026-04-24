@@ -89,17 +89,17 @@ $locationLng = $values['longitude'] ?? null;
 
   <div>
     <label for="parking">Parking</label>
-    <textarea id="parking" name="parking" rows="2"><?= htmlspecialchars($values['parking'] ?? '') ?></textarea>
+    <input type="text" id="parking" name="parking" value="<?= htmlspecialchars($values['parking'] ?? '') ?>">
   </div>
 
   <div>
     <label for="refreshments">Refreshments</label>
-    <textarea id="refreshments" name="refreshments" rows="2"><?= htmlspecialchars($values['refreshments'] ?? '') ?></textarea>
+    <input type="text" id="refreshments" name="refreshments" value="<?= htmlspecialchars($values['refreshments'] ?? '') ?>">
   </div>
 
   <div>
     <label for="accessibility">Accessibility</label>
-    <textarea id="accessibility" name="accessibility" rows="2"><?= htmlspecialchars($values['accessibility'] ?? '') ?></textarea>
+    <input type="text" id="accessibility" name="accessibility" value="<?= htmlspecialchars($values['accessibility'] ?? '') ?>">
   </div>
 
   <div>
