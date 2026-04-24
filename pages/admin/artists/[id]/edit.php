@@ -11,12 +11,22 @@ $eventDates = $db->select('event_dates', '*', ['artist_id' => $artist['id'], 'OR
 $images     = $db->select('images', '*', ['artist_id' => $artist['id']]);
 
 if ($req->isPost()) {
+    $pictureId = $artist['picture_id'];
+    if (!empty($_FILES['picture_file']['tmp_name']) && is_uploaded_file($_FILES['picture_file']['tmp_name'])) {
+        $pictureId = cloudinary_upload($_FILES['picture_file']['tmp_name'], $_FILES['picture_file']['name']);
+    }
+
     $db->update('artists', [
-        'venue_id'  => $req->params['venue_id'] ?: null,
-        'type'      => $req->params['type'],
-        'name'      => $req->params['name'],
-        'slug'      => unique_slug($db, 'artists', $req->params['name'], (int) $artist['id']),
-        'body_html' => $req->params['body_html'] ?: null,
+        'venue_id'          => $req->params['venue_id'] ?: null,
+        'type'              => $req->params['type'],
+        'name'              => $req->params['name'],
+        'slug'              => unique_slug($db, 'artists', $req->params['name'], (int) $artist['id']),
+        'body_html'         => $req->params['body_html'] ?: null,
+        'email'             => $req->params['email'] ?: null,
+        'phone'             => $req->params['phone'] ?: null,
+        'short_description' => $req->params['short_description'] ?: null,
+        'picture_id'        => $pictureId,
+        'approved'          => isset($req->params['approved']) ? 1 : 0,
     ], ['id' => $artist['id']]);
 
     // Replace event dates
@@ -106,6 +116,37 @@ $images     = $db->select('images', '*', ['artist_id' => $artist['id']]);
       <label class="block text-sm font-medium text-gray-700 mb-1">Body</label>
       <div id="body-editor" class="bg-white" style="height:200px"></div>
       <textarea name="body_html" id="body-html-input" class="hidden"><?= htmlspecialchars($artist['body_html'] ?? '') ?></textarea>
+    </div>
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+      <input type="email" name="email" value="<?= htmlspecialchars($artist['email'] ?? '') ?>"
+             class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+    </div>
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+      <input type="tel" name="phone" value="<?= htmlspecialchars($artist['phone'] ?? '') ?>"
+             class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+    </div>
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-1">Short description (for use in printed brochure)</label>
+      <textarea name="short_description" rows="3"
+                class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"><?= htmlspecialchars($artist['short_description'] ?? '') ?></textarea>
+    </div>
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-1">Profile picture <span class="text-gray-400 font-normal">(optional)</span></label>
+      <?php if ($artist['picture_id']): ?>
+      <img src="<?= cloudinary_url($artist['picture_id'], 'w_160,h_160,c_fill') ?>" alt=""
+           class="w-20 h-20 object-cover rounded mb-2">
+      <?php endif ?>
+      <input type="file" name="picture_file" accept="image/*"
+             class="text-sm text-gray-500 file:mr-3 file:border-0 file:rounded-md file:bg-blue-600 file:text-white file:px-3 file:py-1.5 file:text-sm file:cursor-pointer">
+      <?php if ($artist['picture_id']): ?>
+      <p class="text-xs text-gray-400 mt-1">Upload a new file to replace the current picture.</p>
+      <?php endif ?>
+    </div>
+    <div class="flex items-center gap-2">
+      <input type="checkbox" name="approved" value="1" id="approved" <?= $artist['approved'] ? 'checked' : '' ?>>
+      <label for="approved" class="text-sm font-medium text-gray-700">Approved</label>
     </div>
   </div>
 

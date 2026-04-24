@@ -3,6 +3,7 @@ $artists = $db->query("
     SELECT artists.name, artists.slug, images.image_id
     FROM artists
     LEFT JOIN images ON images.artist_id = artists.id AND images.main = 1
+    WHERE artists.approved = 1
     ORDER BY artists.name
 ")->fetchAll(PDO::FETCH_ASSOC);
 ?>

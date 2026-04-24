@@ -7,7 +7,7 @@ function ordinal(int $n): string {
 
 $artist = $db->get('artists', '*', ['slug' => $req->params['artist_slug']]);
 
-if (!$artist) {
+if (!$artist || !$artist['approved']) {
     http_response_code(404);
     return;
 }
@@ -27,6 +27,7 @@ $otherArtists = $artist['venue_id'] ? $db->query("
         SELECT parish_id FROM venues WHERE id = " . (int) $artist['venue_id'] . "
     )
     AND a2.id != " . (int) $artist['id'] . "
+    AND a2.approved = 1
     ORDER BY a2.name
 ")->fetchAll(PDO::FETCH_ASSOC) : [];
 ?>

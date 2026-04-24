@@ -35,7 +35,13 @@ artists
 - venue_id
 - type enum: exhibition, special, workshop
 - name
+- slug (auto-generated from name)
 - body_html
+- email
+- phone
+- short_description
+- picture_id (Cloudinary public_id, optional profile picture)
+- approved (boolean, default false — public pages only show approved artists)
 (belongs to venue)
 (has many event dates)
 (has many images)

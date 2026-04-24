@@ -1,6 +1,6 @@
 <?php
 $artists = $db->query("
-    SELECT artists.id, artists.name, artists.type, artists.slug,
+    SELECT artists.id, artists.name, artists.type, artists.slug, artists.approved,
            parishes.name AS parish_name
     FROM artists
     LEFT JOIN venues ON artists.venue_id = venues.id
@@ -19,6 +19,7 @@ $artists = $db->query("
       <th class="pb-2 font-medium">Parish</th>
       <th class="pb-2 font-medium">Type</th>
       <th class="pb-2 font-medium">Slug</th>
+      <th class="pb-2 font-medium">Approved</th>
       <th class="pb-2"></th>
     </tr>
   </thead>
@@ -29,6 +30,13 @@ $artists = $db->query("
       <td class="py-2 text-gray-500"><?= htmlspecialchars($artist['parish_name'] ?? '—') ?></td>
       <td class="py-2 text-gray-500"><?= htmlspecialchars($artist['type']) ?></td>
       <td class="py-2 text-gray-500"><?= htmlspecialchars($artist['slug']) ?></td>
+      <td class="py-2">
+        <?php if ($artist['approved']): ?>
+        <span class="inline-block text-xs font-medium px-2 py-0.5 rounded-full bg-green-100 text-green-700">Yes</span>
+        <?php else: ?>
+        <span class="inline-block text-xs font-medium px-2 py-0.5 rounded-full bg-gray-100 text-gray-500">No</span>
+        <?php endif ?>
+      </td>
       <td class="py-2 text-right">
         <a href="/admin/artists/<?= $artist['id'] ?>/edit" class="text-blue-600 hover:underline">Edit</a>
       </td>

@@ -72,13 +72,34 @@ function init_schema(Medoo $db): void {
     }
 
     $db->query("CREATE TABLE IF NOT EXISTS artists (
-        id        INTEGER PRIMARY KEY AUTOINCREMENT,
-        venue_id  INTEGER,
-        type      TEXT NOT NULL DEFAULT 'exhibition',
-        name      TEXT NOT NULL,
-        slug      TEXT NOT NULL UNIQUE,
-        body_html TEXT
+        id                INTEGER PRIMARY KEY AUTOINCREMENT,
+        venue_id          INTEGER,
+        type              TEXT NOT NULL DEFAULT 'exhibition',
+        name              TEXT NOT NULL,
+        slug              TEXT NOT NULL UNIQUE,
+        body_html         TEXT,
+        email             TEXT,
+        phone             TEXT,
+        short_description TEXT,
+        picture_id        TEXT,
+        approved          INTEGER NOT NULL DEFAULT 0
     )");
+
+    $artistColumns = array_column(
+        $db->query("PRAGMA table_info(artists)")->fetchAll(PDO::FETCH_ASSOC),
+        'name'
+    );
+    foreach ([
+        'email'             => 'TEXT',
+        'phone'             => 'TEXT',
+        'short_description' => 'TEXT',
+        'picture_id'        => 'TEXT',
+        'approved'          => 'INTEGER NOT NULL DEFAULT 0',
+    ] as $col => $def) {
+        if (!in_array($col, $artistColumns)) {
+            $db->query("ALTER TABLE artists ADD COLUMN $col $def");
+        }
+    }
 
     $db->query("CREATE TABLE IF NOT EXISTS images (
         id        INTEGER PRIMARY KEY AUTOINCREMENT,

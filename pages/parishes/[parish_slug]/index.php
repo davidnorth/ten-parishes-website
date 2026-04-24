@@ -11,6 +11,7 @@ $artists = $db->query("
     FROM artists
     JOIN venues ON artists.venue_id = venues.id
     WHERE venues.parish_id = " . (int) $parish['id'] . "
+    AND artists.approved = 1
     ORDER BY artists.name
 ")->fetchAll(PDO::FETCH_ASSOC);
 ?>

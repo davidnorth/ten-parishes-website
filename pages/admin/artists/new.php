@@ -2,12 +2,22 @@
 $venues = $db->select('venues', ['id', 'name'], ['ORDER' => 'name']);
 
 if ($req->isPost()) {
+    $pictureId = null;
+    if (!empty($_FILES['picture_file']['tmp_name']) && is_uploaded_file($_FILES['picture_file']['tmp_name'])) {
+        $pictureId = cloudinary_upload($_FILES['picture_file']['tmp_name'], $_FILES['picture_file']['name']);
+    }
+
     $db->insert('artists', [
-        'venue_id'  => $req->params['venue_id'] ?: null,
-        'type'      => $req->params['type'],
-        'name'      => $req->params['name'],
-        'slug'      => unique_slug($db, 'artists', $req->params['name']),
-        'body_html' => $req->params['body_html'] ?: null,
+        'venue_id'          => $req->params['venue_id'] ?: null,
+        'type'              => $req->params['type'],
+        'name'              => $req->params['name'],
+        'slug'              => unique_slug($db, 'artists', $req->params['name']),
+        'body_html'         => $req->params['body_html'] ?: null,
+        'email'             => $req->params['email'] ?: null,
+        'phone'             => $req->params['phone'] ?: null,
+        'short_description' => $req->params['short_description'] ?: null,
+        'picture_id'        => $pictureId,
+        'approved'          => isset($req->params['approved']) ? 1 : 0,
     ]);
     $id = $db->id();
 
@@ -71,6 +81,30 @@ if ($req->isPost()) {
       <label class="block text-sm font-medium text-gray-700 mb-1">Body</label>
       <div id="body-editor" class="bg-white" style="height:200px"></div>
       <textarea name="body_html" id="body-html-input" class="hidden"></textarea>
+    </div>
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+      <input type="email" name="email"
+             class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+    </div>
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+      <input type="tel" name="phone"
+             class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+    </div>
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-1">Short description</label>
+      <textarea name="short_description" rows="3"
+                class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
+    </div>
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-1">Profile picture <span class="text-gray-400 font-normal">(optional)</span></label>
+      <input type="file" name="picture_file" accept="image/*"
+             class="text-sm text-gray-500 file:mr-3 file:border-0 file:rounded-md file:bg-blue-600 file:text-white file:px-3 file:py-1.5 file:text-sm file:cursor-pointer">
+    </div>
+    <div class="flex items-center gap-2">
+      <input type="checkbox" name="approved" value="1" id="approved">
+      <label for="approved" class="text-sm font-medium text-gray-700">Approved</label>
     </div>
   </div>
 
