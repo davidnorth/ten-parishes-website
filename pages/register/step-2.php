@@ -119,9 +119,9 @@ $locationLng = $values['longitude'] ?? null;
     <input type="tel" id="venue_contact_phone" name="venue_contact_phone" value="<?= htmlspecialchars($values['venue_contact_phone'] ?? '') ?>">
   </div>
 
-  <div>
-    <button type="submit" name="action" value="back" formnovalidate>&larr; Back</button>
-    <button type="submit" name="action" value="next">Next &rarr;</button>
+  <div class="form-actions">
+    <button class="secondary" type="submit" name="action" value="back" formnovalidate>&larr; Back</button>
+    <button class="primary" type="submit" name="action" value="next">Next &rarr;</button>
   </div>
 </form>
 

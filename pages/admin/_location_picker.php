@@ -3,7 +3,7 @@
   <div class="flex gap-2 mb-2">
     <input type="text" id="location-search" placeholder="Search for a place…"
            class="flex-1 border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-    <button type="button" id="location-search-btn"
+    <button class="small" type="button" id="location-search-btn"
             class="border border-gray-300 rounded-md px-3 py-2 text-sm hover:bg-gray-100">Search</button>
   </div>
   <div id="location-map" class="w-full rounded-md border border-gray-300" style="height:280px"></div>

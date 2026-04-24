@@ -1,8 +1,8 @@
 <div>
   <label for="location-search">Search for your location</label>
-  <div>
+  <div class="flex top">
     <input type="text" id="location-search" placeholder="Search for a place…">
-    <button type="button" id="location-search-btn">Search</button>
+    <button class="small" type="button" id="location-search-btn">Search</button>
   </div>
   <div id="location-map" style="height:280px;margin-top:0.5rem"></div>
   <input type="hidden" name="latitude" id="location-lat" value="<?= htmlspecialchars($locationLat ?? '') ?>">

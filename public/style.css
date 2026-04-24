@@ -121,3 +121,73 @@ footer {
 }
 
 
+
+
+form {
+  margin: 2rem 0;
+  > div {
+    margin-bottom: 1rem;
+  }
+  select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+  }
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+  }
+  input:not([type='checkbox']), textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  .form-actions {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+
+button, a.button {
+  color: #fff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  background: var(--primary-color);
+  &.secondary {
+    background: var(--secondary-color);
+  }
+  &.small {
+    padding: 0.5rem;
+  }
+}
+
+
+
+
+
+
+/* Utility classes */
+
+.flex {
+  display: flex;
+  gap: 1rem;
+  &.center {
+    align-items: center;
+    justify-content: center;
+  }
+  &.top {
+    align-items: flex-start;
+  }
+}
+

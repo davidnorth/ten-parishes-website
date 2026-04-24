@@ -82,12 +82,12 @@ if ($req->isPost()) {
   </div>
 
   <div>
-    <label for="body_html">About your work</label>
+    <label for="body_html">Tell us about work</label>
     <textarea id="body_html" name="body_html" rows="6"><?= htmlspecialchars($values['body_html'] ?? '') ?></textarea>
   </div>
 
   <div>
-    <label for="picture_file">Profile picture (optional)</label>
+    <label for="picture_file">Photo of you (optional)</label>
     <?php if (!empty($reg['artist']['picture_id'])): ?>
     <img src="<?= cloudinary_url($reg['artist']['picture_id'], 'w_160,h_160,c_fill') ?>" alt="Current profile picture">
     <p><small>Upload a new file to replace the current picture.</small></p>
@@ -95,7 +95,7 @@ if ($req->isPost()) {
     <input type="file" id="picture_file" name="picture_file" accept="image/*">
   </div>
 
-  <div>
+  <div class="form-actions">
     <button type="submit">Next &rarr;</button>
   </div>
 </form>
