@@ -1,0 +1,64 @@
+/* Reset */
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; }
+img, video { max-width: 100%; display: block; }
+input, button, textarea, select { font: inherit; }
+
+root {
+    --primary-color: #007acc;
+    --secondary-color: #e0e0e0;
+    --text-color: #1a1a1a;
+    --background-color: #ffffff;
+}
+
+/* Layout */
+body {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100vh;
+    font-family: Georgia, serif;
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--text-color);
+}
+
+header {
+    padding: 1rem 2rem;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+header a { text-decoration: none; color: inherit; }
+
+.site-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+nav { display: flex; gap: 1.25rem; flex-wrap: wrap; }
+
+nav a {
+    font-size: 0.9rem;
+    color: #444;
+}
+
+nav a:hover { color: #000; }
+
+main {
+    padding: 2rem;
+    max-width: 960px;
+    width: 100%;
+    margin-inline: auto;
+}
+
+footer {
+    padding: 1rem 2rem;
+    border-top: 1px solid #e0e0e0;
+    font-size: 0.8rem;
+    color: #666;
+    text-align: center;
+}

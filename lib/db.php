@@ -33,14 +33,43 @@ function init_schema(Medoo $db): void {
     )");
 
     $db->query("CREATE TABLE IF NOT EXISTS venues (
-        id         INTEGER PRIMARY KEY AUTOINCREMENT,
-        parish_id  INTEGER,
-        name       TEXT NOT NULL,
-        slug       TEXT NOT NULL UNIQUE,
-        latitude   REAL,
-        longitude  REAL,
-        picture_id TEXT
+        id                   INTEGER PRIMARY KEY AUTOINCREMENT,
+        parish_id            INTEGER,
+        name                 TEXT NOT NULL,
+        slug                 TEXT NOT NULL UNIQUE,
+        latitude             REAL,
+        longitude            REAL,
+        what_3_words         TEXT,
+        parking              TEXT,
+        refreshments         TEXT,
+        dogs_allowed         INTEGER NOT NULL DEFAULT 0,
+        accessibility        TEXT,
+        directions           TEXT,
+        address              TEXT,
+        venue_contact_name   TEXT,
+        venue_contact_phone  TEXT
     )");
+
+    // Migrate existing venues table
+    $venueColumns = array_column(
+        $db->query("PRAGMA table_info(venues)")->fetchAll(PDO::FETCH_ASSOC),
+        'name'
+    );
+    foreach ([
+        'what_3_words'        => 'TEXT',
+        'parking'             => 'TEXT',
+        'refreshments'        => 'TEXT',
+        'dogs_allowed'        => 'INTEGER NOT NULL DEFAULT 0',
+        'accessibility'       => 'TEXT',
+        'directions'          => 'TEXT',
+        'address'             => 'TEXT',
+        'venue_contact_name'  => 'TEXT',
+        'venue_contact_phone' => 'TEXT',
+    ] as $col => $def) {
+        if (!in_array($col, $venueColumns)) {
+            $db->query("ALTER TABLE venues ADD COLUMN $col $def");
+        }
+    }
 
     $db->query("CREATE TABLE IF NOT EXISTS artists (
         id        INTEGER PRIMARY KEY AUTOINCREMENT,

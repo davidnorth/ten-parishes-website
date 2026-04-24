@@ -1,7 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="utf-8"><title>Ten Parishes</title></head>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ten Parishes Festival</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
 <body>
-<?= $content ?>
+  <header>
+    <a href="/" class="site-title">Ten Parishes Festival</a>
+    <nav>
+      <a href="/parishes">Parishes</a>
+      <a href="/artists">Artists</a>
+      <a href="/events">Events</a>
+      <a href="/map">Map</a>
+      <a href="/about-us">About</a>
+    </nav>
+  </header>
+  <main>
+    <?= $content ?>
+  </main>
+  <footer>
+    <p>&copy; Ten Parishes Festival</p>
+  </footer>
 </body>
 </html>

@@ -35,29 +35,35 @@ $otherArtists = $artist['venue_id'] ? $db->query("
 <?= $artist['body_html'] ?>
 <?php endif ?>
 <?php if ($eventDates): ?>
-<ul>
-  <?php foreach ($eventDates as $ed):
-    $dt = new DateTime($ed['date']);
-    $label = $dt->format('l') . ' ' . ordinal((int) $dt->format('j'));
-    $from = $ed['from_time'] ? substr($ed['from_time'], 0, 5) : '';
-    $to   = $ed['to_time']   ? substr($ed['to_time'],   0, 5) : '';
-  ?>
-  <li>
-    <?= $label ?>
-    <?php if ($from): ?><br><?= $from ?><?= $to ? '–' . $to : '' ?><?php endif ?>
-  </li>
-  <?php endforeach ?>
-</ul>
+<section aria-labelledby="dates-heading">
+  <h2 id="dates-heading">Dates</h2>
+  <ul>
+    <?php foreach ($eventDates as $ed):
+      $dt = new DateTime($ed['date']);
+      $label = $dt->format('l') . ' ' . ordinal((int) $dt->format('j'));
+      $from = $ed['from_time'] ? substr($ed['from_time'], 0, 5) : '';
+      $to   = $ed['to_time']   ? substr($ed['to_time'],   0, 5) : '';
+    ?>
+    <li>
+      <?= $label ?>
+      <?php if ($from): ?><br><?= $from ?><?= $to ? '–' . $to : '' ?><?php endif ?>
+    </li>
+    <?php endforeach ?>
+  </ul>
+</section>
 <?php endif ?>
 <?php if ($images): ?>
-<ul>
-  <?php foreach ($images as $img): ?>
-  <li>
-    <img src="<?= cloudinary_url($img['image_id'], 'w_200,h_200,c_fill') ?>" alt="<?= htmlspecialchars($img['name'] ?? '') ?>">
-    <?php if ($img['name']): ?><?= htmlspecialchars($img['name']) ?><?php endif ?>
-  </li>
-  <?php endforeach ?>
-</ul>
+<section aria-labelledby="gallery-heading">
+  <h2 id="gallery-heading">Featured Artworks</h2>
+  <div class="gallery-grid">
+    <?php foreach ($images as $img): ?>
+    <figure>
+      <img src="<?= cloudinary_url($img['image_id'], 'w_400,h_400,c_fill') ?>" alt="<?= htmlspecialchars($img['name'] ?? '') ?>" loading="lazy">
+      <?php if ($img['name']): ?><figcaption><?= htmlspecialchars($img['name']) ?></figcaption><?php endif ?>
+    </figure>
+    <?php endforeach ?>
+  </div>
+</section>
 <?php endif ?>
 <?php if ($otherArtists): ?>
 <h2>Other artists in this parish</h2>

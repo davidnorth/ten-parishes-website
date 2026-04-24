@@ -19,6 +19,15 @@ venues
 - name
 - slug (auto-generated from name)
 - latitude, longitude
+- address
+- what_3_words
+- directions
+- parking
+- refreshments
+- accessibility
+- dogs_allowed (boolean)
+- venue_contact_name
+- venue_contact_phone
 (belongs to parish)
 (has many artists)
 
