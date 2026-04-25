@@ -1,3 +1,42 @@
+:root {
+  /* T-Shirt Scale Variables */
+  --text-xs: 12px;
+  --text-sm: 14px;
+  --text-base: 16px;
+  --text-md: 18px;
+  --text-lg: 20px;
+  --text-xl: 24px;
+  --text-2xl: 30px;
+  --text-3xl: 36px;
+  --text-4xl: 48px;
+  --text-5xl: 60px;
+
+  --weight-light: 300;
+  --weight-regular: 400;
+  --weight-semi-bold: 500;
+  --weight-bold: 700;
+}
+
+/* Ad-hoc Utility Classes */
+.text-xs   { font-size: var(--text-xs); }
+.text-sm   { font-size: var(--text-sm); }
+.text-base { font-size: var(--text-base); }
+.text-md   { font-size: var(--text-md); }
+.text-lg   { font-size: var(--text-lg); }
+.text-xl   { font-size: var(--text-xl); }
+.text-2xl  { font-size: var(--text-2xl); }
+.text-3xl  { font-size: var(--text-3xl); }
+.text-4xl  { font-size: var(--text-4xl); }
+.text-5xl  { font-size: var(--text-5xl); }
+
+/* weights */
+
+.weight-light { font-weight: var(--weight-light) }
+.weight-regular { font-weight: var(--weight-regular) }
+.weight-semi-bold { font-weight: var(--weight-semi-bold) } 
+.weight-bold { font-weight: var(--weight-bold) }
+
+
 /* Reset */
 *, *::before, *::after { box-sizing: border-box; }
 * { margin: 0; }
@@ -18,6 +57,18 @@ a {
   font-weight: <weight>;
   font-style: normal;
 }
+
+
+h1 {
+  font-weight: var(--weight-light);
+  font-size: var(--text-3xl);
+  letter-spacing: -2px;
+  word-spacing: 4px;
+}
+
+h2 { font-size: var(--text-2xl) }
+h3 { font-size: var(--text-xl) }
+h3 { font-size: var(--text-lg) }
 
 h1, h2, h3, h4 {
   margin-bottom: 1rem;
@@ -51,7 +102,7 @@ body {
     grid-template-rows: auto 1fr auto;
     min-height: 100vh;
     font-family:  "Plus Jakarta Sans", "Helvetica", sans-serif;
-    font-size: 18px;
+    font-size: var(--text-base);
     line-height: 1.6;
     color: var(--text-color);
 }
@@ -72,7 +123,7 @@ header a { text-decoration: none; color: inherit; }
 
 .site-title {
     font-size: 1.25rem;
-    font-weight: bold;
+    font-weight: var(--weight-bold);
     white-space: nowrap;
 }
 
@@ -144,9 +195,9 @@ footer {
 }
 
 .image-grid figure figcaption {
-    margin-top: 0.4rem;
-    font-size: 0.85rem;
-    color: #555;
+  font-size: var(--text-sm);
+  margin-top: 0.4rem;
+  color: #555;
 }
 
 .bg-primary {
@@ -174,7 +225,7 @@ form {
   label {
     display: block;
     margin-bottom: 0.5rem;
-    font-weight: bold;
+    font-weight: var(--weight-bold);
     text-box-trim: trim-both;
     text-box-edge: cap alphabetic;
   }
@@ -279,7 +330,7 @@ button, a.button {
     text-align: center;
     border-bottom: 5px solid #ccc;
     > div:first-child {
-      font-weight: bold;
+      font-weight: var(--weight-bold);
     }
     > div:last-child {
     }
@@ -315,7 +366,7 @@ section#venue {
     figcaption {
       margin: 0 1rem;
       text-align: center;
-      font-size: 1rem;
+      font-size: var(--text-sm);
       white-space:nowrap; 
       text-overflow: ellipsis;
       overflow: hidden;

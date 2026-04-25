@@ -1,7 +1,7 @@
 <div class="page-grid">
 
   <section class="full-bleed bg-primary">
-    <h2>Celebrate a feast of arts and crafts within the 10 Parishes.</h2>
+    <h1>A feast of arts and crafts within the 10 Parishes.</h1>
     <p>The 10 Parishes Festival runs every second year to offer you a 
     rich variety of art throughout the 10 Parishes area 
     (Wiveliscombe and its surrounding parishes). </p>
