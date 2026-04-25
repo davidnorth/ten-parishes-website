@@ -46,6 +46,31 @@
            class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
   </div>
   <div>
+    <label class="block text-sm font-medium text-gray-700 mb-1">Disciplines <span class="text-gray-400 font-normal">(choose up to <?= FormOptions::MAX_DISCIPLINES ?>)</span></label>
+    <?php $selectedDisciplines = array_filter(array_map('trim', explode(',', $record['disciplines'] ?? ''))); ?>
+    <div id="disciplines-group" class="grid grid-cols-2 gap-2">
+      <?php foreach (FormOptions::DISCIPLINES as $d): ?>
+      <label class="flex items-center gap-2 text-sm text-gray-700">
+        <input type="checkbox" name="disciplines[]" value="<?= htmlspecialchars($d) ?>"
+               <?= in_array($d, $selectedDisciplines, true) ? 'checked' : '' ?>>
+        <?= htmlspecialchars($d) ?>
+      </label>
+      <?php endforeach ?>
+    </div>
+    <script>
+    (function() {
+      const max = <?= FormOptions::MAX_DISCIPLINES ?>;
+      const boxes = document.querySelectorAll('#disciplines-group input[type=checkbox]');
+      function update() {
+        const checked = Array.from(boxes).filter(b => b.checked).length;
+        boxes.forEach(b => { if (!b.checked) b.disabled = checked >= max; });
+      }
+      boxes.forEach(b => b.addEventListener('change', update));
+      update();
+    })();
+    </script>
+  </div>
+  <div>
     <label class="block text-sm font-medium text-gray-700 mb-1">Short description <span class="text-gray-400 font-normal">(for printed brochure)</span></label>
     <textarea name="short_description" rows="3"
               class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"><?= htmlspecialchars($record['short_description'] ?? '') ?></textarea>

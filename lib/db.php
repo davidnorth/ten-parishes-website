@@ -101,6 +101,7 @@ function init_schema(Medoo $db): void {
         'short_description' => 'TEXT',
         'picture_id'        => 'TEXT',
         'approved'          => 'INTEGER NOT NULL DEFAULT 0',
+        'disciplines'       => 'TEXT',
     ] as $col => $def) {
         if (!in_array($col, $artistColumns)) {
             $db->query("ALTER TABLE artists ADD COLUMN $col $def");

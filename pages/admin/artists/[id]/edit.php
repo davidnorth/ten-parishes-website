@@ -27,6 +27,10 @@ if ($req->isPost()) {
         'short_description' => $req->params['short_description'] ?: null,
         'picture_id'        => $pictureId,
         'approved'          => isset($req->params['approved']) ? 1 : 0,
+        'disciplines'       => (function($vals) {
+            $allowed = array_values(array_intersect(FormOptions::DISCIPLINES, $vals));
+            return $allowed ? implode(',', array_slice($allowed, 0, FormOptions::MAX_DISCIPLINES)) : null;
+        })($req->params['disciplines'] ?? []),
     ], ['id' => $artist['id']]);
 
     $db->delete('event_dates', ['artist_id' => $artist['id']]);

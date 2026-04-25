@@ -58,6 +58,9 @@ $otherArtists = $artist['venue_id'] ? $db->query("
 
 <section class="full-bleed bg-primary-light" aria-labelledby="name-heading">
   <h1 id="name-heading"><?= htmlspecialchars($artist['name']) ?></h1>
+  <?php if (!empty($artist['disciplines'])): ?>
+    <p>Disciplines: <?= htmlspecialchars(implode(', ', array_map('trim', explode(',', $artist['disciplines'])))) ?></p>
+  <?php endif ?>
   <?= $artist['body_html'] ?>
 
   <?php render_partial(__DIR__ . '/../_gallery.php', ['images' => $images]) ?>
