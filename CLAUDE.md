@@ -178,6 +178,10 @@ Any page that lists or loads artists must filter by `approved = 1`. Currently en
 - `pages/artists/[artist_slug].php` — 404 if `!$artist['approved']`
 - `pages/parishes/[parish_slug]/index.php` — `AND artists.approved = 1`
 
+## SQLite MCP
+
+The `sqlite` MCP server is configured in `.mcp.json` and connected to `storage/db.sqlite`. Use it to inspect data directly — `mcp__sqlite__query` for SELECTs, `mcp__sqlite__list-tables` to browse the schema — rather than writing throwaway PHP scripts or shelling out to `sqlite3`.
+
 ## Running locally
 
 ```

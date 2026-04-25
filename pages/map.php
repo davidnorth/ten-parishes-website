@@ -6,7 +6,7 @@ $venues = $db->select('venues', ['id', 'name', 'latitude', 'longitude'], [
     'ORDER'        => 'name',
 ]);
 
-$allArtists = $db->select('artists', ['venue_id', 'name', 'slug']);
+$allArtists = $db->select('artists', ['venue_id', 'name', 'slug'], ['approved' => 1]);
 
 $artistsByVenue = [];
 foreach ($allArtists as $a) {
@@ -56,7 +56,15 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 const bounds = [];
 venues.forEach(v => {
-    const marker = L.marker([v.lat, v.lng]).addTo(map);
+    const count = v.artists.length;
+    const icon = L.divIcon({
+        html: `<div style="background:#387FBA;color:#fff;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:bold;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4)">${count}</div>`,
+        className: '',
+        iconSize: [28, 28],
+        iconAnchor: [14, 14],
+        popupAnchor: [0, -14],
+    });
+    const marker = L.marker([v.lat, v.lng], { icon }).addTo(map);
     bounds.push([v.lat, v.lng]);
     let html = '<strong>' + v.name + '</strong>';
     if (v.artists.length) {

@@ -88,7 +88,7 @@ $images     = $db->select('images', '*', ['artist_id' => $artist['id']]);
   <div class="space-y-4">
     <div>
       <label class="block text-sm font-medium text-gray-700 mb-1">Venue</label>
-      <select name="venue_id"
+      <select name="venue_id" id="venue-select"
               class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
         <option value="">— None —</option>
         <?php foreach ($venues as $venue): ?>
@@ -97,6 +97,11 @@ $images     = $db->select('images', '*', ['artist_id' => $artist['id']]);
         </option>
         <?php endforeach ?>
       </select>
+      <a id="venue-edit-link"
+         href="/admin/venues/<?= $artist['venue_id'] ?>/edit"
+         class="mt-1 text-sm text-blue-600 hover:text-blue-800 inline-block <?= $artist['venue_id'] ? '' : 'hidden' ?>">
+        Edit this venue
+      </a>
     </div>
     <div>
       <label class="block text-sm font-medium text-gray-700 mb-1">Type</label>
@@ -252,6 +257,18 @@ function addEventDate() {
     `;
     document.getElementById('event-dates').appendChild(row);
 }
+
+const venueSelect = document.getElementById('venue-select');
+const venueLink = document.getElementById('venue-edit-link');
+venueSelect.addEventListener('change', () => {
+    const id = venueSelect.value;
+    if (id) {
+        venueLink.href = `/admin/venues/${id}/edit`;
+        venueLink.classList.remove('hidden');
+    } else {
+        venueLink.classList.add('hidden');
+    }
+});
 
 let imageIndex = 0;
 function addImage() {

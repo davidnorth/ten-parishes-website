@@ -10,7 +10,7 @@ if ($req->isPost()) {
     }
 
     $lastSubmit = $reg['submitted_at'] ?? 0;
-    if ($lastSubmit && (time() - $lastSubmit) < 60) {
+    if (!getenv('TEST_MODE') && $lastSubmit && (time() - $lastSubmit) < 60) {
         $errors[] = 'Please wait a moment before submitting again.';
     }
 
@@ -23,8 +23,6 @@ if ($req->isPost()) {
             $errors[] = 'Email is required.';
         } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $errors[] = 'Please enter a valid email address.';
-        } elseif ($db->has('artists', ['email' => $email])) {
-            $errors[] = 'An artist with this email address is already registered.';
         }
     }
 

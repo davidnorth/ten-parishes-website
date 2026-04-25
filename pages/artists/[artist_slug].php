@@ -21,6 +21,8 @@ $eventDates = $db->select('event_dates', '*', [
 
 $images = $db->select('images', '*', ['artist_id' => $artist['id']]);
 
+$venue = $db->get('venues', '*', ['id' => $artist['venue_id']]);
+
 $otherArtists = $artist['venue_id'] ? $db->query("
     SELECT a2.name, a2.slug
     FROM artists a2
@@ -68,6 +70,54 @@ $otherArtists = $artist['venue_id'] ? $db->query("
   </div>
 </section>
 <?php endif ?>
+<section id="venue" aria-labelledby="venue-heading">
+  <h2 id="venue-heading"><a href="#venue"><?= htmlspecialchars($venue['name']) ?></a></h2>
+  <dl>
+    <?php if ($venue['address']): ?>
+    <div>
+      <dt><iconify-icon icon="ph:map-pin" aria-hidden="true"></iconify-icon> Address</dt>
+      <dd><?= nl2br(htmlspecialchars($venue['address'])) ?></dd>
+    </div>
+    <?php endif ?>
+    <?php if ($venue['directions']): ?>
+    <div>
+      <dt><iconify-icon icon="ph:signpost" aria-hidden="true"></iconify-icon> Directions</dt>
+      <dd><?= nl2br(htmlspecialchars($venue['directions'])) ?></dd>
+    </div>
+    <?php endif ?>
+    <?php if ($venue['refreshments']): ?>
+    <div>
+      <dt><iconify-icon icon="ph:coffee" aria-hidden="true"></iconify-icon> Refreshments</dt>
+      <dd><?= nl2br(htmlspecialchars($venue['refreshments'])) ?></dd>
+    </div>
+    <?php endif ?>
+    <?php if ($venue['accessibility']): ?>
+    <div>
+      <dt><iconify-icon icon="ph:wheelchair" aria-hidden="true"></iconify-icon> Accessibility</dt>
+      <dd><?= nl2br(htmlspecialchars($venue['accessibility'])) ?></dd>
+    </div>
+    <?php endif ?>
+    <?php if ($venue['what_3_words']): ?>
+    <?php $w3w = ltrim($venue['what_3_words'], '/'); ?>
+    <div>
+      <dt><iconify-icon icon="ph:hash" aria-hidden="true"></iconify-icon> What3Words</dt>
+      <dd><a href="https://what3words.com/<?= htmlspecialchars(urlencode($w3w)) ?>">///<?= htmlspecialchars($w3w) ?></a></dd>
+    </div>
+    <?php endif ?>
+    <?php if ($venue['parking']): ?>
+    <div>
+      <dt><iconify-icon icon="ph:car" aria-hidden="true"></iconify-icon> Parking</dt>
+      <dd><?= nl2br(htmlspecialchars($venue['parking'])) ?></dd>
+    </div>
+    <?php endif ?>
+    <?php if ($venue['dog_policy']): ?>
+    <div>
+      <dt><iconify-icon icon="ph:paw-print" aria-hidden="true"></iconify-icon> Dogs</dt>
+      <dd><?= htmlspecialchars($venue['dog_policy']) ?></dd>
+    </div>
+    <?php endif ?>
+  </dl>
+</section>
 <?php if ($otherArtists): ?>
 <h2>Other artists in this parish</h2>
 <ul>

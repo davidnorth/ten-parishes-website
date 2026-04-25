@@ -5,9 +5,10 @@ use Medoo\Medoo;
 function get_db(): Medoo {
     static $db = null;
     if ($db === null) {
+        $dbPath = getenv('APP_DB') ?: (realpath(__DIR__ . '/../storage') . '/db.sqlite');
         $db = new Medoo([
             'type'     => 'sqlite',
-            'database' => realpath(__DIR__ . '/../storage') . '/db.sqlite',
+            'database' => $dbPath,
         ]);
         init_schema($db);
     }
@@ -42,7 +43,7 @@ function init_schema(Medoo $db): void {
         what_3_words         TEXT,
         parking              TEXT,
         refreshments         TEXT,
-        dogs_allowed         INTEGER NOT NULL DEFAULT 0,
+        dog_policy           TEXT,
         accessibility        TEXT,
         directions           TEXT,
         address              TEXT,
@@ -59,16 +60,21 @@ function init_schema(Medoo $db): void {
         'what_3_words'        => 'TEXT',
         'parking'             => 'TEXT',
         'refreshments'        => 'TEXT',
-        'dogs_allowed'        => 'INTEGER NOT NULL DEFAULT 0',
         'accessibility'       => 'TEXT',
         'directions'          => 'TEXT',
         'address'             => 'TEXT',
         'venue_contact_name'  => 'TEXT',
         'venue_contact_phone' => 'TEXT',
+        'dog_policy'          => 'TEXT',
     ] as $col => $def) {
         if (!in_array($col, $venueColumns)) {
             $db->query("ALTER TABLE venues ADD COLUMN $col $def");
         }
+    }
+
+    // Migrate dogs_allowed → dog_policy for existing rows
+    if (!in_array('dog_policy', $venueColumns) && in_array('dogs_allowed', $venueColumns)) {
+        $db->query("UPDATE venues SET dog_policy = CASE WHEN dogs_allowed = 1 THEN 'Dogs welcome' ELSE 'Dogs not allowed' END WHERE dog_policy IS NULL");
     }
 
     $db->query("CREATE TABLE IF NOT EXISTS artists (

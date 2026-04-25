@@ -78,7 +78,7 @@ footer {
 
   grid-template-columns: 
     [page-start] minmax(30px, 1fr)
-    [content-start] min(100% - 60px, 800px) [content-end] 
+    [content-start] min(100% - 60px, 1024px) [content-end] 
   minmax(30px, 1fr) [page-end];
 
   row-gap: 1em;
