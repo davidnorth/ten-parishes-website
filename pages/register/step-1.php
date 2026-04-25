@@ -57,8 +57,10 @@ if ($req->isPost()) {
   <p>Please enter your details as an artist. Fields marked * are required.</p>
 
   <?= text_field('Name *', 'artist[name]', $values['name'] ?? '', ['required' => true]) ?>
-  <?= text_field('Email *', 'artist[email]', $values['email'] ?? '', ['type' => 'email', 'required' => true]) ?>
-  <?= text_field('Phone', 'artist[phone]', $values['phone'] ?? '', ['type' => 'tel']) ?>
+  <div class="field-pair">
+    <?= text_field('Email *', 'artist[email]', $values['email'] ?? '', ['type' => 'email', 'required' => true]) ?>
+    <?= text_field('Phone', 'artist[phone]', $values['phone'] ?? '', ['type' => 'tel']) ?>
+  </div>
 
   <?= text_field('Tell us about work', 'artist[body_html]', $values['body_html'] ?? '', ['textarea' => true, 'rows' => 6]) ?>
 

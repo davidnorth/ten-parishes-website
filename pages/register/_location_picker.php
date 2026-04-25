@@ -3,7 +3,6 @@ $_latName = isset($locationFieldPrefix) ? "{$locationFieldPrefix}[latitude]" : '
 $_lngName = isset($locationFieldPrefix) ? "{$locationFieldPrefix}[longitude]" : 'longitude';
 ?>
 <div>
-  <label for="location-search">Search for your location</label>
   <div class="flex top">
     <input type="text" id="location-search" placeholder="Search for a place…">
     <button class="small" type="button" id="location-search-btn">Search</button>

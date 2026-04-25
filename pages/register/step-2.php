@@ -56,18 +56,23 @@ $locationFieldPrefix = 'venue';
     <?php require __DIR__ . '/_location_picker.php' ?>
   </div>
 
-  <?= text_field('Address', 'venue[address]', $values['address'] ?? '') ?>
-  <?= text_field('What3Words', 'venue[what_3_words]', $values['what_3_words'] ?? '', ['placeholder' => 'e.g. ///word.word.word']) ?>
-  <?= text_field('Directions', 'venue[directions]', $values['directions'] ?? '') ?>
-  <?= text_field('Parking', 'venue[parking]', $values['parking'] ?? '') ?>
+  <div class="field-pair">
+    <?= text_field('Address', 'venue[address]', $values['address'] ?? '') ?>
+    <?= text_field('What3Words', 'venue[what_3_words]', $values['what_3_words'] ?? '', ['placeholder' => 'e.g. ///word.word.word']) ?>
+  </div>
+  <div class="field-pair">
+    <?= text_field('Directions', 'venue[directions]', $values['directions'] ?? '') ?>
+    <?= text_field('Parking', 'venue[parking]', $values['parking'] ?? '') ?>
+  </div>
 
-  <?= text_field('Refreshments', 'venue[refreshments]', $values['refreshments'] ?? '') ?>
-  <?= text_field('Accessibility', 'venue[accessibility]', $values['accessibility'] ?? '') ?>
+  <div class="field-pair">
+    <?= text_field('Refreshments', 'venue[refreshments]', $values['refreshments'] ?? '') ?>
+    <?= text_field('Accessibility', 'venue[accessibility]', $values['accessibility'] ?? '') ?>
+  </div>
 
   <div>
     <label for="dog_policy">Dog policy</label>
     <select id="dog_policy" name="venue[dog_policy]">
-      <option value="">— Not specified —</option>
       <?php foreach (FormOptions::DOG_POLICIES as $opt): ?>
       <option value="<?= $opt ?>" <?= ($values['dog_policy'] ?? '') === $opt ? 'selected' : '' ?>><?= $opt ?></option>
       <?php endforeach ?>

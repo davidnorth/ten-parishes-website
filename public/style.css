@@ -4,6 +4,17 @@
 img, video { max-width: 100%; display: block; }
 input, button, textarea, select { font: inherit; }
 
+
+/* Base typography */
+
+h1, h2, h3, h4 {
+  margin-bottom: 1rem;
+}
+
+p {
+  margin-bottom: 1rem;
+}
+
 html {
     --text-color: #1a1a1a;
     --text-color-light: #eee;
@@ -86,12 +97,13 @@ footer {
 
   > section { 
     grid-column: content;
+    padding: 2rem 0;
   }
   > .full-bleed {
     grid-column: page;
     display: grid;
     grid-template-columns: subgrid;
-    > p, > h2 {
+    > * {
       grid-column: content;
     }
   }
@@ -119,34 +131,42 @@ footer {
 .bg-primary {
   background: var(--primary-color);
 }
+.bg-secondary {
+  background: var(--secondary-color);
+}
+.bg-tertiary {
+  background: var(--tertiary-color);
+}
+
 
 
 
 
 form {
-  margin: 2rem 0;
-  > div {
-    margin-bottom: 1rem;
-  }
-  select {
-    width: 100%;
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-bottom: 1rem;
-    font-size: 1rem;
-  }
+  display: grid;
+  gap: 1.5rem;
+  container-type: inline-size;
+
   label {
     display: block;
     margin-bottom: 0.5rem;
     font-weight: bold;
+    text-box-trim: trim-both;
+    text-box-edge: cap alphabetic;
   }
-  input:not([type='checkbox']), textarea {
+  input:not([type='checkbox'],[type='radio']), textarea, select {
     width: 100%;
     padding: 0.5rem;
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 1rem;
+    line-height: 1.6;
+  }
+  button.small {
+    /* match input */
+    padding: 0.5rem;
+    font-size: 1rem;
+    line-height: 1.6;
   }
   .form-actions {
     display: flex;
@@ -155,6 +175,21 @@ form {
       justify-content: flex-end;
     }
   }
+
+  .field-pair {
+    @container (width < 700px) {
+      display: grid;
+      gap: 1rem;
+    }
+    @container (width >= 700px) {
+      display: flex;
+      gap: 1rem;
+      > div {
+        flex-grow: 1;
+      }
+    }
+  }
+
 }
 
 
@@ -169,9 +204,6 @@ button, a.button {
   background: var(--primary-color);
   &.secondary {
     background: var(--secondary-color);
-  }
-  &.small {
-    padding: 0.5rem;
   }
 }
 
