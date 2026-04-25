@@ -62,7 +62,7 @@ a {
 h1 {
   font-weight: var(--weight-light);
   font-size: var(--text-3xl);
-  letter-spacing: -2px;
+  letter-spacing: -1.5px;
   word-spacing: 4px;
 }
 
@@ -286,7 +286,8 @@ button, a.button {
 
 .amenity-list {
   display: grid;
-  gap: 0.5rem;
+  gap: 1rem;
+  grid-template-columns: 1fr 1fr 1fr;
   > div {
     display: flex;
     gap: 1ch;
@@ -389,3 +390,6 @@ section#venue {
   }
 }
 
+.readable-max-width {
+  max-width: 600px;
+}
