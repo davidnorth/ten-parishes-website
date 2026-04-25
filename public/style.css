@@ -7,6 +7,18 @@ input, button, textarea, select { font: inherit; }
 
 /* Base typography */
 
+
+a {
+  color: var(--text-color);
+}
+
+.plus-jakarta-sans-<uniquifier> {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: <weight>;
+  font-style: normal;
+}
+
 h1, h2, h3, h4 {
   margin-bottom: 1rem;
 }
@@ -22,6 +34,15 @@ html {
     --primary-color: #EE7930;
     --secondary-color: #387FBA;
     --tertiary-color: #377C57;
+
+
+  
+  --text-color-lighter: oklch(from var(--text-color) calc(l + 0.3) c h);
+
+  --primary-color-lighter: oklch(from var(--primary-color) calc(l + 0.2) c h);
+  --primary-color-lightest: oklch(from var(--primary-color) calc(l + 0.4) c h);
+
+  --secondary-color-lighter: oklch(from var(--secondary-color) calc(l + 0.2) c h);
 }
 
 body {
@@ -29,7 +50,7 @@ body {
     display: grid;
     grid-template-rows: auto 1fr auto;
     min-height: 100vh;
-    font-family: Georgia, serif;
+    font-family:  "Plus Jakarta Sans", "Helvetica", sans-serif;
     font-size: 18px;
     line-height: 1.6;
     color: var(--text-color);
@@ -97,7 +118,7 @@ footer {
 
   > section { 
     grid-column: content;
-    padding: 2rem 0;
+    padding: 1rem 0;
   }
   > .full-bleed {
     grid-column: page;
@@ -130,6 +151,9 @@ footer {
 
 .bg-primary {
   background: var(--primary-color);
+}
+.bg-primary-light {
+  background: var(--primary-color-lighter);
 }
 .bg-secondary {
   background: var(--secondary-color);
@@ -209,7 +233,95 @@ button, a.button {
 
 
 
+.amenity-list {
+  display: grid;
+  gap: 0.5rem;
+  > div {
+    display: flex;
+    gap: 1ch;
+    align-items: center;
+  }
+  dt {
+    background: #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 6px;
+    background: var(--primary-color-lightest);
+    color: var(--primary-color);
+  }
+  dd, a {
+    color: var(--text-color-lighter);
+  }
 
+}
+
+
+.event-dates {
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  justify-content: space-between;
+
+  padding: 1rem 0;
+  border-radius: 10px;
+
+
+  gap: 0.5rem;
+  li {
+    background: #eee;
+    color: #999;
+    padding: 0.5rem;
+    flex-grow: 1;
+    text-align: center;
+    border-bottom: 5px solid #ccc;
+    > div:first-child {
+      font-weight: bold;
+    }
+    > div:last-child {
+    }
+    &:has(.times) {
+      color: var(--text-color);
+      background: var(--secondary-color-lighter);
+    border-bottom-color: var(--secondary-color);
+    }
+  }
+}
+
+section#venue {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  > div {
+  }
+}
+
+
+/* Icon variants */
+
+.icon-medium {
+  font-size: 30px;
+}
+
+
+.gallery-grid {
+  display :grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 1rem;
+  figure {
+    figcaption {
+      margin: 0 1rem;
+      text-align: center;
+      font-size: 1rem;
+      white-space:nowrap; 
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+  }
+}
 
 
 /* Utility classes */

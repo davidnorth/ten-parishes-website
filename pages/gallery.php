@@ -13,6 +13,6 @@ $images = $db->query("
 <div class="page-grid">
 <section>
   <h1>Gallery</h1>
-  <?php require __DIR__ . '/_gallery.php' ?>
+  <?php render_partial(__DIR__ . '/_gallery.php', ['images' => $images]) ?>
 </section>
 </div>

@@ -19,6 +19,24 @@ $eventDates = $db->select('event_dates', '*', [
     'ORDER'     => ['date', 'from_time'],
 ]);
 
+$timesByDate = [];
+foreach ($eventDates as $ed) {
+    if (!$ed['from_time']) continue;
+    $from = substr($ed['from_time'], 0, 5);
+    $to   = $ed['to_time'] ? substr($ed['to_time'], 0, 5) : '';
+    $timesByDate[$ed['date']] = $from . ($to ? '–' . $to : '');
+}
+
+$festivalDays = [];
+$start = new DateTime(FestivalOptions::START_DATE);
+for ($i = 0; $i < 10; $i++) {
+    $dt = (clone $start)->modify("+$i days");
+    $festivalDays[] = [
+        'label' => $dt->format('M') . ' ' . ordinal((int) $dt->format('j')),
+        'times' => $timesByDate[$dt->format('Y-m-d')] ?? '',
+    ];
+}
+
 $images = $db->select('images', '*', ['artist_id' => $artist['id']]);
 
 $venue = $db->get('venues', '*', ['id' => $artist['venue_id']]);
@@ -38,76 +56,76 @@ $otherArtists = $artist['venue_id'] ? $db->query("
 
 <div class="page-grid">
 
-<section aria-labelledby="name-heading">
+<section class="full-bleed bg-primary-light" aria-labelledby="name-heading">
   <h1 id="name-heading"><?= htmlspecialchars($artist['name']) ?></h1>
   <?= $artist['body_html'] ?>
+
+  <?php render_partial(__DIR__ . '/../_gallery.php', ['images' => $images]) ?>
 </section>
 
-<section aria-labelledby="dates-heading">
-  <h2 id="dates-heading">Dates</h2>
-  <ul>
-    <?php foreach ($eventDates as $ed):
-      $dt = new DateTime($ed['date']);
-      $label = $dt->format('l') . ' ' . ordinal((int) $dt->format('j'));
-      $from = $ed['from_time'] ? substr($ed['from_time'], 0, 5) : '';
-      $to   = $ed['to_time']   ? substr($ed['to_time'],   0, 5) : '';
-    ?>
+<section>
+  <ul class="event-dates">
+    <?php foreach ($festivalDays as $day): ?>
     <li>
-      <?= $label ?>
-      <?php if ($from): ?><br><?= $from ?><?= $to ? '–' . $to : '' ?><?php endif ?>
+      <div><?= $day['label'] ?></div>
+      <?php if($day['times']): ?>
+        <div class="times"><?= htmlspecialchars($day['times']) ?></div>
+      <?php else: ?>
+        <div>&nbsp;</div>
+      <?php endif ?>
     </li>
     <?php endforeach ?>
   </ul>
 </section>
 
-<section aria-labelledby="gallery-heading">
-  <h2 id="gallery-heading">Featured Artworks</h2>
-  <?php require __DIR__ . '/../_gallery.php' ?>
-</section>
-
 <section id="venue" aria-labelledby="venue-heading">
-  <h2 id="venue-heading">Venue: <?= htmlspecialchars($venue['name']) ?></h2>
-  <dl>
+  <div>
+    <?php if ($venue['latitude'] && $venue['longitude']): ?>
+      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+      <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+      <?php render_partial(__DIR__ . '/../_map.php', ['lat' => $venue['latitude'], 'lng' => $venue['longitude']]) ?>
+    <?php endif ?>
+  </div>
+  <div>
     <?php if ($venue['address']): ?>
-    <div>
-      <dt><iconify-icon icon="ph:map-pin" aria-hidden="true"></iconify-icon> Address</dt>
-      <dd><?= nl2br(htmlspecialchars($venue['address'])) ?></dd>
-    </div>
+      <p><?= nl2br(htmlspecialchars($venue['address'])) ?></p>
     <?php endif ?>
     <?php if ($venue['directions']): ?>
-    <div>
-      <dt><iconify-icon icon="ph:signpost" aria-hidden="true"></iconify-icon> Directions</dt>
-      <dd><?= nl2br(htmlspecialchars($venue['directions'])) ?></dd>
-    </div>
+      <p>Directions: <?= nl2br(htmlspecialchars($venue['directions'])) ?></p>
     <?php endif ?>
-    <?php if ($venue['refreshments']): ?>
+  </div>
+</section>
+
+<section>
+  <dl class="amenity-list">
+   <?php if ($venue['refreshments']): ?>
     <div>
-      <dt><iconify-icon icon="ph:coffee" aria-hidden="true"></iconify-icon> Refreshments</dt>
+      <dt><iconify-icon icon="ph:coffee" class="icon-medium" aria-hidden="true"></iconify-icon></dt>
       <dd><?= nl2br(htmlspecialchars($venue['refreshments'])) ?></dd>
     </div>
     <?php endif ?>
     <?php if ($venue['accessibility']): ?>
     <div>
-      <dt><iconify-icon icon="ph:wheelchair" aria-hidden="true"></iconify-icon> Accessibility</dt>
+      <dt><iconify-icon icon="ph:wheelchair" class="icon-medium" aria-hidden="true"></iconify-icon></dt>
       <dd><?= nl2br(htmlspecialchars($venue['accessibility'])) ?></dd>
     </div>
     <?php endif ?>
     <?php if ($venue['what_3_words']): ?>
     <?php $w3w = ltrim($venue['what_3_words'], '/'); ?>
     <div>
-      <dt><iconify-icon icon="ph:hash" aria-hidden="true"></iconify-icon> What3Words</dt>
+      <dt><iconify-icon icon="ph:hash" class="icon-medium" aria-hidden="true"></iconify-icon></dt>
       <dd><a href="https://what3words.com/<?= htmlspecialchars(urlencode($w3w)) ?>">///<?= htmlspecialchars($w3w) ?></a></dd>
     </div>
     <?php endif ?>
     <?php if ($venue['parking']): ?>
     <div>
-      <dt><iconify-icon icon="ph:car" aria-hidden="true"></iconify-icon> Parking</dt>
+      <dt><iconify-icon icon="ph:car" class="icon-medium" aria-hidden="true"></iconify-icon></dt>
       <dd><?= nl2br(htmlspecialchars($venue['parking'])) ?></dd>
     </div>
     <?php endif ?>
     <?php if ($venue['dog_policy']): ?>
     <div>
-      <dt><iconify-icon icon="ph:paw-print" aria-hidden="true"></iconify-icon> Dogs</dt>
+      <dt><iconify-icon icon="ph:paw-print" class="icon-medium" aria-hidden="true"></iconify-icon></dt>
       <dd><?= htmlspecialchars($venue['dog_policy']) ?></dd>
     </div>
     <?php endif ?>
@@ -115,7 +133,7 @@ $otherArtists = $artist['venue_id'] ? $db->query("
 </section>
 
 <section aria-labelled-by="other-artists-heading">
-<h2 id="other-artists-heading">Other artists in this parish</h2>
+<h3 id="other-artists-heading">Other artists in this parish</h3>
 <ul>
   <?php foreach ($otherArtists as $other): ?>
   <li><a href="/artists/<?= htmlspecialchars($other['slug']) ?>"><?= htmlspecialchars($other['name']) ?></a></li>
