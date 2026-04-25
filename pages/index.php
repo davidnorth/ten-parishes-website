@@ -4,8 +4,8 @@
     <h2>Celebrate a feast of arts and crafts within the 10 Parishes.</h2>
     <p>The 10 Parishes Festival runs every second year to offer you a 
     rich variety of art throughout the 10 Parishes area 
-    (Wiveliscombe and its surrounding parishes). 
-    2026 will see the return of the festival since 2023 and we are excited to be welcoming 
+    (Wiveliscombe and its surrounding parishes). </p>
+    <p>2026 will see the return of the festival since 2023 and we are excited to be welcoming 
     back many talented artists and showcasing the work of new talent as well.  
     All types of artistic disciplines will be represented, from painting and 
     textiles, photography, jewellery, ceramics, sculpture, music, installation and carving.  

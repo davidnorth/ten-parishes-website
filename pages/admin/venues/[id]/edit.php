@@ -84,7 +84,7 @@ if ($req->isPost()) {
     <select name="dog_policy"
             class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
       <option value="">— Not specified —</option>
-      <?php foreach (['Dogs welcome', 'Assistance dogs only', 'Dogs not allowed'] as $opt): ?>
+      <?php foreach (FormOptions::DOG_POLICIES as $opt): ?>
       <option value="<?= $opt ?>" <?= $venue['dog_policy'] === $opt ? 'selected' : '' ?>><?= $opt ?></option>
       <?php endforeach ?>
     </select>

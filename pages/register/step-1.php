@@ -56,25 +56,11 @@ if ($req->isPost()) {
 
   <p>Please enter your details as an artist. Fields marked * are required.</p>
 
-  <div>
-    <label for="name">Name *</label>
-    <input type="text" id="name" name="artist[name]" value="<?= htmlspecialchars($values['name'] ?? '') ?>" required>
-  </div>
+  <?= text_field('Name *', 'artist[name]', $values['name'] ?? '', ['required' => true]) ?>
+  <?= text_field('Email *', 'artist[email]', $values['email'] ?? '', ['type' => 'email', 'required' => true]) ?>
+  <?= text_field('Phone', 'artist[phone]', $values['phone'] ?? '', ['type' => 'tel']) ?>
 
-  <div>
-    <label for="email">Email *</label>
-    <input type="email" id="email" name="artist[email]" value="<?= htmlspecialchars($values['email'] ?? '') ?>" required>
-  </div>
-
-  <div>
-    <label for="phone">Phone</label>
-    <input type="tel" id="phone" name="artist[phone]" value="<?= htmlspecialchars($values['phone'] ?? '') ?>">
-  </div>
-
-  <div>
-    <label for="body_html">Tell us about work</label>
-    <textarea id="body_html" name="artist[body_html]" rows="6"><?= htmlspecialchars($values['body_html'] ?? '') ?></textarea>
-  </div>
+  <?= text_field('Tell us about work', 'artist[body_html]', $values['body_html'] ?? '', ['textarea' => true, 'rows' => 6]) ?>
 
   <div>
     <label for="picture_file">Photo of you (optional)</label>

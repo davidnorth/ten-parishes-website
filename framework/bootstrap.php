@@ -6,9 +6,11 @@ if (file_exists(__DIR__ . '/../config/config.php')) {
     require_once __DIR__ . '/../config/config.php';
 }
 
+require_once __DIR__ . '/../lib/constants.php';
 require_once __DIR__ . '/../lib/db.php';
 require_once __DIR__ . '/../lib/slug.php';
 require_once __DIR__ . '/../lib/cloudinary.php';
+require_once __DIR__ . '/../lib/form_helpers.php';
 require_once __DIR__ . '/Request.php';
 require_once __DIR__ . '/Router.php';
 require_once __DIR__ . '/helpers.php';

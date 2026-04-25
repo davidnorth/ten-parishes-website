@@ -23,7 +23,7 @@ if ($req->isPost()) {
         'parking'             => $venueData['parking'] ?: null,
         'refreshments'        => $venueData['refreshments'] ?: null,
         'accessibility'       => $venueData['accessibility'] ?: null,
-        'dogs_allowed'        => $venueData['dogs_allowed'] ?? 0,
+        'dog_policy'          => $venueData['dog_policy'] ?: null,
         'venue_contact_name'  => $venueData['contact_name'] ?: null,
         'venue_contact_phone' => $venueData['contact_phone'] ?: null,
     ]);

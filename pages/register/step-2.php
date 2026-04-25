@@ -9,7 +9,6 @@ $values   = $reg['venue'] ?? [];
 
 if ($req->isPost()) {
     $venueData = $req->params['venue'] ?? [];
-    $venueData['dogs_allowed'] = empty($venueData['dogs_allowed']) ? 0 : 1;
     $reg['venue'] = $venueData;
 
     if ($req->params['action'] === 'back') {
@@ -37,10 +36,7 @@ $locationFieldPrefix = 'venue';
 
 <form method="post" action="/register/step-2">
 
-  <div>
-    <label for="venue_name">Venue or studio name *</label>
-    <input type="text" id="venue_name" name="venue[name]" value="<?= htmlspecialchars($values['name'] ?? '') ?>" required>
-  </div>
+  <?= text_field('Venue or studio name', 'venue[name]', $values['name'] ?? '') ?>
 
   <div>
     <label for="parish_id">Parish</label>
@@ -60,52 +56,26 @@ $locationFieldPrefix = 'venue';
     <?php require __DIR__ . '/_location_picker.php' ?>
   </div>
 
-  <div>
-    <label for="address">Address</label>
-    <textarea id="address" name="venue[address]" rows="3"><?= htmlspecialchars($values['address'] ?? '') ?></textarea>
-  </div>
+  <?= text_field('Address', 'venue[address]', $values['address'] ?? '') ?>
+  <?= text_field('What3Words', 'venue[what_3_words]', $values['what_3_words'] ?? '', ['placeholder' => 'e.g. ///word.word.word']) ?>
+  <?= text_field('Directions', 'venue[directions]', $values['directions'] ?? '') ?>
+  <?= text_field('Parking', 'venue[parking]', $values['parking'] ?? '') ?>
+
+  <?= text_field('Refreshments', 'venue[refreshments]', $values['refreshments'] ?? '') ?>
+  <?= text_field('Accessibility', 'venue[accessibility]', $values['accessibility'] ?? '') ?>
 
   <div>
-    <label for="what_3_words">What3Words</label>
-    <input type="text" id="what_3_words" name="venue[what_3_words]" value="<?= htmlspecialchars($values['what_3_words'] ?? '') ?>" placeholder="e.g. ///word.word.word">
+    <label for="dog_policy">Dog policy</label>
+    <select id="dog_policy" name="venue[dog_policy]">
+      <option value="">— Not specified —</option>
+      <?php foreach (FormOptions::DOG_POLICIES as $opt): ?>
+      <option value="<?= $opt ?>" <?= ($values['dog_policy'] ?? '') === $opt ? 'selected' : '' ?>><?= $opt ?></option>
+      <?php endforeach ?>
+    </select>
   </div>
 
-  <div>
-    <label for="directions">Directions</label>
-    <textarea id="directions" name="venue[directions]" rows="3"><?= htmlspecialchars($values['directions'] ?? '') ?></textarea>
-  </div>
-
-  <div>
-    <label for="parking">Parking</label>
-    <input type="text" id="parking" name="venue[parking]" value="<?= htmlspecialchars($values['parking'] ?? '') ?>">
-  </div>
-
-  <div>
-    <label for="refreshments">Refreshments</label>
-    <input type="text" id="refreshments" name="venue[refreshments]" value="<?= htmlspecialchars($values['refreshments'] ?? '') ?>">
-  </div>
-
-  <div>
-    <label for="accessibility">Accessibility</label>
-    <input type="text" id="accessibility" name="venue[accessibility]" value="<?= htmlspecialchars($values['accessibility'] ?? '') ?>">
-  </div>
-
-  <div>
-    <label>
-      <input type="checkbox" name="venue[dogs_allowed]" value="1" <?= ($values['dogs_allowed'] ?? 0) ? 'checked' : '' ?>>
-      Dogs welcome
-    </label>
-  </div>
-
-  <div>
-    <label for="venue_contact_name">Venue contact name</label>
-    <input type="text" id="venue_contact_name" name="venue[contact_name]" value="<?= htmlspecialchars($values['contact_name'] ?? '') ?>">
-  </div>
-
-  <div>
-    <label for="venue_contact_phone">Venue contact phone</label>
-    <input type="tel" id="venue_contact_phone" name="venue[contact_phone]" value="<?= htmlspecialchars($values['contact_phone'] ?? '') ?>">
-  </div>
+  <?= text_field('Venue contact name', 'venue[contact_name]', $values['contact_name'] ?? '') ?>
+  <?= text_field('Venue contact phone', 'venue[contact_phone]', $values['contact_phone'] ?? '', ['type' => 'tel']) ?>
 
   <div class="form-actions">
     <button class="secondary" type="submit" name="action" value="back" formnovalidate>&larr; Back</button>
