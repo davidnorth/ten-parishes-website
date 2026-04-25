@@ -24,6 +24,7 @@
         '/admin/artists'  => 'Artists',
         '/admin/venues'   => 'Venues',
         '/admin/parishes' => 'Parishes',
+        '/admin/gallery'  => 'Gallery',
       ];
       foreach ($navLinks as $href => $label):
         $active = $href === '/admin'

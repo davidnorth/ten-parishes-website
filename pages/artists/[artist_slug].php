@@ -35,11 +35,14 @@ $otherArtists = $artist['venue_id'] ? $db->query("
     ORDER BY a2.name
 ")->fetchAll(PDO::FETCH_ASSOC) : [];
 ?>
-<h1><?= htmlspecialchars($artist['name']) ?></h1>
-<?php if ($artist['body_html']): ?>
-<?= $artist['body_html'] ?>
-<?php endif ?>
-<?php if ($eventDates): ?>
+
+<div class="page-grid">
+
+<section aria-labelledby="name-heading">
+  <h1 id="name-heading"><?= htmlspecialchars($artist['name']) ?></h1>
+  <?= $artist['body_html'] ?>
+</section>
+
 <section aria-labelledby="dates-heading">
   <h2 id="dates-heading">Dates</h2>
   <ul>
@@ -56,22 +59,14 @@ $otherArtists = $artist['venue_id'] ? $db->query("
     <?php endforeach ?>
   </ul>
 </section>
-<?php endif ?>
-<?php if ($images): ?>
+
 <section aria-labelledby="gallery-heading">
   <h2 id="gallery-heading">Featured Artworks</h2>
-  <div class="gallery-grid">
-    <?php foreach ($images as $img): ?>
-    <figure>
-      <img src="<?= cloudinary_url($img['image_id'], 'w_400,h_400,c_fill') ?>" alt="<?= htmlspecialchars($img['name'] ?? '') ?>" loading="lazy">
-      <?php if ($img['name']): ?><figcaption><?= htmlspecialchars($img['name']) ?></figcaption><?php endif ?>
-    </figure>
-    <?php endforeach ?>
-  </div>
+  <?php require __DIR__ . '/../_gallery.php' ?>
 </section>
-<?php endif ?>
+
 <section id="venue" aria-labelledby="venue-heading">
-  <h2 id="venue-heading"><a href="#venue"><?= htmlspecialchars($venue['name']) ?></a></h2>
+  <h2 id="venue-heading">Venue: <?= htmlspecialchars($venue['name']) ?></h2>
   <dl>
     <?php if ($venue['address']): ?>
     <div>
@@ -118,11 +113,12 @@ $otherArtists = $artist['venue_id'] ? $db->query("
     <?php endif ?>
   </dl>
 </section>
-<?php if ($otherArtists): ?>
-<h2>Other artists in this parish</h2>
+
+<section aria-labelled-by="other-artists-heading">
+<h2 id="other-artists-heading">Other artists in this parish</h2>
 <ul>
   <?php foreach ($otherArtists as $other): ?>
   <li><a href="/artists/<?= htmlspecialchars($other['slug']) ?>"><?= htmlspecialchars($other['name']) ?></a></li>
   <?php endforeach ?>
 </ul>
-<?php endif ?>
+</section>

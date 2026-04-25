@@ -204,8 +204,8 @@ function addImage() {
     row.innerHTML = `
         <input type="file" name="new_image_file[${idx}]" accept="image/*"
                class="text-sm text-gray-500 file:mr-3 file:border-0 file:rounded-md file:bg-blue-600 file:text-white file:px-3 file:py-1.5 file:text-sm file:cursor-pointer flex-1">
-        <input type="text" name="new_image_name[${idx}]" placeholder="Caption"
-               class="border border-gray-300 rounded-md px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-40">
+        <input type="text" size="30" name="new_image_name[${idx}]" placeholder="Caption"
+               class="border border-gray-300 rounded-md px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
         <button type="button" onclick="this.closest('.new-image-row').remove()"
                 class="text-sm text-red-600 hover:text-red-800 flex-shrink-0">Remove</button>
     `;

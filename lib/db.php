@@ -112,8 +112,21 @@ function init_schema(Medoo $db): void {
         artist_id INTEGER NOT NULL,
         main      INTEGER NOT NULL DEFAULT 0,
         name      TEXT,
-        image_id  TEXT NOT NULL
+        image_id  TEXT NOT NULL,
+        featured  INTEGER NOT NULL DEFAULT 0
     )");
+
+    $imageColumns = array_column(
+        $db->query("PRAGMA table_info(images)")->fetchAll(PDO::FETCH_ASSOC),
+        'name'
+    );
+    foreach ([
+        'featured' => 'INTEGER NOT NULL DEFAULT 0',
+    ] as $col => $def) {
+        if (!in_array($col, $imageColumns)) {
+            $db->query("ALTER TABLE images ADD COLUMN $col $def");
+        }
+    }
 
     $db->query("CREATE TABLE IF NOT EXISTS event_dates (
         id        INTEGER PRIMARY KEY AUTOINCREMENT,
