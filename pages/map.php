@@ -6,7 +6,10 @@ $venues = $db->select('venues', ['id', 'name', 'latitude', 'longitude'], [
     'ORDER'        => 'name',
 ]);
 
-$allArtists = $db->select('artists', ['venue_id', 'name', 'slug'], ['approved' => 1]);
+$allArtists = $db->select('artists', ['venue_id', 'name', 'slug'], [
+    'approved'      => 1,
+    'venue_id[!]'   => null,
+]);
 
 $artistsByVenue = [];
 foreach ($allArtists as $a) {
@@ -29,9 +32,15 @@ foreach ($venues as $v) {
 
 <h1>Artists</h1>
 
-<nav>
-  <a href="/artists">List view</a>
-  <a href="/map">Map view</a>
+<nav class="icon-tabs">
+  <a href="/artists">
+    <iconify-icon icon="ph:list" class="icon-medium" aria-hidden="true"> </iconify-icon>
+    <span>List view</span>
+  </a>
+  <a href="/map" class="current">
+    <iconify-icon icon="ph:map-pin" class="icon-medium" aria-hidden="true" /></iconify-icon>
+    <span>Map view</span>
+  </a>
 </nav>
 
 

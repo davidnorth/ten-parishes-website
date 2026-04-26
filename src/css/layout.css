@@ -278,3 +278,29 @@ section#venue {
 
 
 
+.leaflet-popup-content-wrapper {
+  ul {
+    padding: 0;
+  }
+  li {
+    list-style: none;
+  }
+}
+
+
+.icon-tabs {
+  display: flex;
+  justify-content: center;
+  margin-bottom: var(--space-lg);
+  a {
+    text-decoration: none;
+    font-weight: var(--weight-semi-bold);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--space-sm) var(--space-md);
+    &.current {
+      background: #eee;
+    }
+  }
+}

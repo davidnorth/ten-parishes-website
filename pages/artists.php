@@ -17,9 +17,15 @@ $artists = $db->query("
 <h1>Artists</h1>
 
 
-<nav>
-  <a href="/artists">List view</a>
-  <a href="/map">Map view</a>
+<nav class="icon-tabs">
+  <a href="/artists" class="current">
+    <iconify-icon icon="ph:list" class="icon-medium" aria-hidden="true"> </iconify-icon>
+    <span>List view</span>
+  </a>
+  <a href="/map">
+    <iconify-icon icon="ph:map-pin" class="icon-medium" aria-hidden="true" /></iconify-icon>
+    <span>Map view</span>
+  </a>
 </nav>
 
 <div class="image-grid">
