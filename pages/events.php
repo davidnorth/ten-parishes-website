@@ -13,7 +13,7 @@ $artists = $db->query("
 <article>
   <?php if ($artist['image_id']): ?>
   <a href="/artists/<?= htmlspecialchars($artist['slug']) ?>">
-    <img src="<?= cloudinary_url($artist['image_id'], 'w_200,h_200,c_fill') ?>" alt="<?= htmlspecialchars($artist['name']) ?>">
+    <?= cloudinary_image($artist['image_id'], 200, 200, $artist['name']) ?>
   </a>
   <?php endif ?>
   <a href="/artists/<?= htmlspecialchars($artist['slug']) ?>"><?= htmlspecialchars($artist['name']) ?></a>

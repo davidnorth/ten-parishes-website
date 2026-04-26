@@ -13,7 +13,7 @@ $parishes = $db->select('parishes', '*', ['ORDER' => 'name']);
   <article class="card">
     <?php if ($parish['picture_id']): ?>
     <a href="/parishes/<?= htmlspecialchars($parish['slug']) ?>">
-      <img src="<?= cloudinary_url($parish['picture_id'], 'w_400,h_300,c_fill') ?>" alt="<?= htmlspecialchars($parish['name']) ?>">
+      <?= cloudinary_image($parish['picture_id'], 400, 300, $parish['name']) ?>
     </a>
     <?php endif ?>
     <a href="/parishes/<?= htmlspecialchars($parish['slug']) ?>"><?= htmlspecialchars($parish['name']) ?></a>

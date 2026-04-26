@@ -41,9 +41,14 @@ if (!empty($venue['id']) && empty($venue['name'])) {
 
 
 <div class="page-grid">
-  <section>
+  <section class="register-wizard">
 
-<h1>Register: Step 4 of 4 — Images</h1>
+    <div>
+      <?php $current = 4; require __DIR__ . '/_progress.php'; ?>
+    </div>
+    <div>
+
+<h1>Images</h1>
 
 <p>Upload images of your work here. Please ensure the image size is at least 800&times;600px and the file size is less than 5MB. This step is optional &mdash; you can add or change images later.</p>
 
@@ -58,12 +63,13 @@ if (!empty($venue['id']) && empty($venue['name'])) {
   <div id="images"></div>
   <button type="button" onclick="addImage()">+ Add image</button>
 
-  <div>
-    <button type="submit" name="action" value="back">&larr; Back</button>
-    <button type="submit" name="action" value="next">Submit registration</button>
+  <div class="form-actions">
+    <button class="secondary" type="submit" name="action" value="back">&larr; Back</button>
+    <button class="primary" type="submit" name="action" value="next">Submit registration</button>
   </div>
 </form>
 
+    </div>
   </section>
 </div>
 

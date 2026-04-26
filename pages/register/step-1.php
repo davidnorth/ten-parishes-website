@@ -64,9 +64,21 @@ if ($req->isPost()) {
 ?>
 
 <div class="page-grid">
-  <section>
+  <section class="register-wizard">
 
-<h1>Register: Step 1 of 4 — Artist Details</h1>
+
+<div>
+
+<?php $current = 1; require __DIR__ . '/_progress.php'; ?>
+
+</div>
+<div>
+
+
+
+<h1>Artist Details</h1>
+
+
 
 <?php if ($errors): ?>
 <p role="alert"><?= implode('<br>', array_map('htmlspecialchars', $errors)) ?></p>
@@ -75,7 +87,6 @@ if ($req->isPost()) {
 <form method="post" action="/register/step-1" enctype="multipart/form-data">
   <input type="text" name="website" value="" style="position:absolute;left:-9999px;top:-9999px;opacity:0" tabindex="-1" autocomplete="off" aria-hidden="true">
 
-  <p>Please enter your details as an artist. Fields marked * are required.</p>
 
   <?= text_field('Name *', 'artist[name]', $values['name'] ?? '', ['required' => true]) ?>
   <div class="field-pair">
@@ -99,6 +110,7 @@ if ($req->isPost()) {
   </div>
 </form>
 
+    </div>
   </section>
 </div>
 

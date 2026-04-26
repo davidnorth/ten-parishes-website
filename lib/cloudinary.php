@@ -4,6 +4,11 @@ function cloudinary_url(string $publicId, string $transform = 'w_800,c_limit'): 
     return 'https://res.cloudinary.com/' . CLOUDINARY_CLOUD_NAME . '/image/upload/' . $transform . '/' . $publicId;
 }
 
+function cloudinary_image(string $publicId, int $width, int $height, string $alt = ''): string {
+    $url = cloudinary_url($publicId, "w_{$width},h_{$height},c_fill");
+    return '<img src="' . htmlspecialchars($url) . '" alt="' . htmlspecialchars($alt) . '" width="' . $width . '" height="' . $height . '">';
+}
+
 function cloudinary_upload(string $tmpPath, string $fileName): string {
     $timestamp = time();
     $params = ['timestamp' => $timestamp];

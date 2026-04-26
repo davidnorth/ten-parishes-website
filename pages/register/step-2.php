@@ -70,18 +70,24 @@ $startInCreateMode = isset($reg['venue']) && !isset($reg['venue']['id']) && !emp
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <div class="page-grid">
-  <section>
+  <section class="register-wizard">
 
-    <h1>Register: Step 2 of 4 — Venue</h1>
-
-    <div id="venue-picker-section" style="<?= $startInCreateMode ? 'display:none' : '' ?>">
-      <?php require __DIR__ . '/_venue_picker.php' ?>
+    <div>
+      <?php $current = 2; require __DIR__ . '/_progress.php'; ?>
     </div>
+    <div>
 
-    <div id="venue-create-section" style="<?= $startInCreateMode ? '' : 'display:none' ?>">
-      <h2>Create a new venue</h2>
-      <?php require __DIR__ . '/_venue_form.php' ?>
+      <h1>Venue</h1>
+
+      <div id="venue-picker-section" style="<?= $startInCreateMode ? 'display:none' : '' ?>">
+        <?php require __DIR__ . '/_venue_picker.php' ?>
+      </div>
+
+      <div id="venue-create-section" style="<?= $startInCreateMode ? '' : 'display:none' ?>">
+        <h2>Create a new venue</h2>
+        <?php require __DIR__ . '/_venue_form.php' ?>
+      </div>
+
     </div>
-
   </section>
 </div>

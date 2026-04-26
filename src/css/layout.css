@@ -149,7 +149,7 @@ form {
     text-box-trim: trim-both;
     text-box-edge: cap alphabetic;
   }
-  input:not([type='checkbox'],[type='radio']), textarea, select {
+  input:not([type='checkbox'],[type='radio'],[type='file']), textarea, select {
     width: 100%;
     padding: var(--space-sm);
     border: 1px solid #ccc;
@@ -275,3 +275,6 @@ section#venue {
   display: flex;
   gap: var(--space-xs);
 }
+
+
+

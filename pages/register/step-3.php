@@ -36,15 +36,19 @@ $existingCount = count($eventDates);
 
 
 <div class="page-grid">
-  <section>
+  <section class="register-wizard">
 
-<h1>Register: Step 3 of 4 — Event Dates</h1>
+    <div>
+      <?php $current = 3; require __DIR__ . '/_progress.php'; ?>
+    </div>
+    <div>
+
+<h1>Event Dates</h1>
 
 <p>Please add the dates your event will be open to the public. This step is optional &mdash; you can come back and add them later.</p>
 
 <form method="post" action="/register/step-3">
 
-  <fieldset>
     <legend>Dates</legend>
     <div id="event-dates">
       <?php foreach ($eventDates as $i => $ed): ?>
@@ -58,14 +62,14 @@ $existingCount = count($eventDates);
       <?php endforeach ?>
     </div>
     <button type="button" onclick="addEventDate()">+ Add date</button>
-  </fieldset>
 
-  <div>
-    <button type="submit" name="action" value="back">&larr; Back</button>
-    <button type="submit" name="action" value="next">Next &rarr;</button>
+  <div class="form-actions">
+    <button class="secondary" type="submit" name="action" value="back">&larr; Back</button>
+    <button class="primary" type="submit" name="action" value="next">Next &rarr;</button>
   </div>
 </form>
 
+    </div>
   </section>
 </div>
 

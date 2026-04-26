@@ -1,0 +1,133 @@
+/* Register wizard layout */
+
+.page-register {
+
+  background: #eee;
+  padding: var(--space-xl) 0;
+
+  section {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    padding: var(--space-xl);
+  }
+}
+
+
+
+
+#venue-picker-form {
+  input[type='text'] { max-width: 200px; }
+}
+
+#venue-results {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.venue-result {
+  padding: var(--space-md);
+  display: flex;
+  align-items: center;
+  > div {
+    flex-grow: 1;
+  }
+}
+.venue-result:not(:last-child) {
+  border-bottom: 1px solid #ccc;
+}
+
+
+
+.wizard-progress {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  
+
+  li {
+    list-style: none;
+    display: flex;
+    gap: var(--space-sm);
+    align-items: center;
+    position: relative;
+    padding: 10px 0;
+
+    &:not(:first-child) {
+      &:before {
+        content: "";
+        width: 1;
+        height: 26px;
+        border-left: 2px solid #999;
+        position: absolute;
+        left: 14px;
+        top: -13px;
+        z-index: 1;
+      }
+    }
+
+    &.complete, &.current {
+      &:not(:first-child) {
+        &:before {
+          border-color: black;
+        }
+      }
+    }
+
+    > span:first-child span {
+      z-index: 2;
+      border: 2px solid #999;
+      background: white;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    > span:first-child {
+      width: 30px;
+      height: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    &.complete, &.current {
+      svg {
+        /* display: block; */
+      }
+    }
+    &.complete {
+      > span:first-child span {
+        border-color: black;
+        color: white;
+        background: black;
+      }
+    }
+
+    &.current {
+      > span:first-child span {
+        width: 30px;
+        height: 30px;
+        border-color: black;
+      }
+    }
+
+  }
+}
+
+.register-wizard {
+  display: flex;
+  gap: var(--space-xl);
+  > div:first-child {
+    min-width: 200px;
+    flex-basis: 200px;
+    padding: var(--space-xl);
+  }
+  > div:last-child {
+    flex-grow: 1;
+  }
+}

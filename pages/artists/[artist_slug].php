@@ -85,7 +85,7 @@ $otherArtists = $artist['venue_id'] ? $db->query("
   </div>
   <div>
     <?php if (!empty($artist['picture_id'])): ?>
-      <img src="<?= cloudinary_url($artist['picture_id'], 'w_400,h_250,c_fill') ?>" alt="<?= htmlspecialchars($artist['name']) ?>" width="400" height="250">
+      <?= cloudinary_image($artist['picture_id'], 400, 250, $artist['name']) ?>
     <?php endif ?>
   </div>
 </section>
