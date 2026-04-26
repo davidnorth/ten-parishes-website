@@ -1,5 +1,5 @@
 <?php
-if (empty($reg['artist'])) {
+if (empty($reg['artist_id'])) {
     return redirect('/register/step-1');
 }
 
@@ -7,10 +7,21 @@ $pageTitle = 'Register: Event Dates';
 $eventDates = $reg['event_dates'] ?? [];
 
 if ($req->isPost()) {
-    $reg['event_dates'] = array_values(array_filter(
+    $eventDates = array_values(array_filter(
         $req->params['event_dates'] ?? [],
         fn($ed) => !empty($ed['date'])
     ));
+    $reg['event_dates'] = $eventDates;
+
+    $db->delete('event_dates', ['artist_id' => $reg['artist_id']]);
+    foreach ($eventDates as $ed) {
+        $db->insert('event_dates', [
+            'artist_id' => $reg['artist_id'],
+            'date'      => $ed['date'],
+            'from_time' => $ed['from_time'] ?: null,
+            'to_time'   => $ed['to_time'] ?: null,
+        ]);
+    }
 
     if ($req->params['action'] === 'back') {
         return redirect('/register/step-2');
@@ -29,7 +40,7 @@ $existingCount = count($eventDates);
 
 <h1>Register: Step 3 of 4 — Event Dates</h1>
 
-<p>Please add the dates your event will be open to the public.</p>
+<p>Please add the dates your event will be open to the public. This step is optional &mdash; you can come back and add them later.</p>
 
 <form method="post" action="/register/step-3">
 

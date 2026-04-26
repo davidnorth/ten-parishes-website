@@ -9,8 +9,9 @@ if ($req->isPost()) {
         return redirect('/register/complete');
     }
 
+    $isFirstSubmission = empty($reg['artist_id']);
     $lastSubmit = $reg['submitted_at'] ?? 0;
-    if (!getenv('TEST_MODE') && $lastSubmit && (time() - $lastSubmit) < 60) {
+    if ($isFirstSubmission && !getenv('TEST_MODE') && $lastSubmit && (time() - $lastSubmit) < 60) {
         $errors[] = 'Please wait a moment before submitting again.';
     }
 
@@ -34,6 +35,26 @@ if ($req->isPost()) {
 
         $reg['artist'] = $artist + ['picture_id' => $pictureId];
         $reg['submitted_at'] = time();
+
+        $row = [
+            'name'       => $artist['name'],
+            'email'      => $artist['email'] ?: null,
+            'phone'      => $artist['phone'] ?: null,
+            'body_html'  => $artist['body_html'] ?: null,
+            'picture_id' => $pictureId,
+        ];
+
+        if ($isFirstSubmission) {
+            $db->insert('artists', $row + [
+                'type'     => 'exhibition',
+                'slug'     => unique_slug($db, 'artists', $artist['name']),
+                'approved' => 0,
+            ]);
+            $reg['artist_id'] = $db->id();
+        } else {
+            $row['slug'] = unique_slug($db, 'artists', $artist['name'], $reg['artist_id']);
+            $db->update('artists', $row, ['id' => $reg['artist_id']]);
+        }
 
         return redirect('/register/step-2');
     }

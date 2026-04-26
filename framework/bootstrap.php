@@ -11,6 +11,7 @@ require_once __DIR__ . '/../lib/db.php';
 require_once __DIR__ . '/../lib/slug.php';
 require_once __DIR__ . '/../lib/cloudinary.php';
 require_once __DIR__ . '/../lib/form_helpers.php';
+require_once __DIR__ . '/../lib/geocode.php';
 require_once __DIR__ . '/Request.php';
 require_once __DIR__ . '/Router.php';
 require_once __DIR__ . '/helpers.php';

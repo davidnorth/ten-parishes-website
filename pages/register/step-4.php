@@ -1,5 +1,5 @@
 <?php
-if (empty($reg['artist'])) {
+if (empty($reg['artist_id'])) {
     return redirect('/register/step-1');
 }
 
@@ -9,66 +9,20 @@ if ($req->isPost()) {
         return redirect('/register/step-3');
     }
 
-    // Create venue
-    $venueData = $reg['venue'] ?? [];
-    $db->insert('venues', [
-        'name'                => $venueData['name'],
-        'slug'                => unique_slug($db, 'venues', $venueData['name']),
-        'parish_id'           => $venueData['parish_id'] ?: null,
-        'latitude'            => $venueData['latitude'] ?: null,
-        'longitude'           => $venueData['longitude'] ?: null,
-        'address'             => $venueData['address'] ?: null,
-        'what_3_words'        => $venueData['what_3_words'] ?: null,
-        'directions'          => $venueData['directions'] ?: null,
-        'parking'             => $venueData['parking'] ?: null,
-        'refreshments'        => $venueData['refreshments'] ?: null,
-        'accessibility'       => $venueData['accessibility'] ?: null,
-        'dog_policy'          => $venueData['dog_policy'] ?: null,
-        'venue_contact_name'  => $venueData['contact_name'] ?: null,
-        'venue_contact_phone' => $venueData['contact_phone'] ?: null,
-    ]);
-    $venueId = $db->id();
+    $artistId = $reg['artist_id'];
 
-    // Create artist
-    $artistData = $reg['artist'];
-    $db->insert('artists', [
-        'venue_id'   => $venueId,
-        'type'       => 'exhibition',
-        'name'       => $artistData['name'],
-        'slug'       => unique_slug($db, 'artists', $artistData['name']),
-        'body_html'  => $artistData['body_html'] ?: null,
-        'email'      => $artistData['email'] ?: null,
-        'phone'      => $artistData['phone'] ?: null,
-        'picture_id' => $artistData['picture_id'] ?: null,
-        'approved'   => 0,
-    ]);
-    $artistId = $db->id();
-
-    // Insert event dates
-    foreach ($reg['event_dates'] ?? [] as $ed) {
-        if (!empty($ed['date'])) {
-            $db->insert('event_dates', [
-                'artist_id' => $artistId,
-                'date'      => $ed['date'],
-                'from_time' => $ed['from_time'] ?: null,
-                'to_time'   => $ed['to_time'] ?: null,
-            ]);
-        }
-    }
-
-    // Upload images
     if (!empty($_FILES['images']['tmp_name'])) {
-        $firstImage = true;
+        $hasMain = $db->has('images', ['artist_id' => $artistId, 'main' => 1]);
         foreach ($_FILES['images']['tmp_name'] as $idx => $tmpPath) {
             if (!empty($tmpPath) && is_uploaded_file($tmpPath)) {
                 $publicId = cloudinary_upload($tmpPath, $_FILES['images']['name'][$idx]);
                 $db->insert('images', [
                     'artist_id' => $artistId,
-                    'main'      => $firstImage ? 1 : 0,
+                    'main'      => $hasMain ? 0 : 1,
                     'name'      => $req->params['image_name'][$idx] ?? null,
                     'image_id'  => $publicId,
                 ]);
-                $firstImage = false;
+                $hasMain = true;
             }
         }
     }
@@ -79,6 +33,9 @@ if ($req->isPost()) {
 
 $artist = $reg['artist'] ?? [];
 $venue  = $reg['venue'] ?? [];
+if (!empty($venue['id']) && empty($venue['name'])) {
+    $venue['name'] = $db->get('venues', 'name', ['id' => $venue['id']]);
+}
 ?>
 
 
@@ -88,7 +45,7 @@ $venue  = $reg['venue'] ?? [];
 
 <h1>Register: Step 4 of 4 — Images</h1>
 
-<p>Upload images of your work here. Please ensure the image size is at least 800&times;600px and the file size is less than 5MB. You can add more images later.</p>
+<p>Upload images of your work here. Please ensure the image size is at least 800&times;600px and the file size is less than 5MB. This step is optional &mdash; you can add or change images later.</p>
 
 <?php if (!empty($artist['name'])): ?>
 <p><strong><?= htmlspecialchars($artist['name']) ?></strong>
