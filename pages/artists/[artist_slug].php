@@ -68,21 +68,6 @@ $otherArtists = $artist['venue_id'] ? $db->query("
   <?php render_partial(__DIR__ . '/../_gallery.php', ['images' => $images]) ?>
 </section>
 
-<section>
-  <ul class="event-dates">
-    <?php foreach ($festivalDays as $day): ?>
-    <li>
-      <div><?= $day['label'] ?></div>
-      <?php if($day['times']): ?>
-        <div class="times"><?= htmlspecialchars($day['times']) ?></div>
-      <?php else: ?>
-        <div>&nbsp;</div>
-      <?php endif ?>
-    </li>
-    <?php endforeach ?>
-  </ul>
-</section>
-
 <section id="venue" aria-labelledby="venue-heading">
   <div>
     <?php if ($venue['latitude'] && $venue['longitude']): ?>
@@ -99,6 +84,21 @@ $otherArtists = $artist['venue_id'] ? $db->query("
       <p>Directions: <?= nl2br(htmlspecialchars($venue['directions'])) ?></p>
     <?php endif ?>
   </div>
+</section>
+
+<section>
+  <ul class="event-dates">
+    <?php foreach ($festivalDays as $day): ?>
+    <li>
+      <div><?= $day['label'] ?></div>
+      <?php if($day['times']): ?>
+        <div class="times"><?= htmlspecialchars($day['times']) ?></div>
+      <?php else: ?>
+        <div>&nbsp;</div>
+      <?php endif ?>
+    </li>
+    <?php endforeach ?>
+  </ul>
 </section>
 
 <section>

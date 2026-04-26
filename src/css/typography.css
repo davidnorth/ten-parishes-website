@@ -1,0 +1,41 @@
+h1 {
+  font-weight: var(--weight-light);
+  font-size: var(--text-3xl);
+  letter-spacing: -1.5px;
+  word-spacing: 4px;
+}
+
+h2 { font-size: var(--text-2xl); }
+h3 { font-size: var(--text-xl); }
+h4 { font-size: var(--text-lg); }
+
+h1, h2, h3, h4 {
+  margin-bottom: var(--space-md);
+}
+
+p {
+  margin-bottom: var(--space-md);
+}
+
+a {
+  color: var(--text-color);
+}
+
+
+/* Text size utilities */
+.text-xs   { font-size: var(--text-xs); }
+.text-sm   { font-size: var(--text-sm); }
+.text-base { font-size: var(--text-base); }
+.text-md   { font-size: var(--text-md); }
+.text-lg   { font-size: var(--text-lg); }
+.text-xl   { font-size: var(--text-xl); }
+.text-2xl  { font-size: var(--text-2xl); }
+.text-3xl  { font-size: var(--text-3xl); }
+.text-4xl  { font-size: var(--text-4xl); }
+.text-5xl  { font-size: var(--text-5xl); }
+
+/* Font weight utilities */
+.weight-light     { font-weight: var(--weight-light); }
+.weight-regular   { font-weight: var(--weight-regular); }
+.weight-semi-bold { font-weight: var(--weight-semi-bold); }
+.weight-bold      { font-weight: var(--weight-bold); }

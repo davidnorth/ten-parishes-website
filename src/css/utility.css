@@ -1,0 +1,53 @@
+/* ── Spacing utilities ── */
+
+.p-xs   { padding: var(--space-xs); }
+.p-sm   { padding: var(--space-sm); }
+.p-base { padding: var(--space-base); }
+.p-md   { padding: var(--space-md); }
+.p-lg   { padding: var(--space-lg); }
+.p-xl   { padding: var(--space-xl); }
+.p-2xl  { padding: var(--space-2xl); }
+
+.m-xs   { margin: var(--space-xs); }
+.m-sm   { margin: var(--space-sm); }
+.m-base { margin: var(--space-base); }
+.m-md   { margin: var(--space-md); }
+.m-lg   { margin: var(--space-lg); }
+.m-xl   { margin: var(--space-xl); }
+.m-2xl  { margin: var(--space-2xl); }
+
+.gap-xs   { gap: var(--space-xs); }
+.gap-sm   { gap: var(--space-sm); }
+.gap-base { gap: var(--space-base); }
+.gap-md   { gap: var(--space-md); }
+.gap-lg   { gap: var(--space-lg); }
+.gap-xl   { gap: var(--space-xl); }
+.gap-2xl  { gap: var(--space-2xl); }
+
+
+/* ── Colour utilities ── */
+
+.bg-primary       { background: var(--primary-color); }
+.bg-primary-light { background: var(--primary-color-lighter); }
+.bg-secondary     { background: var(--secondary-color); }
+.bg-tertiary      { background: var(--tertiary-color); }
+
+
+
+/* ── Generic utilities ── */
+
+.flex {
+  display: flex;
+  gap: var(--space-md);
+  &.center {
+    align-items: center;
+    justify-content: center;
+  }
+  &.top {
+    align-items: flex-start;
+  }
+}
+
+.readable-max-width {
+  max-width: 600px;
+}

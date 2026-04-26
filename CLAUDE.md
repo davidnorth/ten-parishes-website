@@ -1,5 +1,9 @@
 # Ten Parishes Website
 
+## Working conventions
+
+- Never commit without being explicitly asked to do so.
+
 A festival website for visitors to explore events, with an admin system for managing artists, venues, parishes and event dates. Artists register via a public multi-step form; submissions require admin approval before going live.
 
 ## Technologies

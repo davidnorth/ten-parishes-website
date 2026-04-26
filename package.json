@@ -1,0 +1,11 @@
+{
+  "name": "ten-parishes",
+  "private": true,
+  "scripts": {
+    "css:build": "node scripts/build-css.js --minify",
+    "css:watch": "node scripts/build-css.js --watch"
+  },
+  "devDependencies": {
+    "lightningcss": "^1.32.0"
+  }
+}

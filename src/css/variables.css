@@ -1,0 +1,42 @@
+:root {
+  /* Text scale */
+  --text-xs:   12px;
+  --text-sm:   14px;
+  --text-base: 16px;
+  --text-md:   18px;
+  --text-lg:   20px;
+  --text-xl:   24px;
+  --text-2xl:  30px;
+  --text-3xl:  36px;
+  --text-4xl:  48px;
+  --text-5xl:  60px;
+
+  /* Font weights */
+  --weight-light:     300;
+  --weight-regular:   400;
+  --weight-semi-bold: 500;
+  --weight-bold:      700;
+
+  /* Spacing scale */
+  --space-xs:   4px;
+  --space-sm:   8px;
+  --space-base: 12px;
+  --space-md:   16px;
+  --space-lg:   24px;
+  --space-xl:   32px;
+  --space-2xl:  48px;
+
+  /* Base Colors */
+  --text-color:       #1a1a1a;
+  --text-color-light: #eee;
+  --background-color: #ffffff;
+  --primary-color:    #EE7930;
+  --secondary-color:  #387FBA;
+  --tertiary-color:   #377C57;
+
+  /* Derived Colours */
+  --text-color-lighter:      oklch(from var(--text-color)      calc(l + 0.3) c h);
+  --primary-color-lighter:   oklch(from var(--primary-color)   calc(l + 0.2) c h);
+  --primary-color-lightest:  oklch(from var(--primary-color)   calc(l + 0.4) c h);
+  --secondary-color-lighter: oklch(from var(--secondary-color) calc(l + 0.2) c h);
+}
