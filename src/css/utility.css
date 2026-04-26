@@ -27,6 +27,7 @@
 
 /* ── Colour utilities ── */
 
+.color-primary { color: var(--primary-color); }
 .bg-primary       { background: var(--primary-color); }
 .bg-primary-light { background: var(--primary-color-lighter); }
 .bg-secondary     { background: var(--secondary-color); }
@@ -46,6 +47,14 @@
   &.top {
     align-items: flex-start;
   }
+}
+
+.flex-center {
+  align-items: center;
+}
+
+.flex-end {
+  align-items: flex-end;
 }
 
 .readable-max-width {

@@ -10,8 +10,7 @@ body {
 }
 
 header {
-  padding: var(--space-md) var(--space-xl);
-  border-bottom: 1px solid #e0e0e0;
+  padding: var(--space-xl) var(--space-xl);
   display: flex;
   align-items: center;
   gap: var(--space-xl);
@@ -24,27 +23,47 @@ header {
 header a { text-decoration: none; color: inherit; }
 
 .site-title {
-  font-size: 1.25rem;
+  font-size: var(--text-xl);
   font-weight: var(--weight-bold);
   white-space: nowrap;
 }
 
-nav { display: flex; gap: 1.25rem; flex-wrap: wrap; }
+nav { 
+  display: flex; 
+  gap: var(--space-lg);
+  flex-wrap: wrap; 
 
-nav a {
-  font-size: 0.9rem;
-  color: #444;
+  a {
+    font-size: var(--text-sm);
+    color: #444;
+  }
+
+  a.active {
+    border-bottom: 4px solid var(--primary-color);
+  }
+
+  a:hover {
+    color: #000; 
+  }
 }
 
-nav a:hover { color: #000; }
-
 footer {
+  display: grid;
+
+  grid-template-columns:
+    [page-start] minmax(30px, 1fr)
+    [content-start] min(100% - 60px, 1024px) [content-end]
+    minmax(30px, 1fr) [page-end];
+
   color: var(--text-color-light);
-  padding: var(--space-md) var(--space-xl);
-  border-top: 1px solid #e0e0e0;
-  font-size: 0.8rem;
-  text-align: center;
-  background: var(--secondary-color);
+  padding: var(--space-xl) var(--space-xl);
+  font-size: var(--text-xs);
+  background: var(--primary-color);
+  margin-top: var(--space-2xl);
+  p {
+    grid-column: content;
+    max-width: 500px;
+  }
 }
 
 
@@ -69,6 +88,9 @@ footer {
     > * {
       grid-column: content;
     }
+  }
+  > .full-bleed-special {
+    grid-column: page;
   }
 }
 
@@ -132,12 +154,12 @@ form {
     padding: var(--space-sm);
     border: 1px solid #ccc;
     border-radius: 4px;
-    font-size: 1rem;
+    font-size: var(--text-base);
     line-height: 1.6;
   }
   button.small {
     padding: var(--space-sm);
-    font-size: 1rem;
+    font-size: var(--text-base);
     line-height: 1.6;
   }
   .form-actions {
@@ -195,11 +217,12 @@ button, a.button {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
+    width: 45px;
+    height: 45px;
     border-radius: 6px;
-    background: var(--primary-color-lightest);
-    color: var(--primary-color);
+    color: var(--text-color);
+    border: 1px solid var(--text-color);
+    font-size: var(--text-xs);
   }
   dd, a {
     color: var(--text-color-lighter);
@@ -235,14 +258,20 @@ button, a.button {
 section#venue {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--space-md);
+  gap: var(--space-xl);
 }
 
 
 /* ── Icons ── */
 
 .icon-medium {
-  font-size: 30px;
+  font-size: var(--text-2xl);
 }
 
 
+
+
+.hero-gallery {
+  display: flex;
+  gap: var(--space-xs);
+}

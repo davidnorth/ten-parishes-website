@@ -1,4 +1,7 @@
 <?php
+
+$nav_current = 'artists';
+
 function ordinal(int $n): string {
     $s = ['th', 'st', 'nd', 'rd'];
     $v = $n % 100;
@@ -56,16 +59,35 @@ $otherArtists = $artist['venue_id'] ? $db->query("
 
 <div class="page-grid">
 
-<section class="full-bleed bg-primary-light" aria-labelledby="name-heading">
-  <h1 id="name-heading"><?= htmlspecialchars($artist['name']) ?></h1>
-  <?php if (!empty($artist['disciplines'])): ?>
-    <p class="weight-bold text-md">Disciplines: <?= htmlspecialchars(implode(', ', array_map('trim', explode(',', $artist['disciplines'])))) ?></p>
-  <?php endif ?>
-  <div class="readable-max-width">
-  <?= $artist['body_html'] ?>
+<section class="full-bleed-special">
+
+  <div class="hero-gallery spotlight-group">
+  <?php foreach ($images as $img): ?>
+  <figure>
+    <a class="spotlight" href="<?= cloudinary_url($img['image_id'], 'w_1600,c_limit') ?>"<?= !empty($img['name']) ? ' data-title="' . htmlspecialchars($img['name']) . '"' : '' ?>>
+      <img src="<?= cloudinary_url($img['image_id'], 'w_600,h_600,c_fill') ?>" alt="<?= htmlspecialchars($img['name'] ?? '') ?>" loading="lazy">
+    </a>
+  </figure>
+  <?php endforeach ?>
   </div>
 
-  <?php render_partial(__DIR__ . '/../_gallery.php', ['images' => $images]) ?>
+</section>
+
+<section aria-labelledby="name-heading" class="flex flex-end">
+  <div>
+    <h1 id="name-heading"><?= htmlspecialchars($artist['name']) ?></h1>
+    <?php if (!empty($artist['disciplines'])): ?>
+      <p class="weight-bold text-md">Disciplines: <?= htmlspecialchars(implode(', ', array_map('trim', explode(',', $artist['disciplines'])))) ?></p>
+    <?php endif ?>
+    <div class="readable-max-width">
+    <?= $artist['body_html'] ?>
+    </div>
+  </div>
+  <div>
+    <?php if (!empty($artist['picture_id'])): ?>
+      <img src="<?= cloudinary_url($artist['picture_id'], 'w_400,h_250,c_fill') ?>" alt="<?= htmlspecialchars($artist['name']) ?>" width="400" height="250">
+    <?php endif ?>
+  </div>
 </section>
 
 <section id="venue" aria-labelledby="venue-heading">
@@ -77,11 +99,20 @@ $otherArtists = $artist['venue_id'] ? $db->query("
     <?php endif ?>
   </div>
   <div>
+    <h2 class="text-lg" id="venue-heading">Location</h2>
     <?php if ($venue['address']): ?>
       <p><?= nl2br(htmlspecialchars($venue['address'])) ?></p>
     <?php endif ?>
+
+    <?php if ($venue['what_3_words']): ?>
+      <?php $w3w = ltrim($venue['what_3_words'], '/'); ?>
+      <p>
+        <a href="https://what3words.com/<?= htmlspecialchars(urlencode($w3w)) ?>">///<?= htmlspecialchars($w3w) ?></a>
+      </p>
+    <?php endif ?>
+
     <?php if ($venue['directions']): ?>
-      <p>Directions: <?= nl2br(htmlspecialchars($venue['directions'])) ?></p>
+      <p><?= nl2br(htmlspecialchars($venue['directions'])) ?></p>
     <?php endif ?>
   </div>
 </section>
@@ -113,13 +144,6 @@ $otherArtists = $artist['venue_id'] ? $db->query("
     <div>
       <dt><iconify-icon icon="ph:wheelchair" class="icon-medium" aria-hidden="true"></iconify-icon></dt>
       <dd><?= nl2br(htmlspecialchars($venue['accessibility'])) ?></dd>
-    </div>
-    <?php endif ?>
-    <?php if ($venue['what_3_words']): ?>
-    <?php $w3w = ltrim($venue['what_3_words'], '/'); ?>
-    <div>
-      <dt><iconify-icon icon="ph:hash" class="icon-medium" aria-hidden="true"></iconify-icon></dt>
-      <dd><a href="https://what3words.com/<?= htmlspecialchars(urlencode($w3w)) ?>">///<?= htmlspecialchars($w3w) ?></a></dd>
     </div>
     <?php endif ?>
     <?php if ($venue['parking']): ?>

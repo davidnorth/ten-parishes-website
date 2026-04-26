@@ -13,12 +13,18 @@
 </head>
 <body>
   <header>
-    <a href="/" class="site-title">Ten Parishes Festival</a>
+    <a href="/" class="site-title">
+Ten Parishes 
+<span class="color-primary">
+Festival
+</span>
+
+  </a>
     <nav>
-      <a href="/parishes">Parishes</a>
-      <a href="/artists">Artists</a>
-      <a href="/events">Events</a>
-      <a href="/about-us">About</a>
+      <a href="/parishes" <?= ($nav_current ?? '') === 'parishes' ? 'class="active"' : '' ?>>Parishes</a>
+      <a href="/artists"  <?= ($nav_current ?? '') === 'artists'  ? 'class="active"' : '' ?>>Artists</a>
+      <a href="/events"   <?= ($nav_current ?? '') === 'events'   ? 'class="active"' : '' ?>>Events</a>
+      <a href="/about-us" <?= ($nav_current ?? '') === 'about'    ? 'class="active"' : '' ?>>About</a>
     </nav>
   </header>
   <main>
@@ -26,6 +32,13 @@
   </main>
   <footer>
     <p>&copy; Ten Parishes Festival</p>
+
+    <p>
+    The 10 Parishes Festival is operated by Wiveliscombe Area Partnership.
+    Registered in England and Wales No. 4351175.
+    Charity No. 1132983			
+    </p>
+
   </footer>
 </body>
 </html>
