@@ -15,7 +15,41 @@
   --weight-regular: 400;
   --weight-semi-bold: 500;
   --weight-bold: 700;
+
+  /* Spacing Scale */
+  --space-xs:   4px;
+  --space-sm:   8px;
+  --space-base: 12px;
+  --space-md:   16px;
+  --space-lg:   24px;
+  --space-xl:   32px;
+  --space-2xl:  48px;
 }
+
+/* Spacing Utility Classes */
+.p-xs   { padding: var(--space-xs); }
+.p-sm   { padding: var(--space-sm); }
+.p-base { padding: var(--space-base); }
+.p-md   { padding: var(--space-md); }
+.p-lg   { padding: var(--space-lg); }
+.p-xl   { padding: var(--space-xl); }
+.p-2xl  { padding: var(--space-2xl); }
+
+.m-xs   { margin: var(--space-xs); }
+.m-sm   { margin: var(--space-sm); }
+.m-base { margin: var(--space-base); }
+.m-md   { margin: var(--space-md); }
+.m-lg   { margin: var(--space-lg); }
+.m-xl   { margin: var(--space-xl); }
+.m-2xl  { margin: var(--space-2xl); }
+
+.gap-xs   { gap: var(--space-xs); }
+.gap-sm   { gap: var(--space-sm); }
+.gap-base { gap: var(--space-base); }
+.gap-md   { gap: var(--space-md); }
+.gap-lg   { gap: var(--space-lg); }
+.gap-xl   { gap: var(--space-xl); }
+.gap-2xl  { gap: var(--space-2xl); }
 
 /* Ad-hoc Utility Classes */
 .text-xs   { font-size: var(--text-xs); }
@@ -33,7 +67,7 @@
 
 .weight-light { font-weight: var(--weight-light) }
 .weight-regular { font-weight: var(--weight-regular) }
-.weight-semi-bold { font-weight: var(--weight-semi-bold) } 
+.weight-semi-bold { font-weight: var(--weight-semi-bold) }
 .weight-bold { font-weight: var(--weight-bold) }
 
 
@@ -71,11 +105,11 @@ h3 { font-size: var(--text-xl) }
 h3 { font-size: var(--text-lg) }
 
 h1, h2, h3, h4 {
-  margin-bottom: 1rem;
+  margin-bottom: var(--space-md);
 }
 
 p {
-  margin-bottom: 1rem;
+  margin-bottom: var(--space-md);
 }
 
 html {
@@ -87,7 +121,7 @@ html {
     --tertiary-color: #377C57;
 
 
-  
+
   --text-color-lighter: oklch(from var(--text-color) calc(l + 0.3) c h);
 
   --primary-color-lighter: oklch(from var(--primary-color) calc(l + 0.2) c h);
@@ -108,11 +142,11 @@ body {
 }
 
 header {
-    padding: 1rem 2rem;
+    padding: var(--space-md) var(--space-xl);
     border-bottom: 1px solid #e0e0e0;
     display: flex;
     align-items: center;
-    gap: 2rem;
+    gap: var(--space-xl);
     flex-wrap: wrap;
     nav {
       margin-left: auto;
@@ -138,7 +172,7 @@ nav a:hover { color: #000; }
 
 footer {
   color: var(--text-color-light);
-  padding: 1rem 2rem;
+  padding: var(--space-md) var(--space-xl);
   border-top: 1px solid #e0e0e0;
   font-size: 0.8rem;
   text-align: center;
@@ -148,28 +182,20 @@ footer {
 
 
 
-
-
-
-
-
-
-
-
 .page-grid {
   display: grid;
 
-  grid-template-columns: 
+  grid-template-columns:
     [page-start] minmax(30px, 1fr)
-    [content-start] min(100% - 60px, 1024px) [content-end] 
+    [content-start] min(100% - 60px, 1024px) [content-end]
   minmax(30px, 1fr) [page-end];
 
-  row-gap: 1em;
-  
+  row-gap: var(--space-md);
 
-  > section { 
+
+  > section {
     grid-column: content;
-    padding: 1rem 0;
+    padding: var(--space-md) 0;
   }
   > .full-bleed {
     grid-column: page;
@@ -185,7 +211,7 @@ footer {
 .image-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1rem;
+    gap: var(--space-md);
 }
 
 .image-grid figure img {
@@ -196,7 +222,7 @@ footer {
 
 .image-grid figure figcaption {
   font-size: var(--text-sm);
-  margin-top: 0.4rem;
+  margin-top: var(--space-sm);
   color: #555;
 }
 
@@ -214,24 +240,21 @@ footer {
 }
 
 
-
-
-
 form {
   display: grid;
-  gap: 1.5rem;
+  gap: var(--space-lg);
   container-type: inline-size;
 
   label {
     display: block;
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--space-sm);
     font-weight: var(--weight-bold);
     text-box-trim: trim-both;
     text-box-edge: cap alphabetic;
   }
   input:not([type='checkbox'],[type='radio']), textarea, select {
     width: 100%;
-    padding: 0.5rem;
+    padding: var(--space-sm);
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 1rem;
@@ -239,7 +262,7 @@ form {
   }
   button.small {
     /* match input */
-    padding: 0.5rem;
+    padding: var(--space-sm);
     font-size: 1rem;
     line-height: 1.6;
   }
@@ -254,11 +277,11 @@ form {
   .field-pair {
     @container (width < 700px) {
       display: grid;
-      gap: 1rem;
+      gap: var(--space-md);
     }
     @container (width >= 700px) {
       display: flex;
-      gap: 1rem;
+      gap: var(--space-md);
       > div {
         flex-grow: 1;
       }
@@ -271,7 +294,7 @@ form {
 button, a.button {
   color: #fff;
   border: none;
-  padding: 0.75rem 1.5rem;
+  padding: var(--space-base) var(--space-lg);
   border-radius: 4px;
   cursor: pointer;
   text-decoration: none;
@@ -286,7 +309,7 @@ button, a.button {
 
 .amenity-list {
   display: grid;
-  gap: 1rem;
+  gap: var(--space-md);
   grid-template-columns: 1fr 1fr 1fr;
   > div {
     display: flex;
@@ -318,15 +341,15 @@ button, a.button {
   grid-template-columns: repeat(5, 1fr);
   justify-content: space-between;
 
-  padding: 1rem 0;
+  padding: var(--space-md) 0;
   border-radius: 10px;
 
 
-  gap: 0.5rem;
+  gap: var(--space-sm);
   li {
     background: #eee;
     color: #999;
-    padding: 0.5rem;
+    padding: var(--space-sm);
     flex-grow: 1;
     text-align: center;
     border-bottom: 5px solid #ccc;
@@ -346,7 +369,7 @@ button, a.button {
 section#venue {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+  gap: var(--space-md);
   > div {
   }
 }
@@ -362,13 +385,13 @@ section#venue {
 .gallery-grid {
   display :grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 1rem;
+  gap: var(--space-md);
   figure {
     figcaption {
-      margin: 0 1rem;
+      margin: 0 var(--space-md);
       text-align: center;
       font-size: var(--text-sm);
-      white-space:nowrap; 
+      white-space:nowrap;
       text-overflow: ellipsis;
       overflow: hidden;
     }
@@ -380,7 +403,7 @@ section#venue {
 
 .flex {
   display: flex;
-  gap: 1rem;
+  gap: var(--space-md);
   &.center {
     align-items: center;
     justify-content: center;
