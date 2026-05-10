@@ -1,0 +1,824 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Chris Howe — Ten Parishes Festival</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="anonymous"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="../tweaks-panel.jsx"></script>
+<style>
+  :root {
+    --orange: #E8602A;
+    --orange-soft: #FCEFE7;
+    --ink: #16140F;
+    --ink-2: #3a362f;
+    --muted: #7a7468;
+    --rule: #e7e2d8;
+    --rule-2: #d3cdc0;
+    --paper: #FAF8F2;
+    --card: #fff;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  a { color: inherit; }
+  img { display: block; max-width: 100%; }
+
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 0 48px; }
+
+  /* Header */
+  .topbar {
+    border-bottom: 1px solid var(--rule);
+    background: var(--paper);
+  }
+  .topbar-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px 48px;
+    max-width: none;
+  }
+  .brand {
+    font-weight: 600;
+    font-size: 18px;
+    letter-spacing: -0.01em;
+  }
+  .brand em {
+    color: var(--orange); font-style: normal; font-weight: 600;
+  }
+  nav.main { display: flex; gap: 32px; font-size: 14px; font-weight: 400; }
+  nav.main a { text-decoration: none; color: var(--ink-2); }
+  nav.main a.active {
+    color: var(--ink);
+    position: relative;
+  }
+  nav.main a.active::after {
+    content:""; position: absolute; left: 0; right: 0; bottom: -10px;
+    height: 2px; background: var(--orange);
+  }
+
+  /* Breadcrumb */
+  .crumb {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 28px 0 0;
+    display: flex; gap: 8px; align-items: center;
+  }
+  .crumb a { text-decoration: none; }
+  .crumb .sep { color: var(--rule-2); }
+
+  /* Hero filmstrip */
+  .filmstrip {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    margin-top: 20px;
+  }
+  .filmstrip .tile {
+    aspect-ratio: 1 / 1;
+    background: #ddd;
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+  }
+
+  /* Single hero */
+  .hero-single {
+    margin-top: 20px;
+    aspect-ratio: 16 / 7;
+    background-size: cover;
+    background-position: center;
+  }
+
+  /* Split hero */
+  .hero-split {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 8px;
+  }
+  .hero-split .feature {
+    aspect-ratio: 4 / 3;
+    background-size: cover;
+    background-position: center;
+  }
+  .hero-split .stack {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 8px;
+  }
+  .hero-split .stack > div {
+    background-size: cover; background-position: center;
+  }
+
+  /* Identity block */
+  .identity {
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 64px;
+    padding: 56px 0 24px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .identity .meta-eyebrow {
+    font-size: 12px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--muted);
+    margin-bottom: 18px;
+    display: flex; gap: 14px; align-items: center;
+  }
+  .identity .meta-eyebrow .dot {
+    width: 4px; height: 4px; background: var(--rule-2); border-radius: 50%;
+  }
+  .identity h1 {
+    font-size: 80px;
+    font-weight: 200;
+    line-height: 0.96;
+    letter-spacing: -0.025em;
+    margin: 0 0 28px;
+    color: var(--ink);
+  }
+  .disciplines {
+    display: flex; gap: 8px; flex-wrap: wrap;
+    margin: 0 0 28px;
+  }
+  .disciplines li {
+    list-style: none;
+    font-size: 13px;
+    padding: 6px 12px;
+    border: 1px solid var(--rule-2);
+    border-radius: 999px;
+    color: var(--ink-2);
+    font-weight: 400;
+  }
+  .statement {
+    font-size: 18px; line-height: 1.55;
+    max-width: 560px; color: var(--ink-2);
+    font-weight: 300;
+  }
+  .website-link {
+    margin-top: 22px;
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 14px; font-weight: 500;
+    color: var(--ink); text-decoration: none;
+    border-bottom: 1px solid var(--ink); padding-bottom: 2px;
+  }
+  .website-link:hover { color: var(--orange); border-color: var(--orange); }
+
+  .portrait-card { }
+  .portrait {
+    width: 100%; aspect-ratio: 4/5;
+    background-size: cover; background-position: center;
+    background-color: #ddd;
+  }
+  .portrait-cap {
+    margin-top: 14px;
+    font-size: 12px; color: var(--muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  /* Section */
+  section.block { padding: 56px 0; border-bottom: 1px solid var(--rule); }
+  .section-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin-bottom: 32px;
+  }
+  .section-num {
+    font-size: 11px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--muted);
+    font-weight: 500;
+  }
+  .section-head h2 {
+    font-size: 36px; font-weight: 250;
+    letter-spacing: -0.02em;
+    line-height: 1; margin: 8px 0 0;
+  }
+  .section-head .lead {
+    font-size: 14px; color: var(--muted);
+    max-width: 320px;
+  }
+
+  /* Schedule */
+  .sched {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+  }
+  .sched .day {
+    background: var(--card);
+    padding: 18px 18px 22px;
+    min-height: 134px;
+    display: flex; flex-direction: column;
+    position: relative;
+  }
+  .sched .day .dow {
+    font-size: 11px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--muted);
+    font-weight: 500;
+  }
+  .sched .day .num {
+    font-size: 28px; font-weight: 250;
+    letter-spacing: -0.02em;
+    margin-top: 6px;
+  }
+  .sched .day .month {
+    font-size: 11px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--muted);
+    margin-top: 2px;
+  }
+  .sched .day .hours {
+    font-size: 14px; font-weight: 500;
+    margin-top: auto;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+  .sched .day .closed {
+    margin-top: auto;
+    font-size: 12px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--muted);
+    opacity: 0.7;
+  }
+  .sched .day.open {
+    background: var(--orange);
+    color: white;
+  }
+  .sched .day.open .dow,
+  .sched .day.open .month { color: rgba(255,255,255,0.7); }
+  .sched .day.open .hours { color: white; }
+  .sched .day.open::after {
+    content: "OPEN";
+    position: absolute; top: 16px; right: 16px;
+    font-size: 10px; letter-spacing: 0.18em;
+    background: rgba(255,255,255,0.2);
+    padding: 4px 8px; border-radius: 999px;
+    font-weight: 600;
+  }
+
+  /* Visit grid */
+  .visit {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 56px;
+  }
+  .map {
+    width: 100%; height: 380px;
+    border: 1px solid var(--rule);
+  }
+  .addr { display: flex; flex-direction: column; gap: 28px; }
+  .addr-block { }
+  .addr-label {
+    font-size: 11px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--muted);
+    font-weight: 500; margin-bottom: 8px;
+  }
+  .addr-line {
+    font-size: 18px; font-weight: 400; line-height: 1.5;
+    color: var(--ink);
+  }
+  .what3words {
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+    font-size: 14px;
+    color: var(--orange);
+    text-decoration: none;
+  }
+  .what3words::before { content: "///"; opacity: 0.6; margin-right: 1px; }
+  .directions-link {
+    font-size: 14px; font-weight: 500;
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 2px; align-self: flex-start;
+  }
+  .directions-link:hover { color: var(--orange); border-color: var(--orange); }
+
+  /* Facilities */
+  .facilities {
+    display: flex; gap: 8px; flex-wrap: wrap;
+    margin-top: 12px;
+  }
+  .chip {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 9px 14px;
+    border: 1px solid var(--rule-2);
+    border-radius: 999px;
+    font-size: 13px; font-weight: 400;
+    background: var(--card);
+    color: var(--ink);
+  }
+  .chip svg { width: 16px; height: 16px; stroke: var(--ink-2); fill: none; stroke-width: 1.6; }
+
+  /* Other artists */
+  .others {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+  }
+  .artist-card {
+    text-decoration: none; color: inherit;
+    display: flex; flex-direction: column;
+  }
+  .artist-card .thumb {
+    aspect-ratio: 1 / 1;
+    background-size: cover; background-position: center;
+    background-color: #ddd;
+    transition: transform 0.4s cubic-bezier(.2,.7,.3,1);
+  }
+  .artist-card:hover .thumb { transform: scale(1.02); }
+  .artist-card .name {
+    margin-top: 12px;
+    font-size: 16px; font-weight: 500;
+  }
+  .artist-card .disc {
+    font-size: 12px; color: var(--muted);
+    letter-spacing: 0.04em;
+    margin-top: 2px;
+  }
+
+  /* Footer */
+  footer.foot {
+    background: var(--orange);
+    color: white;
+    padding: 64px 0 48px;
+    margin-top: 0;
+  }
+  footer.foot .wrap {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+  footer.foot h3 {
+    font-size: 32px; font-weight: 250;
+    letter-spacing: -0.015em; margin: 0 0 8px;
+    line-height: 1.1;
+  }
+  footer.foot p, footer.foot a, footer.foot li {
+    font-size: 14px;
+    line-height: 1.6;
+    font-weight: 300;
+    color: rgba(255,255,255,0.92);
+  }
+  footer.foot ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+  footer.foot a { text-decoration: none; }
+  footer.foot a:hover { text-decoration: underline; }
+  footer.foot .col-label {
+    font-size: 11px; letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 14px; font-weight: 500;
+  }
+  footer.foot .legal {
+    grid-column: 1 / -1;
+    margin-top: 56px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.18);
+    display: flex; justify-content: space-between;
+    font-size: 12px; color: rgba(255,255,255,0.7);
+  }
+
+  /* Hero variant switcher */
+  .variant-switch {
+    position: fixed;
+    top: 16px; left: 50%; transform: translateX(-50%);
+    z-index: 50;
+    display: inline-flex;
+    background: var(--ink);
+    border-radius: 999px;
+    padding: 4px;
+    gap: 2px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+  }
+  .variant-switch button {
+    background: transparent; color: rgba(255,255,255,0.65);
+    border: 0; font: inherit;
+    font-size: 12px; font-weight: 500;
+    letter-spacing: 0.04em;
+    padding: 7px 14px; border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.16s, color 0.16s;
+  }
+  .variant-switch button:hover { color: white; }
+  .variant-switch button.on {
+    background: var(--orange); color: white;
+  }
+  .variant-switch::before {
+    content: "Hero"; align-self: center;
+    font-size: 11px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: rgba(255,255,255,0.45);
+    padding-left: 12px; padding-right: 4px;
+  }
+
+  /* Hide hero variants by default, show via attr */
+  body[data-hero="filmstrip"] .hero-single,
+  body[data-hero="filmstrip"] .hero-split { display: none; }
+  body[data-hero="single"] .filmstrip,
+  body[data-hero="single"] .hero-split { display: none; }
+  body[data-hero="split"] .filmstrip,
+  body[data-hero="split"] .hero-single { display: none; }
+
+  /* Breakpoint simulator */
+  body[data-bp] {
+    transition: background 0.2s;
+  }
+  body[data-bp="tablet"], body[data-bp="mobile"] {
+    background: #2a2620;
+  }
+  .bp-frame {
+    margin: 0 auto;
+    background: var(--paper);
+    transition: max-width 0.32s cubic-bezier(.2,.7,.3,1), box-shadow 0.32s, outline 0.32s;
+    max-width: none;
+  }
+  body[data-bp="tablet"] .bp-frame {
+    max-width: 768px;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.4);
+  }
+  body[data-bp="mobile"] .bp-frame {
+    max-width: 390px;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.4);
+  }
+  /* Breakpoint label badge */
+  body[data-bp="tablet"]::before, body[data-bp="mobile"]::before {
+    content: attr(data-bp-label);
+    position: fixed; bottom: 16px; left: 16px; z-index: 60;
+    background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.85);
+    font: 500 11px/1 "Plus Jakarta Sans", sans-serif;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    padding: 8px 12px; border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.15);
+    backdrop-filter: blur(8px);
+  }
+
+  /* TABLET (≤ 768) — applies via attr OR media query */
+  body[data-bp="tablet"] .topbar-inner,
+  body[data-bp="tablet"] .wrap { padding-left: 32px; padding-right: 32px; }
+  body[data-bp="tablet"] nav.main { gap: 22px; font-size: 13px; }
+  body[data-bp="tablet"] .filmstrip { grid-template-columns: repeat(3, 1fr); }
+  body[data-bp="tablet"] .filmstrip .tile:nth-child(n+4) { display: none; }
+  body[data-bp="tablet"] .hero-split { grid-template-columns: 1fr; }
+  body[data-bp="tablet"] .hero-split .stack { grid-template-columns: repeat(4, 1fr); grid-template-rows: 1fr; }
+  body[data-bp="tablet"] .identity { grid-template-columns: 1.4fr 280px; gap: 32px; padding: 40px 0 20px; }
+  body[data-bp="tablet"] .identity h1 { font-size: 56px; }
+  body[data-bp="tablet"] .statement { font-size: 16px; }
+  body[data-bp="tablet"] .sched { grid-template-columns: repeat(5, 1fr); }
+  body[data-bp="tablet"] .sched .day { padding: 14px 12px 16px; min-height: 110px; }
+  body[data-bp="tablet"] .sched .day .num { font-size: 22px; }
+  body[data-bp="tablet"] .sched .day .hours { font-size: 12px; }
+  body[data-bp="tablet"] .visit { grid-template-columns: 1fr; gap: 32px; }
+  body[data-bp="tablet"] .others { grid-template-columns: repeat(3, 1fr); }
+  body[data-bp="tablet"] .others .artist-card:nth-child(n+4) { display: none; }
+  body[data-bp="tablet"] .section-head { flex-direction: column; gap: 12px; align-items: flex-start; }
+  body[data-bp="tablet"] .section-head h2 { font-size: 28px; }
+  body[data-bp="tablet"] footer.foot .wrap { grid-template-columns: 1fr 1fr; gap: 32px; }
+  body[data-bp="tablet"] .variant-switch { top: auto; bottom: 16px; left: 50%; right: auto; }
+
+  /* MOBILE (≤ 480) */
+  body[data-bp="mobile"] .topbar-inner { padding: 14px 20px; flex-wrap: wrap; gap: 12px; }
+  body[data-bp="mobile"] .wrap { padding-left: 20px; padding-right: 20px; }
+  body[data-bp="mobile"] nav.main { gap: 14px; font-size: 12px; flex-wrap: wrap; }
+  body[data-bp="mobile"] nav.main a.active::after { bottom: -4px; }
+  body[data-bp="mobile"] .crumb { font-size: 10px; padding-top: 18px; }
+  body[data-bp="mobile"] .filmstrip { grid-template-columns: repeat(2, 1fr); gap: 4px; }
+  body[data-bp="mobile"] .filmstrip .tile:nth-child(n+5) { display: none; }
+  body[data-bp="mobile"] .hero-single { aspect-ratio: 4/3; }
+  body[data-bp="mobile"] .hero-split { grid-template-columns: 1fr; gap: 4px; }
+  body[data-bp="mobile"] .hero-split .stack { grid-template-columns: repeat(2, 1fr); grid-template-rows: 1fr 1fr; gap: 4px; }
+  body[data-bp="mobile"] .identity { grid-template-columns: 1fr; gap: 28px; padding: 32px 0 16px; }
+  body[data-bp="mobile"] .identity h1 { font-size: 44px; margin-bottom: 20px; }
+  body[data-bp="mobile"] .meta-eyebrow { font-size: 10px; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; }
+  body[data-bp="mobile"] .statement { font-size: 16px; }
+  body[data-bp="mobile"] .portrait { aspect-ratio: 3/4; }
+  body[data-bp="mobile"] section.block { padding: 36px 0; }
+  body[data-bp="mobile"] .section-head { flex-direction: column; gap: 14px; align-items: flex-start; margin-bottom: 22px; }
+  body[data-bp="mobile"] .section-head h2 { font-size: 26px; }
+  body[data-bp="mobile"] .sched { grid-template-columns: repeat(2, 1fr); }
+  body[data-bp="mobile"] .sched .day { padding: 12px; min-height: 92px; }
+  body[data-bp="mobile"] .sched .day .num { font-size: 22px; }
+  body[data-bp="mobile"] .sched .day.open::after { font-size: 9px; padding: 3px 6px; top: 10px; right: 10px; }
+  body[data-bp="mobile"] .visit { grid-template-columns: 1fr; gap: 24px; }
+  body[data-bp="mobile"] .map { height: 260px; }
+  body[data-bp="mobile"] .addr-line { font-size: 16px; }
+  body[data-bp="mobile"] .others { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  body[data-bp="mobile"] .others .artist-card:nth-child(n+5) { display: none; }
+  body[data-bp="mobile"] footer.foot { padding: 40px 0 32px; }
+  body[data-bp="mobile"] footer.foot .wrap { grid-template-columns: 1fr; gap: 28px; }
+  body[data-bp="mobile"] footer.foot h3 { font-size: 26px; }
+  body[data-bp="mobile"] footer.foot .legal { flex-direction: column; gap: 8px; margin-top: 28px; }
+  body[data-bp="mobile"] .variant-switch { top: auto; bottom: 16px; left: 50%; right: auto; transform: translateX(-50%); padding: 3px; }
+  body[data-bp="mobile"] .variant-switch button { font-size: 11px; padding: 6px 10px; }
+  body[data-bp="mobile"] .variant-switch::before { font-size: 10px; padding-left: 8px; }
+</style>
+</head>
+<body data-hero="filmstrip" data-bp="desktop">
+<div id="tweaks-root"></div>
+<div class="bp-frame">
+
+<div class="variant-switch" role="tablist" aria-label="Hero layout">
+  <button data-h="filmstrip" class="on">Filmstrip</button>
+  <button data-h="single">Single</button>
+  <button data-h="split">Split</button>
+</div>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">Ten Parishes <em>Festival</em></div>
+    <nav class="main">
+      <a href="#">Parishes</a>
+      <a href="#" class="active">Artists</a>
+      <a href="#">Events</a>
+      <a href="#">About</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="crumb">
+    <a href="#">Artists</a>
+    <span class="sep">/</span>
+    <a href="#">Wiveliscombe</a>
+    <span class="sep">/</span>
+    <span>Chris Howe</span>
+  </div>
+
+  <!-- Hero variants -->
+  <div class="filmstrip" aria-label="Selected works">
+    <div class="tile" style="background-image:url('../assets/painting-1.png')"></div>
+    <div class="tile" style="background-image:url('../assets/painting-2.png')"></div>
+    <div class="tile" style="background-image:url('../assets/painting-3.png')"></div>
+    <div class="tile" style="background-image:url('../assets/painting-4.png')"></div>
+    <div class="tile" style="background-image:url('../assets/painting-5.png')"></div>
+  </div>
+  <div class="hero-single" style="background-image:url('../assets/painting-3.png')"></div>
+  <div class="hero-split">
+    <div class="feature" style="background-image:url('../assets/painting-3.png')"></div>
+    <div class="stack">
+      <div style="background-image:url('../assets/painting-1.png')"></div>
+      <div style="background-image:url('../assets/painting-2.png')"></div>
+      <div style="background-image:url('../assets/painting-4.png')"></div>
+      <div style="background-image:url('../assets/painting-5.png')"></div>
+    </div>
+  </div>
+
+  <!-- Identity -->
+  <section class="identity">
+    <div>
+      <div class="meta-eyebrow">
+        <span>Artist 014</span>
+        <span class="dot"></span>
+        <span>Wiveliscombe</span>
+        <span class="dot"></span>
+        <span>Open 3 days</span>
+      </div>
+      <h1>Chris Howe</h1>
+      <ul class="disciplines">
+        <li>Watercolour</li>
+        <li>Drawing</li>
+        <li>Illustration</li>
+      </ul>
+      <p class="statement">
+        Chris works mainly in watercolours and uses a limited palette to produce paintings which appear fresh and vibrant. His main inspiration comes from the countryside around his home on Exmoor. Originals, prints and cards are on show. Chris also holds watercolour classes in various venues across Somerset.
+      </p>
+      <a class="website-link" href="#">
+        Visit chrishowewatercolours.co.uk
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+    <div class="portrait-card">
+      <div class="portrait" style="background-image:url('../assets/artist-portrait.png')"></div>
+      <div class="portrait-cap">In the studio · Exmoor</div>
+    </div>
+  </section>
+
+  <!-- Schedule -->
+  <section class="block">
+    <div class="section-head">
+      <div>
+        <div class="section-num">When you can visit</div>
+        <h2>Open studio · 1–10 July</h2>
+      </div>
+      <p class="lead">Studio open three days during the festival. Drop in — no need to book.</p>
+    </div>
+
+    <div class="sched">
+      <div class="day"><div class="dow">Wed</div><div class="num">1</div><div class="month">Jul</div><div class="closed">Closed</div></div>
+      <div class="day open"><div class="dow">Thu</div><div class="num">2</div><div class="month">Jul</div><div class="hours">10:00 — 12:00</div></div>
+      <div class="day open"><div class="dow">Fri</div><div class="num">3</div><div class="month">Jul</div><div class="hours">10:00 — 13:00</div></div>
+      <div class="day open"><div class="dow">Sat</div><div class="num">4</div><div class="month">Jul</div><div class="hours">11:00 — 15:00</div></div>
+      <div class="day"><div class="dow">Sun</div><div class="num">5</div><div class="month">Jul</div><div class="closed">Closed</div></div>
+      <div class="day"><div class="dow">Mon</div><div class="num">6</div><div class="month">Jul</div><div class="closed">Closed</div></div>
+      <div class="day"><div class="dow">Tue</div><div class="num">7</div><div class="month">Jul</div><div class="closed">Closed</div></div>
+      <div class="day"><div class="dow">Wed</div><div class="num">8</div><div class="month">Jul</div><div class="closed">Closed</div></div>
+      <div class="day"><div class="dow">Thu</div><div class="num">9</div><div class="month">Jul</div><div class="closed">Closed</div></div>
+      <div class="day"><div class="dow">Fri</div><div class="num">10</div><div class="month">Jul</div><div class="closed">Closed</div></div>
+    </div>
+  </section>
+
+  <!-- Visit -->
+  <section class="block">
+    <div class="section-head">
+      <div>
+        <div class="section-num">Where to find us</div>
+        <h2>Wiveliscombe</h2>
+      </div>
+      <p class="lead">In the centre of town, next to the carpark. Look for the open studio sign.</p>
+    </div>
+
+    <div class="visit">
+      <div id="map" class="map"></div>
+      <div class="addr">
+        <div class="addr-block">
+          <div class="addr-label">Address</div>
+          <div class="addr-line">12 The Street<br>Wiveliscombe<br>Somerset · TA2 1PO</div>
+        </div>
+        <div class="addr-block">
+          <div class="addr-label">what3words</div>
+          <a class="what3words" href="#">the.place.where</a>
+        </div>
+        <div class="addr-block">
+          <div class="addr-label">Facilities</div>
+          <div class="facilities">
+            <span class="chip">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="3"/><path d="M5 21a7 7 0 0 1 14 0"/><circle cx="12" cy="9" r="6" /></svg>
+              Wheelchair access
+            </span>
+            <span class="chip">
+              <svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="1"/><circle cx="7.5" cy="18" r="1.5"/><circle cx="16.5" cy="18" r="1.5"/></svg>
+              Parking on site
+            </span>
+            <span class="chip">
+              <svg viewBox="0 0 24 24"><path d="M4 18h16M6 18l1-9h10l1 9M9 9V6a3 3 0 0 1 6 0v3"/></svg>
+              Tea &amp; biscuits
+            </span>
+            <span class="chip">
+              <svg viewBox="0 0 24 24"><path d="M5 17c2-3 5-3 7-3s5 0 7 3M9 7c0 2 1 3 3 3s3-1 3-3-1-3-3-3-3 1-3 3z"/></svg>
+              Assistance dogs
+            </span>
+          </div>
+        </div>
+        <a class="directions-link" href="#">Get directions →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Other artists -->
+  <section class="block" style="border-bottom:0">
+    <div class="section-head">
+      <div>
+        <div class="section-num">Also nearby</div>
+        <h2>Other artists in Wiveliscombe</h2>
+      </div>
+      <a class="directions-link" href="#" style="align-self:center">See all 12 artists in this parish →</a>
+    </div>
+
+    <div class="others">
+      <a href="#" class="artist-card">
+        <div class="thumb" style="background:linear-gradient(135deg,#2a3a5e,#7a4a30)"></div>
+        <div class="name">David North</div>
+        <div class="disc">Sculpture</div>
+      </a>
+      <a href="#" class="artist-card">
+        <div class="thumb" style="background:linear-gradient(135deg,#3a5a3a,#c8a55a)"></div>
+        <div class="name">John Abraham</div>
+        <div class="disc">Photography</div>
+      </a>
+      <a href="#" class="artist-card">
+        <div class="thumb" style="background:linear-gradient(135deg,#7e3838,#d8a878)"></div>
+        <div class="name">John Smiths</div>
+        <div class="disc">Painting</div>
+      </a>
+      <a href="#" class="artist-card">
+        <div class="thumb" style="background:linear-gradient(135deg,#3a3a3a,#a89878)"></div>
+        <div class="name">Mel North</div>
+        <div class="disc">Ceramics</div>
+      </a>
+      <a href="#" class="artist-card">
+        <div class="thumb" style="background:linear-gradient(135deg,#5a3a7a,#e8b88a)"></div>
+        <div class="name">Victoria Ward</div>
+        <div class="disc">Printmaking</div>
+      </a>
+    </div>
+  </section>
+</div>
+
+<footer class="foot">
+  <div class="wrap">
+    <div>
+      <h3>Ten Parishes<br>Festival 2026</h3>
+      <p>1—10 July · Across ten parishes of West Somerset</p>
+    </div>
+    <div>
+      <div class="col-label">Discover</div>
+      <ul>
+        <li><a href="#">All artists</a></li>
+        <li><a href="#">All parishes</a></li>
+        <li><a href="#">Events &amp; talks</a></li>
+        <li><a href="#">Plan a route</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="col-label">Festival</div>
+      <ul>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Get involved</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Press</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="col-label">Newsletter</div>
+      <p style="margin:0 0 12px">Get news of new artists and events.</p>
+      <form onsubmit="event.preventDefault()" style="display:flex;gap:6px">
+        <input type="email" placeholder="you@example.com" style="flex:1;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);color:white;padding:9px 12px;border-radius:0;font:inherit;font-size:13px">
+        <button style="background:white;color:var(--orange);border:0;padding:9px 14px;font:inherit;font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;cursor:pointer">Join</button>
+      </form>
+    </div>
+    <div class="legal">
+      <div>© Ten Parishes Festival · Wiveliscombe Area Partnership · Charity 1132983</div>
+      <div>Privacy · Terms</div>
+    </div>
+  </div>
+</footer>
+</div><!-- /.bp-frame -->
+
+<script type="text/babel">
+  const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+    "breakpoint": "mobile"
+  }/*EDITMODE-END*/;
+
+  function ArtistTweaks() {
+    const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
+    React.useEffect(() => {
+      const labels = { desktop: '', tablet: 'Tablet · 768', mobile: 'Mobile · 390' };
+      document.body.dataset.bp = t.breakpoint;
+      document.body.dataset.bpLabel = labels[t.breakpoint] || '';
+      // Nudge leaflet to recalc tiles when frame resizes
+      if (window._tpfMap) setTimeout(() => window._tpfMap.invalidateSize(), 380);
+    }, [t.breakpoint]);
+    return (
+      <TweaksPanel title="Tweaks">
+        <TweakSection title="Breakpoint" subtitle="Preview the page at common widths.">
+          <TweakRadio
+            label="Width"
+            value={t.breakpoint}
+            onChange={(v) => setTweak('breakpoint', v)}
+            options={[
+              { value: 'desktop', label: 'Desktop' },
+              { value: 'tablet', label: 'Tablet' },
+              { value: 'mobile', label: 'Mobile' },
+            ]}
+          />
+        </TweakSection>
+      </TweaksPanel>
+    );
+  }
+  ReactDOM.createRoot(document.getElementById('tweaks-root')).render(<ArtistTweaks />);
+</script>
+
+<script>
+  // Hero variant switching
+  document.querySelectorAll('.variant-switch button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.variant-switch button').forEach(b => b.classList.remove('on'));
+      btn.classList.add('on');
+      document.body.dataset.hero = btn.dataset.h;
+    });
+  });
+
+  // Leaflet map
+  const map = L.map('map', {
+    zoomControl: true, scrollWheelZoom: false, attributionControl: true
+  }).setView([51.0413, -3.3022], 15);
+  window._tpfMap = map;
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '© OpenStreetMap'
+  }).addTo(map);
+
+  // Custom orange pin
+  const pin = L.divIcon({
+    className: 'tpf-pin',
+    html: '<div style="width:32px;height:32px;background:#E8602A;border:3px solid white;border-radius:50% 50% 50% 0;transform:rotate(-45deg);box-shadow:0 4px 10px rgba(0,0,0,0.25)"></div>',
+    iconSize: [32, 32], iconAnchor: [16, 32]
+  });
+  L.marker([51.0413, -3.3022], { icon: pin }).addTo(map);
+</script>
+</body>
+</html>

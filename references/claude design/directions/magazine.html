@@ -1,0 +1,920 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Chris Howe — Ten Parishes Festival</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="anonymous"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="anonymous"></script>
+<style>
+  :root {
+    --orange: #E8602A;
+    --orange-deep: #B6481B;
+    --orange-soft: #F6E6DA;
+    --ink: #1a1814;
+    --ink-2: #3d382f;
+    --muted: #88817a;
+    --rule: #e7e1d2;
+    --rule-2: #cdc6b3;
+    --paper: #F4EFE3;
+    --paper-deep: #ECE5D2;
+    --card: #FBF7EC;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .serif { font-family: "Instrument Serif", "Times New Roman", serif; font-weight: 400; }
+  a { color: inherit; }
+  img { display: block; max-width: 100%; }
+
+  .wrap { max-width: 1320px; margin: 0 auto; padding: 0 56px; }
+  .wrap-narrow { max-width: 980px; margin: 0 auto; padding: 0 56px; }
+
+  /* Header */
+  .topbar {
+    border-bottom: 1px solid var(--rule);
+    background: var(--paper);
+  }
+  .topbar-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px 56px;
+  }
+  .brand {
+    font-size: 20px;
+    letter-spacing: -0.01em;
+    font-family: "Instrument Serif", serif;
+    font-weight: 400;
+  }
+  .brand em {
+    color: var(--orange); font-style: italic;
+  }
+  .brand small {
+    display: block;
+    font-family: "Plus Jakarta Sans", sans-serif;
+    font-size: 9px; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--muted);
+    font-weight: 500; margin-top: 2px;
+  }
+  nav.main { display: flex; gap: 32px; font-size: 13px; font-weight: 400; }
+  nav.main a {
+    text-decoration: none;
+    color: var(--ink-2);
+    letter-spacing: 0.02em;
+  }
+  nav.main a.active { color: var(--orange); }
+
+  /* Issue strip */
+  .issue {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 10px 0;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .issue .wrap {
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .issue .wrap > div { display: flex; gap: 28px; align-items: center; }
+  .issue .wrap > div:last-child { color: rgba(244,239,227,0.65); }
+  .issue .dot { width: 4px; height: 4px; background: var(--orange); border-radius: 50%; }
+
+  /* Editorial title block */
+  .title-block {
+    padding: 80px 0 56px;
+    display: grid;
+    grid-template-columns: 1fr 2.4fr 1fr;
+    gap: 48px;
+    align-items: end;
+  }
+  .meta-col {
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+    line-height: 1.8;
+  }
+  .meta-col dt {
+    color: var(--ink); font-weight: 600;
+    margin-top: 16px;
+  }
+  .meta-col dt:first-child { margin-top: 0; }
+  .meta-col dd {
+    margin: 4px 0 0;
+    color: var(--ink-2);
+    font-weight: 400;
+  }
+  .title-main { text-align: center; }
+  .title-main .kicker {
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--orange);
+    font-weight: 500;
+    margin-bottom: 28px;
+  }
+  .title-main h1 {
+    font-family: "Instrument Serif", serif;
+    font-weight: 400;
+    font-size: 132px;
+    line-height: 0.92;
+    letter-spacing: -0.02em;
+    margin: 0;
+    color: var(--ink);
+  }
+  .title-main h1 em {
+    font-style: italic;
+    color: var(--orange);
+  }
+  .title-main .deck {
+    margin-top: 32px;
+    font-family: "Instrument Serif", serif;
+    font-size: 24px;
+    line-height: 1.45;
+    color: var(--ink-2);
+    font-style: italic;
+    max-width: 620px; margin-left: auto; margin-right: auto;
+    font-weight: 400;
+  }
+
+  /* Hero — single (default), filmstrip, split */
+  .hero { margin: 24px 0 0; }
+  .hero-single {
+    aspect-ratio: 16 / 9;
+    background-size: cover;
+    background-position: center;
+    background-color: var(--paper-deep);
+  }
+  .hero-cap {
+    margin-top: 16px;
+    display: flex; justify-content: space-between;
+    font-size: 12px; color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+  .hero-cap em { color: var(--ink-2); font-style: italic; }
+
+  .hero-filmstrip {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+  }
+  .hero-filmstrip .tile {
+    aspect-ratio: 4/5;
+    background-size: cover; background-position: center;
+    background-color: var(--paper-deep);
+    position: relative;
+  }
+  .hero-filmstrip .tile .num {
+    position: absolute; top: 12px; left: 12px;
+    width: 28px; height: 28px;
+    background: var(--paper);
+    color: var(--ink);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+  .hero-filmstrip .tile .cap {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 14px 12px 12px;
+    background: linear-gradient(to top, rgba(0,0,0,0.55), transparent);
+    color: white;
+    font-size: 12px;
+    font-style: italic;
+    font-family: "Instrument Serif", serif;
+    line-height: 1.3;
+  }
+  .hero-split {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 12px;
+  }
+  .hero-split .left {
+    aspect-ratio: 4/3;
+    background-size: cover; background-position: center;
+  }
+  .hero-split .right { display: grid; grid-template-rows: 1fr 1fr; gap: 12px; }
+  .hero-split .right > div {
+    background-size: cover; background-position: center;
+  }
+
+  body[data-hero="single"] .hero-filmstrip,
+  body[data-hero="single"] .hero-split { display: none; }
+  body[data-hero="filmstrip"] .hero-single,
+  body[data-hero="filmstrip"] .hero-split { display: none; }
+  body[data-hero="split"] .hero-single,
+  body[data-hero="split"] .hero-filmstrip { display: none; }
+
+  /* Article body */
+  .article {
+    padding: 96px 0 72px;
+    display: grid;
+    grid-template-columns: 1fr 1.6fr 1fr;
+    gap: 48px;
+  }
+  .side-note {
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    line-height: 1.6;
+    border-top: 1px solid var(--rule-2);
+    padding-top: 16px;
+    font-style: italic;
+    font-family: "Instrument Serif", serif;
+    font-size: 18px;
+  }
+  .side-note .label {
+    font-style: normal;
+    font-family: "Plus Jakarta Sans", sans-serif;
+    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--ink); display: block; margin-bottom: 8px;
+    font-weight: 600;
+  }
+  .body-col p {
+    font-size: 19px;
+    line-height: 1.65;
+    color: var(--ink-2);
+    margin: 0 0 24px;
+  }
+  .body-col p.lead {
+    font-family: "Instrument Serif", serif;
+    font-size: 28px;
+    line-height: 1.4;
+    color: var(--ink);
+    margin-bottom: 32px;
+  }
+  .body-col p.lead::first-letter {
+    font-size: 84px;
+    float: left;
+    line-height: 0.85;
+    padding: 6px 12px 0 0;
+    color: var(--orange);
+    font-style: italic;
+  }
+  .portrait-side {
+    margin-top: 0;
+  }
+  .portrait-side img,
+  .portrait-side .img {
+    width: 100%;
+    aspect-ratio: 4/5;
+    background-size: cover; background-position: center;
+    background-color: var(--paper-deep);
+  }
+  .portrait-side .caption {
+    margin-top: 14px;
+    font-size: 12px; color: var(--muted);
+    line-height: 1.5;
+  }
+  .portrait-side .caption strong { color: var(--ink); font-weight: 500; }
+
+  /* Pull quote */
+  .pullquote {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 88px 0;
+    text-align: center;
+  }
+  .pullquote blockquote {
+    margin: 0 auto;
+    max-width: 980px;
+    font-family: "Instrument Serif", serif;
+    font-size: 56px;
+    line-height: 1.15;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    padding: 0 56px;
+  }
+  .pullquote blockquote em {
+    color: var(--orange); font-style: italic;
+  }
+  .pullquote .attrib {
+    margin-top: 32px;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(244,239,227,0.6);
+    font-weight: 500;
+  }
+
+  /* Section header */
+  .section-rule {
+    border-top: 1px solid var(--rule-2);
+    padding-top: 32px;
+    margin-bottom: 40px;
+    display: grid; grid-template-columns: 1fr 2.4fr 1fr;
+    gap: 48px; align-items: baseline;
+  }
+  .section-rule .num {
+    font-family: "Instrument Serif", serif;
+    font-style: italic;
+    font-size: 28px;
+    color: var(--orange);
+  }
+  .section-rule h2 {
+    font-family: "Instrument Serif", serif;
+    font-weight: 400;
+    font-size: 56px;
+    line-height: 1;
+    letter-spacing: -0.015em;
+    margin: 0;
+    color: var(--ink);
+  }
+  .section-rule h2 em { color: var(--orange); font-style: italic; }
+  .section-rule .lead {
+    font-size: 14px; color: var(--muted);
+    line-height: 1.55;
+    align-self: center;
+    text-align: right;
+  }
+
+  /* Visit panel */
+  .panel { padding: 64px 0; }
+  .visit {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 64px;
+  }
+  .map-frame {
+    background: var(--card);
+    padding: 16px;
+    border: 1px solid var(--rule);
+  }
+  #map {
+    width: 100%; height: 460px;
+    background: #ddd;
+  }
+  .addr-stack { display: flex; flex-direction: column; gap: 32px; }
+  .addr-block .l {
+    font-size: 11px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--orange);
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .addr-block .v {
+    font-family: "Instrument Serif", serif;
+    font-size: 28px; line-height: 1.25;
+    color: var(--ink);
+  }
+  .addr-block .sub {
+    font-size: 14px; color: var(--ink-2);
+    margin-top: 4px;
+  }
+  .what3words {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 16px; color: var(--orange);
+    text-decoration: none;
+  }
+  .what3words::before { content: "///"; opacity: 0.55; }
+
+  .facilities {
+    display: flex; gap: 8px; flex-wrap: wrap;
+  }
+  .chip {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 9px 14px;
+    background: var(--card);
+    border: 1px solid var(--rule-2);
+    border-radius: 999px;
+    font-size: 13px; color: var(--ink);
+  }
+  .chip svg { width: 16px; height: 16px; stroke: var(--orange); fill: none; stroke-width: 1.6; }
+
+  .directions-cta {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 12px 0;
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    color: var(--ink); text-decoration: none;
+    font-size: 14px; font-weight: 500;
+    letter-spacing: 0.04em;
+    align-self: flex-start;
+    padding-left: 0; padding-right: 32px;
+    transition: color 0.2s;
+  }
+  .directions-cta:hover { color: var(--orange); }
+
+  /* Schedule — editorial calendar */
+  .calendar {
+    background: var(--card);
+    border: 1px solid var(--rule-2);
+  }
+  .cal-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+  }
+  .cal-row + .cal-row { border-top: 1px solid var(--rule-2); }
+  .cal-cell {
+    padding: 28px 24px 32px;
+    border-right: 1px solid var(--rule-2);
+    min-height: 168px;
+    position: relative;
+    display: flex; flex-direction: column;
+    transition: background 0.16s;
+  }
+  .cal-cell:last-child { border-right: 0; }
+  .cal-cell .dow {
+    font-size: 11px; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--muted);
+    font-weight: 500;
+  }
+  .cal-cell .num {
+    font-family: "Instrument Serif", serif;
+    font-size: 64px; line-height: 0.9;
+    color: var(--ink);
+    margin: 4px 0 0;
+    letter-spacing: -0.02em;
+  }
+  .cal-cell .num em {
+    font-style: italic;
+    font-size: 14px;
+    font-family: "Plus Jakarta Sans", sans-serif;
+    color: var(--muted);
+    margin-left: 8px;
+    vertical-align: middle;
+    letter-spacing: 0.04em;
+    font-weight: 400;
+  }
+  .cal-cell .hours {
+    font-size: 14px;
+    color: var(--ink);
+    font-weight: 500;
+    margin-top: auto;
+    font-variant-numeric: tabular-nums;
+  }
+  .cal-cell .closed {
+    margin-top: auto;
+    font-size: 12px; letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-style: italic;
+    font-family: "Instrument Serif", serif;
+    font-size: 18px;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+  .cal-cell.open {
+    background: var(--orange);
+    color: white;
+  }
+  .cal-cell.open .num,
+  .cal-cell.open .hours { color: white; }
+  .cal-cell.open .num em { color: rgba(255,255,255,0.7); }
+  .cal-cell.open .dow { color: rgba(255,255,255,0.75); }
+  .cal-cell.open::before {
+    content: "Open";
+    font-family: "Instrument Serif", serif;
+    font-style: italic;
+    position: absolute; top: 24px; right: 24px;
+    font-size: 18px;
+    color: rgba(255,255,255,0.85);
+  }
+
+  /* Other artists */
+  .others {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+  .a-card {
+    text-decoration: none; color: inherit;
+    display: flex; flex-direction: column;
+  }
+  .a-card .thumb {
+    aspect-ratio: 3/4;
+    background-size: cover; background-position: center;
+    background-color: var(--paper-deep);
+    transition: transform 0.5s cubic-bezier(.2,.7,.3,1);
+  }
+  .a-card:hover .thumb { transform: scale(1.015); }
+  .a-card .meta {
+    margin-top: 16px;
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  .a-card .name {
+    margin-top: 6px;
+    font-family: "Instrument Serif", serif;
+    font-size: 28px; line-height: 1.05;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+  .a-card .tagline {
+    margin-top: 10px;
+    font-size: 13px;
+    color: var(--ink-2);
+    line-height: 1.5;
+  }
+
+  /* Footer */
+  footer.foot {
+    background: var(--ink);
+    color: var(--paper);
+    margin-top: 96px;
+    padding: 96px 0 48px;
+  }
+  footer.foot .top {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+    padding-bottom: 64px;
+    border-bottom: 1px solid rgba(244,239,227,0.15);
+  }
+  footer.foot h3 {
+    font-family: "Instrument Serif", serif;
+    font-weight: 400;
+    font-size: 56px;
+    line-height: 1;
+    letter-spacing: -0.015em;
+    margin: 0;
+  }
+  footer.foot h3 em { color: var(--orange); font-style: italic; }
+  footer.foot p, footer.foot li {
+    font-size: 14px; color: rgba(244,239,227,0.78);
+    line-height: 1.65;
+  }
+  footer.foot ul { list-style: none; padding: 0; margin: 12px 0 0; display: grid; gap: 6px; }
+  footer.foot a { color: var(--paper); text-decoration: none; }
+  footer.foot a:hover { color: var(--orange); }
+  footer.foot .col-label {
+    font-size: 11px; letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--orange);
+    font-weight: 600;
+  }
+  footer.foot .legal {
+    margin-top: 32px;
+    display: flex; justify-content: space-between;
+    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(244,239,227,0.4);
+  }
+
+  /* Hero variant switcher */
+  .variant-switch {
+    position: fixed;
+    top: 16px; left: 50%; transform: translateX(-50%);
+    z-index: 50;
+    display: inline-flex;
+    background: var(--ink);
+    border-radius: 999px;
+    padding: 4px;
+    gap: 2px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+  }
+  .variant-switch button {
+    background: transparent; color: rgba(255,255,255,0.65);
+    border: 0; font: inherit;
+    font-size: 12px; font-weight: 500;
+    letter-spacing: 0.04em;
+    padding: 7px 14px; border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.16s, color 0.16s;
+  }
+  .variant-switch button:hover { color: white; }
+  .variant-switch button.on {
+    background: var(--orange); color: white;
+  }
+  .variant-switch::before {
+    content: "Hero"; align-self: center;
+    font-size: 11px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: rgba(255,255,255,0.45);
+    padding-left: 12px; padding-right: 4px;
+  }
+
+  /* Leaflet override */
+  .leaflet-container { font-family: inherit !important; background: var(--paper-deep); }
+</style>
+</head>
+<body data-hero="single">
+
+<div class="variant-switch" role="tablist" aria-label="Hero layout">
+  <button data-h="single" class="on">Single</button>
+  <button data-h="filmstrip">Filmstrip</button>
+  <button data-h="split">Split</button>
+</div>
+
+<div class="issue">
+  <div class="wrap">
+    <div>
+      <span>Ten Parishes Festival 2026</span>
+      <span class="dot"></span>
+      <span>Issue 14</span>
+      <span class="dot"></span>
+      <span>1—10 July</span>
+    </div>
+    <div>West Somerset · Free entry · Every studio open</div>
+  </div>
+</div>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">Ten <em>Parishes</em><small>Festival · West Somerset</small></div>
+    <nav class="main">
+      <a href="#">Parishes</a>
+      <a href="#" class="active">Artists</a>
+      <a href="#">Events</a>
+      <a href="#">Map</a>
+      <a href="#">About</a>
+    </nav>
+  </div>
+</header>
+
+<!-- Title block -->
+<div class="wrap">
+  <div class="title-block">
+    <dl class="meta-col">
+      <dt>Parish</dt>
+      <dd>Wiveliscombe</dd>
+      <dt>Discipline</dt>
+      <dd>Watercolour · Drawing · Illustration</dd>
+      <dt>Studio №</dt>
+      <dd>014</dd>
+    </dl>
+    <div class="title-main">
+      <div class="kicker">Studio Visit · No. 014</div>
+      <h1>Chris<br><em>Howe</em></h1>
+      <p class="deck">"A limited palette, fresh and vibrant — drawn from the countryside around home on Exmoor."</p>
+    </div>
+    <dl class="meta-col" style="text-align:right">
+      <dt>Open</dt>
+      <dd>2 — 4 July</dd>
+      <dt>Hours</dt>
+      <dd>From 10:00</dd>
+      <dt>Bookings</dt>
+      <dd>Drop in</dd>
+    </dl>
+  </div>
+</div>
+
+<!-- Hero -->
+<div class="wrap">
+  <div class="hero">
+    <div class="hero-single" style="background-image:url('../assets/painting-3.png')"></div>
+    <div class="hero-filmstrip">
+      <div class="tile" style="background-image:url('../assets/painting-1.png')">
+        <span class="num">01</span>
+        <div class="cap"><em>Lone tree, Exmoor</em><br>Watercolour, 2024</div>
+      </div>
+      <div class="tile" style="background-image:url('../assets/painting-2.png')">
+        <span class="num">02</span>
+        <div class="cap"><em>Storm coming in</em><br>Watercolour, 2024</div>
+      </div>
+      <div class="tile" style="background-image:url('../assets/painting-3.png')">
+        <span class="num">03</span>
+        <div class="cap"><em>October light, beech wood</em><br>Watercolour, 2025</div>
+      </div>
+      <div class="tile" style="background-image:url('../assets/painting-4.png')">
+        <span class="num">04</span>
+        <div class="cap"><em>Birch stand, late afternoon</em><br>Watercolour, 2024</div>
+      </div>
+      <div class="tile" style="background-image:url('../assets/painting-5.png')">
+        <span class="num">05</span>
+        <div class="cap"><em>River edge, autumn</em><br>Watercolour, 2025</div>
+      </div>
+    </div>
+    <div class="hero-split">
+      <div class="left" style="background-image:url('../assets/painting-3.png')"></div>
+      <div class="right">
+        <div style="background-image:url('../assets/painting-1.png')"></div>
+        <div style="background-image:url('../assets/painting-5.png')"></div>
+      </div>
+    </div>
+    <div class="hero-cap">
+      <span><em>October light, beech wood</em> · 2025 · Watercolour on cold-press paper</span>
+      <span>Photography by the artist</span>
+    </div>
+  </div>
+</div>
+
+<!-- Article -->
+<div class="wrap">
+  <article class="article">
+    <aside>
+      <div class="side-note">
+        <span class="label">In this studio</span>
+        Originals, prints and cards. Watercolour palettes set out on the bench. Coffee on, kettle warm.
+      </div>
+      <div class="side-note" style="margin-top:32px">
+        <span class="label">Also teaches</span>
+        Watercolour classes in venues across Somerset — full schedule on the artist's website.
+      </div>
+    </aside>
+    <div class="body-col">
+      <p class="lead">Chris works mainly in watercolours and uses a limited palette to produce paintings which appear fresh and vibrant.</p>
+      <p>His main inspiration comes from the countryside around his home on Exmoor — the wooded combes, river valleys, and high moor light that defines this stretch of West Somerset. Originals, prints and cards are on show throughout the festival.</p>
+      <p>Chris also holds watercolour classes in various venues across Somerset; full details are found on his website. Visitors are welcome to ask about the technique behind any piece on the wall — there's always a half-finished work on the bench to point at.</p>
+    </div>
+    <aside class="portrait-side">
+      <div class="img" style="background-image:url('../assets/artist-portrait.png')"></div>
+      <div class="caption">
+        <strong>Chris in the home studio</strong><br>
+        Wiveliscombe · April 2026
+      </div>
+    </aside>
+  </article>
+</div>
+
+<!-- Pull quote -->
+<section class="pullquote">
+  <blockquote>"A <em>limited palette</em> is a discipline — it makes you look harder at the colour that's already there."</blockquote>
+  <div class="attrib">— Chris Howe, in conversation</div>
+</section>
+
+<!-- Schedule -->
+<section class="panel">
+  <div class="wrap">
+    <div class="section-rule">
+      <div class="num">01</div>
+      <h2>When you can <em>visit</em></h2>
+      <p class="lead">Studio open three days during the festival. Drop in — no booking required.</p>
+    </div>
+
+    <div class="calendar">
+      <div class="cal-row">
+        <div class="cal-cell"><div class="dow">Wed</div><div class="num">1<em>Jul</em></div><div class="closed">Closed</div></div>
+        <div class="cal-cell open"><div class="dow">Thu</div><div class="num">2<em>Jul</em></div><div class="hours">10:00 — 12:00</div></div>
+        <div class="cal-cell open"><div class="dow">Fri</div><div class="num">3<em>Jul</em></div><div class="hours">10:00 — 13:00</div></div>
+        <div class="cal-cell open"><div class="dow">Sat</div><div class="num">4<em>Jul</em></div><div class="hours">11:00 — 15:00</div></div>
+        <div class="cal-cell"><div class="dow">Sun</div><div class="num">5<em>Jul</em></div><div class="closed">Closed</div></div>
+      </div>
+      <div class="cal-row">
+        <div class="cal-cell"><div class="dow">Mon</div><div class="num">6<em>Jul</em></div><div class="closed">Closed</div></div>
+        <div class="cal-cell"><div class="dow">Tue</div><div class="num">7<em>Jul</em></div><div class="closed">Closed</div></div>
+        <div class="cal-cell"><div class="dow">Wed</div><div class="num">8<em>Jul</em></div><div class="closed">Closed</div></div>
+        <div class="cal-cell"><div class="dow">Thu</div><div class="num">9<em>Jul</em></div><div class="closed">Closed</div></div>
+        <div class="cal-cell"><div class="dow">Fri</div><div class="num">10<em>Jul</em></div><div class="closed">Closed</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Visit -->
+<section class="panel" style="padding-top: 0">
+  <div class="wrap">
+    <div class="section-rule">
+      <div class="num">02</div>
+      <h2>Where to <em>find us</em></h2>
+      <p class="lead">In the centre of Wiveliscombe, next to the carpark. Look for the open studio sign on the gate.</p>
+    </div>
+
+    <div class="visit">
+      <div class="map-frame">
+        <div id="map"></div>
+      </div>
+      <div class="addr-stack">
+        <div class="addr-block">
+          <div class="l">Address</div>
+          <div class="v">12 The Street</div>
+          <div class="sub">Wiveliscombe · Somerset · TA2 1PO</div>
+        </div>
+        <div class="addr-block">
+          <div class="l">what3words</div>
+          <a class="what3words" href="#">the.place.where</a>
+        </div>
+        <div class="addr-block">
+          <div class="l">Facilities</div>
+          <div class="facilities">
+            <span class="chip">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="3"/><path d="M5 21a7 7 0 0 1 14 0"/><circle cx="12" cy="9" r="6" /></svg>
+              Wheelchair access
+            </span>
+            <span class="chip">
+              <svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="1"/><circle cx="7.5" cy="18" r="1.5"/><circle cx="16.5" cy="18" r="1.5"/></svg>
+              Parking on site
+            </span>
+            <span class="chip">
+              <svg viewBox="0 0 24 24"><path d="M4 18h16M6 18l1-9h10l1 9M9 9V6a3 3 0 0 1 6 0v3"/></svg>
+              Tea &amp; biscuits
+            </span>
+            <span class="chip">
+              <svg viewBox="0 0 24 24"><path d="M5 17c2-3 5-3 7-3s5 0 7 3M9 7c0 2 1 3 3 3s3-1 3-3-1-3-3-3-3 1-3 3z"/></svg>
+              Assistance dogs
+            </span>
+          </div>
+        </div>
+        <a class="directions-cta" href="#">Get directions →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Other artists -->
+<section class="panel">
+  <div class="wrap">
+    <div class="section-rule">
+      <div class="num">03</div>
+      <h2>Also in <em>Wiveliscombe</em></h2>
+      <p class="lead">Eleven other studios within walking distance of Chris's. Make an afternoon of it.</p>
+    </div>
+
+    <div class="others">
+      <a href="#" class="a-card">
+        <div class="thumb" style="background:linear-gradient(135deg,#2a3a5e 0%,#7a4a30 100%)"></div>
+        <div class="meta"><span>Studio 008</span><span>↗</span></div>
+        <div class="name">David North</div>
+        <div class="tagline">Stone carving and architectural fragments.</div>
+      </a>
+      <a href="#" class="a-card">
+        <div class="thumb" style="background:linear-gradient(135deg,#3a5a3a 0%,#c8a55a 100%)"></div>
+        <div class="meta"><span>Studio 009</span><span>↗</span></div>
+        <div class="name">John Abraham</div>
+        <div class="tagline">Black-and-white landscape photography.</div>
+      </a>
+      <a href="#" class="a-card">
+        <div class="thumb" style="background:linear-gradient(135deg,#7e3838 0%,#d8a878 100%)"></div>
+        <div class="meta"><span>Studio 011</span><span>↗</span></div>
+        <div class="name">John Smiths</div>
+        <div class="tagline">Oil paintings of harbour towns.</div>
+      </a>
+      <a href="#" class="a-card">
+        <div class="thumb" style="background:linear-gradient(135deg,#3a3a3a 0%,#a89878 100%)"></div>
+        <div class="meta"><span>Studio 016</span><span>↗</span></div>
+        <div class="name">Mel North</div>
+        <div class="tagline">Hand-thrown stoneware vessels.</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="top">
+      <div>
+        <h3>Ten Parishes<br><em>Festival</em></h3>
+        <p style="margin-top:24px;max-width:380px">Ten parishes. One week. Open studios across West Somerset, 1—10 July 2026. Free to all.</p>
+      </div>
+      <div>
+        <div class="col-label">Discover</div>
+        <ul>
+          <li><a href="#">All artists</a></li>
+          <li><a href="#">Parishes</a></li>
+          <li><a href="#">Events &amp; talks</a></li>
+          <li><a href="#">Plan a route</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="col-label">Festival</div>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Get involved</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="col-label">Newsletter</div>
+        <p style="margin: 12px 0">News of new artists and events.</p>
+        <form onsubmit="event.preventDefault()" style="display:flex;gap:6px;margin-top:8px">
+          <input type="email" placeholder="you@example.com" style="flex:1;background:transparent;border:1px solid rgba(244,239,227,0.3);color:var(--paper);padding:10px 12px;font:inherit;font-size:13px">
+          <button style="background:var(--orange);color:white;border:0;padding:10px 14px;font:inherit;font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;cursor:pointer">Join</button>
+        </form>
+      </div>
+    </div>
+    <div class="legal">
+      <div>© Ten Parishes Festival · Wiveliscombe Area Partnership</div>
+      <div>Charity 1132983 · Privacy · Terms</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('.variant-switch button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.variant-switch button').forEach(b => b.classList.remove('on'));
+      btn.classList.add('on');
+      document.body.dataset.hero = btn.dataset.h;
+    });
+  });
+
+  const map = L.map('map', {
+    zoomControl: true, scrollWheelZoom: false, attributionControl: true
+  }).setView([51.0413, -3.3022], 15);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '© OpenStreetMap'
+  }).addTo(map);
+
+  const pin = L.divIcon({
+    className: 'tpf-pin',
+    html: '<div style="width:32px;height:32px;background:#E8602A;border:3px solid #FBF7EC;border-radius:50% 50% 50% 0;transform:rotate(-45deg);box-shadow:0 4px 14px rgba(0,0,0,0.3)"></div>',
+    iconSize: [32, 32], iconAnchor: [16, 32]
+  });
+  L.marker([51.0413, -3.3022], { icon: pin }).addTo(map);
+</script>
+</body>
+</html>
