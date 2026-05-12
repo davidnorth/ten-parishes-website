@@ -1,5 +1,5 @@
 <?php $_mapId = 'map-' . bin2hex(random_bytes(4)); ?>
-<div id="<?= $_mapId ?>" style="height:280px"></div>
+<div id="<?= $_mapId ?>" style="width: 550px; height:440px"></div>
 <script>
 (function () {
   const map = L.map('<?= $_mapId ?>', { scrollWheelZoom: false }).setView([<?= (float) $lat ?>, <?= (float) $lng ?>], 15);

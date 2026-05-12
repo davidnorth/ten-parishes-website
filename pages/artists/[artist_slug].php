@@ -84,7 +84,7 @@ $otherArtists = $artist['venue_id'] ? $db->query("
 
 </section>
 
-<section aria-labelledby="name-heading" class="flex flex-end">
+<section aria-labelledby="name-heading" class="flex flex-end border-bottom">
   <div>
     <h1 id="name-heading"><?= htmlspecialchars($artist['name']) ?></h1>
     <?php if (!empty($artist['disciplines'])): ?>
@@ -109,7 +109,7 @@ $otherArtists = $artist['venue_id'] ? $db->query("
   </div>
 </section>
 
-<section id="venue" aria-labelledby="venue-heading">
+<section id="venue" aria-labelledby="venue-heading" class="border-bottom">
   <div>
     <?php if ($venue['latitude'] && $venue['longitude']): ?>
       <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
@@ -118,21 +118,42 @@ $otherArtists = $artist['venue_id'] ? $db->query("
     <?php endif ?>
   </div>
   <div>
-    <h2 class="text-lg" id="venue-heading">Location</h2>
+
     <?php if ($venue['address']): ?>
-      <p><?= nl2br(htmlspecialchars($venue['address'])) ?></p>
+      <h3>Address</h3>
+      <p class="text-md"><?= nl2br(htmlspecialchars($venue['address'])) ?></p>
+    <?php endif ?>
+    <?php if ($venue['directions']): ?>
+      <p><?= nl2br(htmlspecialchars($venue['directions'])) ?></p>
     <?php endif ?>
 
     <?php if ($venue['what_3_words']): ?>
+      <h3>What3words</h3>
       <?php $w3w = ltrim($venue['what_3_words'], '/'); ?>
       <p>
         <a href="https://what3words.com/<?= htmlspecialchars(urlencode($w3w)) ?>">///<?= htmlspecialchars($w3w) ?></a>
       </p>
     <?php endif ?>
 
-    <?php if ($venue['directions']): ?>
-      <p><?= nl2br(htmlspecialchars($venue['directions'])) ?></p>
-    <?php endif ?>
+
+    <h3>Facilities</h3>
+    <p class="flex gap-sm facilities">
+    <?php if ($venue['refreshments']): ?>
+      <span class="chip"><iconify-icon icon="ph:coffee" aria-hidden="true"></iconify-icon> <?= htmlspecialchars($venue['refreshments']) ?></span>
+      <?php endif ?>
+      <?php if ($venue['accessibility']): ?>
+      <span class="chip"><iconify-icon icon="ph:wheelchair" aria-hidden="true"></iconify-icon> <?= htmlspecialchars($venue['accessibility']) ?></span>
+      <?php endif ?>
+      <?php if ($venue['parking']): ?>
+      <span class="chip"><iconify-icon icon="ph:car" aria-hidden="true"></iconify-icon> <?= htmlspecialchars($venue['parking']) ?></span>
+      <?php endif ?>
+      <?php if ($venue['dog_policy']): ?>
+      <span class="chip"><iconify-icon icon="ph:paw-print" aria-hidden="true"></iconify-icon> <?= htmlspecialchars($venue['dog_policy']) ?></span>
+      <?php endif ?>
+    </p>
+
+
+
   </div>
 </section>
 
@@ -151,33 +172,21 @@ $otherArtists = $artist['venue_id'] ? $db->query("
   </ul>
 </section>
 
-<section>
-  <dl class="amenity-list">
+<section class="facilities">
+  <p class="flex gap-sm facilities">
    <?php if ($venue['refreshments']): ?>
-    <div>
-      <dt><iconify-icon icon="ph:coffee" class="icon-medium" aria-hidden="true"></iconify-icon></dt>
-      <dd><?= nl2br(htmlspecialchars($venue['refreshments'])) ?></dd>
-    </div>
+    <span class="chip"><iconify-icon icon="ph:coffee" aria-hidden="true"></iconify-icon> <?= htmlspecialchars($venue['refreshments']) ?></span>
     <?php endif ?>
     <?php if ($venue['accessibility']): ?>
-    <div>
-      <dt><iconify-icon icon="ph:wheelchair" class="icon-medium" aria-hidden="true"></iconify-icon></dt>
-      <dd><?= nl2br(htmlspecialchars($venue['accessibility'])) ?></dd>
-    </div>
+    <span class="chip"><iconify-icon icon="ph:wheelchair" aria-hidden="true"></iconify-icon> <?= htmlspecialchars($venue['accessibility']) ?></span>
     <?php endif ?>
     <?php if ($venue['parking']): ?>
-    <div>
-      <dt><iconify-icon icon="ph:car" class="icon-medium" aria-hidden="true"></iconify-icon></dt>
-      <dd><?= nl2br(htmlspecialchars($venue['parking'])) ?></dd>
-    </div>
+    <span class="chip"><iconify-icon icon="ph:car" aria-hidden="true"></iconify-icon> <?= htmlspecialchars($venue['parking']) ?></span>
     <?php endif ?>
     <?php if ($venue['dog_policy']): ?>
-    <div>
-      <dt><iconify-icon icon="ph:paw-print" class="icon-medium" aria-hidden="true"></iconify-icon></dt>
-      <dd><?= htmlspecialchars($venue['dog_policy']) ?></dd>
-    </div>
+    <span class="chip"><iconify-icon icon="ph:paw-print" aria-hidden="true"></iconify-icon> <?= htmlspecialchars($venue['dog_policy']) ?></span>
     <?php endif ?>
-  </dl>
+  </p>
 </section>
 
 <section aria-labelled-by="other-artists-heading">
