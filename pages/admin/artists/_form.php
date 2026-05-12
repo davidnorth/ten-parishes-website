@@ -36,6 +36,11 @@
     <textarea name="body_html" id="body-html-input" class="hidden"><?= htmlspecialchars($record['body_html'] ?? '') ?></textarea>
   </div>
   <div>
+    <label class="block text-sm font-medium text-gray-700 mb-1">Website</label>
+    <input type="url" name="website" value="<?= htmlspecialchars($record['website'] ?? '') ?>"
+           class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+  </div>
+  <div>
     <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
     <input type="email" name="email" value="<?= htmlspecialchars($record['email'] ?? '') ?>"
            class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">

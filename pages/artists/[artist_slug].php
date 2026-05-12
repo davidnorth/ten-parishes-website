@@ -44,6 +44,9 @@ $images = $db->select('images', '*', ['artist_id' => $artist['id']]);
 
 $venue = $db->get('venues', '*', ['id' => $artist['venue_id']]);
 
+
+$parish = $db->get('parishes', '*', ['id' => $venue['parish_id']]);
+
 $otherArtists = $artist['venue_id'] ? $db->query("
     SELECT a2.name, a2.slug
     FROM artists a2
@@ -58,6 +61,14 @@ $otherArtists = $artist['venue_id'] ? $db->query("
 ?>
 
 <div class="page-grid">
+
+<section class="breadcrumb">
+  <a href="/artists">Artists</a>
+  <span>/</span>
+  <span><a href="/parishes/<?= $parish['slug'] ?>"><?= htmlspecialchars($parish['name']) ?></a></span>
+  <span>/</span>
+  <?= htmlspecialchars($artist['name']) ?>
+</section>
 
 <section class="full-bleed-special">
 
@@ -77,10 +88,18 @@ $otherArtists = $artist['venue_id'] ? $db->query("
   <div>
     <h1 id="name-heading"><?= htmlspecialchars($artist['name']) ?></h1>
     <?php if (!empty($artist['disciplines'])): ?>
-      <p class="weight-bold text-md">Disciplines: <?= htmlspecialchars(implode(', ', array_map('trim', explode(',', $artist['disciplines'])))) ?></p>
+      <p class="flex gap-sm">
+        <?php foreach (explode(',', $artist['disciplines']) as $discipline): ?>
+          <span class="chip"><?= htmlspecialchars(trim($discipline)) ?></span>
+        <?php endforeach ?>
+      </p>
     <?php endif ?>
-    <div class="readable-max-width">
-    <?= $artist['body_html'] ?>
+
+    <div class="prose readable-max-width">
+      <?= $artist['body_html'] ?>
+    <?php if (!empty($artist['website'])): ?>
+    <p><a href="<?= htmlspecialchars($artist['website']) ?>" target="_blank" rel="noopener">Visit <?= formatURL($artist['website']) ?></a></p>
+    <?php endif ?>
     </div>
   </div>
   <div>

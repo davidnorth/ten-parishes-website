@@ -39,7 +39,6 @@
 
 .flex {
   display: flex;
-  gap: var(--space-md);
   &.center {
     align-items: center;
     justify-content: center;
@@ -59,4 +58,13 @@
 
 .readable-max-width {
   max-width: 600px;
+}
+
+
+.chip {
+  border-radius: 9999px;
+  border: 1px solid var(--border-color);
+  padding: var(--space-xs) var(--space-sm);
+  display: inline-block;
+  font-size: var(--text-sm);
 }

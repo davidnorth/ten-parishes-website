@@ -25,6 +25,7 @@ if ($req->isPost()) {
         'email'             => $req->params['email'] ?: null,
         'phone'             => $req->params['phone'] ?: null,
         'short_description' => $req->params['short_description'] ?: null,
+        'website'           => $req->params['website'] ?: null,
         'picture_id'        => $pictureId,
         'approved'          => isset($req->params['approved']) ? 1 : 0,
         'disciplines'       => (function($vals) {
