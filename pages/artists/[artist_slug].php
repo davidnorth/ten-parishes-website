@@ -35,7 +35,9 @@ $start = new DateTime(FestivalOptions::START_DATE);
 for ($i = 0; $i < 10; $i++) {
     $dt = (clone $start)->modify("+$i days");
     $festivalDays[] = [
-        'label' => $dt->format('M') . ' ' . ordinal((int) $dt->format('j')),
+        'day'   => $dt->format('D'),
+        'date'  => ordinal((int) $dt->format('j')),
+        'month' => $dt->format('F'),
         'times' => $timesByDate[$dt->format('Y-m-d')] ?? '',
     ];
 }
@@ -58,6 +60,15 @@ $otherArtists = $artist['venue_id'] ? $db->query("
     AND a2.approved = 1
     ORDER BY a2.name
 ")->fetchAll(PDO::FETCH_ASSOC) : [];
+
+$otherArtistsInVenue = $artist['venue_id'] ? $db->select('artists', ['name', 'slug'], [
+    'venue_id' => $artist['venue_id'],
+    'id[!]'    => $artist['id'],
+    'approved' => 1,
+    'ORDER'    => 'name',
+]) : [];
+
+
 ?>
 
 <div class="page-grid">
@@ -84,7 +95,7 @@ $otherArtists = $artist['venue_id'] ? $db->query("
 
 </section>
 
-<section aria-labelledby="name-heading" class="flex flex-end border-bottom">
+<section aria-labelledby="name-heading" class="flex flex-end border-bottom gap-2xl">
   <div>
     <h1 id="name-heading"><?= htmlspecialchars($artist['name']) ?></h1>
     <?php if (!empty($artist['disciplines'])): ?>
@@ -124,6 +135,7 @@ $otherArtists = $artist['venue_id'] ? $db->query("
       <p class="text-md"><?= nl2br(htmlspecialchars($venue['address'])) ?></p>
     <?php endif ?>
     <?php if ($venue['directions']): ?>
+      <h3>Directions</h3>
       <p><?= nl2br(htmlspecialchars($venue['directions'])) ?></p>
     <?php endif ?>
 
@@ -157,40 +169,34 @@ $otherArtists = $artist['venue_id'] ? $db->query("
   </div>
 </section>
 
-<section>
+<?php if (count($otherArtistsInVenue) > 0): ?>
+  <section aria-labelledby="other-venue-artists-heading" class="border-bottom">
+    <h2 id="other-venue-artists-heading">Other artists at this venue</h2>
+    <ul>
+      <?php foreach ($otherArtistsInVenue as $other): ?>
+      <li><a href="/artists/<?= htmlspecialchars($other['slug']) ?>"><?= htmlspecialchars($other['name']) ?></a></li>
+      <?php endforeach ?>
+    </ul>
+  </section>
+<?php endif ?>
+
+
+<section aria-labelledby="event-dates-heading" class="border-bottom">
+  <h2 id="event-dates-heading">Event Dates &amp; Times</h2>
   <ul class="event-dates">
     <?php foreach ($festivalDays as $day): ?>
-    <li>
-      <div><?= $day['label'] ?></div>
-      <?php if($day['times']): ?>
-        <div class="times"><?= htmlspecialchars($day['times']) ?></div>
-      <?php else: ?>
-        <div>&nbsp;</div>
-      <?php endif ?>
+    <li class="<?= $day['times'] ? 'open' : 'closed' ?>">
+      <div class="day"><?= htmlspecialchars($day['day']) ?></div>
+      <div class="date"><?= htmlspecialchars($day['date']) ?></div>
+      <div class="month"><?= htmlspecialchars($day['month']) ?></div>
+      <div class="times"><?= $day['times'] ? htmlspecialchars($day['times']) : 'Closed' ?></div>
     </li>
     <?php endforeach ?>
   </ul>
 </section>
 
-<section class="facilities">
-  <p class="flex gap-sm facilities">
-   <?php if ($venue['refreshments']): ?>
-    <span class="chip"><iconify-icon icon="ph:coffee" aria-hidden="true"></iconify-icon> <?= htmlspecialchars($venue['refreshments']) ?></span>
-    <?php endif ?>
-    <?php if ($venue['accessibility']): ?>
-    <span class="chip"><iconify-icon icon="ph:wheelchair" aria-hidden="true"></iconify-icon> <?= htmlspecialchars($venue['accessibility']) ?></span>
-    <?php endif ?>
-    <?php if ($venue['parking']): ?>
-    <span class="chip"><iconify-icon icon="ph:car" aria-hidden="true"></iconify-icon> <?= htmlspecialchars($venue['parking']) ?></span>
-    <?php endif ?>
-    <?php if ($venue['dog_policy']): ?>
-    <span class="chip"><iconify-icon icon="ph:paw-print" aria-hidden="true"></iconify-icon> <?= htmlspecialchars($venue['dog_policy']) ?></span>
-    <?php endif ?>
-  </p>
-</section>
-
 <section aria-labelled-by="other-artists-heading">
-<h3 id="other-artists-heading">Other artists in this parish</h3>
+<h2 id="other-artists-heading">Other artists in this parish</h2>
 <ul>
   <?php foreach ($otherArtists as $other): ?>
   <li><a href="/artists/<?= htmlspecialchars($other['slug']) ?>"><?= htmlspecialchars($other['name']) ?></a></li>

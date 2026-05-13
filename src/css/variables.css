@@ -48,5 +48,7 @@
 
 
   --border-color: #D2CDC2;
+  --border-color-light: #E6E2D9;
   --standard-border: 1px solid var(--border-color);
+  --light-border: 1px solid var(--border-color-light);
 }

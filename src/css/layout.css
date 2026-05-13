@@ -235,24 +235,45 @@ button, a.button {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   justify-content: space-between;
-  padding: var(--space-md) 0;
-  border-radius: 10px;
-  gap: var(--space-sm);
+
+  background: var(--border-color);
+  border: var(--light-border);
+  gap: 1px;
+
   li {
-    background: #eee;
-    color: #999;
-    padding: var(--space-sm);
+    background: white;
+    padding: var(--space-md);
     flex-grow: 1;
-    text-align: center;
-    border-bottom: 5px solid #ccc;
-    > div:first-child {
-      font-weight: var(--weight-bold);
+
+    .day, .month {
+      text-transform: uppercase;
+      color: var(--text-color-light);
+      font-size: var(--text-sm);
     }
-    &:has(.times) {
-      color: var(--text-color);
-      background: var(--secondary-color-lighter);
-      border-bottom-color: var(--secondary-color);
+
+    .day {
     }
+
+    .date {
+      font-size: var(--text-xl);
+      font-weight: var(--weight-light);
+    }
+
+    .month {
+    }
+    .times {
+      font-size: var(--text-sm);
+    }
+
+    &.open {
+      &, > div { 
+        color: white;
+      }
+      background: var(--primary-color);
+    }
+
+
+
   }
 }
 
@@ -299,6 +320,11 @@ button, a.button {
   }
 }
 
+section {
+  img {
+    border: var(--standard-border);
+  }
+}
 
 section.breadcrumb {
   text-transform: uppercase;
