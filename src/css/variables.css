@@ -1,49 +1,61 @@
 :root {
 
   /* Ratio: 1.200 (Minor Third) */
-  --text-xs:   0.694rem; /* 11.11px */
-  --text-sm:   0.833rem; /* 13.33px */
-  --text-base: 1rem;     /* 16.00px (The Anchor) */
-  --text-md:   1.2rem;   /* 19.20px */
-  --text-lg:   1.44rem;  /* 23.04px */
-  --text-xl:   1.728rem; /* 27.65px */
-  --text-2xl:  2.074rem; /* 33.18px */
-  --text-3xl:  2.488rem; /* 39.81px */
-  --text-4xl:  2.986rem; /* 47.78px */
-  --text-5xl:  3.583rem; /* 57.33px */
-  --text-6xl: 4.3rem; /* ~68.8px */
+  --text-xs: 0.694rem;
+  /* 11.11px */
+  --text-sm: 0.833rem;
+  /* 13.33px */
+  --text-base: 1rem;
+  /* 16.00px (The Anchor) */
+  --text-md: 1.2rem;
+  /* 19.20px */
+  --text-lg: 1.44rem;
+  /* 23.04px */
+  --text-xl: 1.728rem;
+  /* 27.65px */
+  --text-2xl: 2.074rem;
+  /* 33.18px */
+  --text-3xl: 2.488rem;
+  /* 39.81px */
+  --text-4xl: 2.986rem;
+  /* 47.78px */
+  --text-5xl: 3.583rem;
+  /* 57.33px */
+  --text-6xl: 4.3rem;
+  /* ~68.8px */
 
 
 
   /* Font weights */
-  --weight-light:     200;
-  --weight-regular:   400;
+  --weight-light: 200;
+  --weight-regular: 400;
   --weight-semi-bold: 500;
-  --weight-bold:      700;
+  --weight-bold: 700;
 
   /* Spacing scale */
-  --space-xs:   4px;
-  --space-sm:   8px;
+  --space-xs: 4px;
+  --space-sm: 8px;
   --space-base: 12px;
-  --space-md:   16px;
-  --space-lg:   24px;
-  --space-xl:   32px;
-  --space-2xl:  48px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
 
   /* Base Colors */
 
   --surface-color: #FAF8F3;
+  --surface-color-dark: #e0dacc;
 
-  --text-color:       #1a1a1a;
+  --text-color: #1a1a1a;
   --text-color-light: #797469;
-  --primary-color:    #EE7930;
-  --secondary-color:  #387FBA;
-  --tertiary-color:   #377C57;
+  --primary-color: #e38246;
+  --secondary-color: #387FBA;
+  --tertiary-color: #377C57;
 
   /* Derived Colours */
-  --text-color-lighter:      oklch(from var(--text-color)      calc(l + 0.3) c h);
-  --primary-color-lighter:   oklch(from var(--primary-color)   calc(l + 0.2) c h);
-  --primary-color-lightest:  oklch(from var(--primary-color)   calc(l + 0.4) c h);
+  --text-color-lighter: oklch(from var(--text-color) calc(l + 0.3) c h);
+  --primary-color-lighter: oklch(from var(--primary-color) calc(l + 0.2) c h);
+  --primary-color-lightest: oklch(from var(--primary-color) calc(l + 0.4) c h);
   --secondary-color-lighter: oklch(from var(--secondary-color) calc(l + 0.2) c h);
 
 

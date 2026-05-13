@@ -39,6 +39,34 @@ Festival
     Charity No. 1132983			
     </p>
 
+    <div>
+      <ul>
+        <li><a href="/artists">Artists</a></li>
+        <li><a href="/events">Events</a></li>
+        <li><a href="/parishes">Parishes</a></li>
+        <li><a href="/about-us">About</a></li>
+        <li><a href="/contact">Contact</a></li>
+</ul>
+
+    </div>
+
+    <div>
+    <h4>Participating Parishes</h4>
+    <ul>
+        <li><a href="/parishes/ashbrittle">Ashbrittle</a></li>
+        <li><a href="/parishes/bathealton">Bathealton</a></li>
+        <li><a href="/parishes/brompton-ralph">Brompton Ralph</a></li>
+        <li><a href="/parishes/chipstable">Chipstable</a></li>
+        <li><a href="/parishes/clatworthy">Clatworthy</a></li>
+        <li><a href="/parishes/fitzhead">Fitzhead</a></li>
+        <li><a href="/parishes/huish-champflower">Huish Champflower</a></li>
+        <li><a href="/parishes/milverton">Milverton</a></li>
+        <li><a href="/parishes/stawley">Stawley</a></li>
+        <li><a href="/parishes/wiveliscombe">Wiveliscombe</a></li>
+      </ul>
+    </p>
+</div>
+
   </footer>
 </body>
 </html>
