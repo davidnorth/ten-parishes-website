@@ -1,0 +1,20 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+      - vendor:/app/vendor
+
+  css:
+    build:
+      context: .
+      dockerfile: Dockerfile.css
+    volumes:
+      - .:/app
+      - node_modules:/app/node_modules
+
+volumes:
+  vendor:
+  node_modules:
