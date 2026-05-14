@@ -1,9 +1,9 @@
 <?php
 
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 
-if (file_exists(__DIR__ . '/../config/config.php')) {
-    require_once __DIR__ . '/../config/config.php';
+if (file_exists(__DIR__ . '/../../config/config.php')) {
+    require_once __DIR__ . '/../../config/config.php';
 }
 
 require_once __DIR__ . '/../lib/constants.php';
@@ -24,7 +24,7 @@ $match = $router->match($req->path);
 
 if (!$match) {
     http_response_code(404);
-    include __DIR__ . '/../public/404.html';
+    include __DIR__ . '/../../public/404.html';
     exit;
 }
 

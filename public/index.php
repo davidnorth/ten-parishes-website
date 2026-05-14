@@ -3,4 +3,4 @@ if (PHP_SAPI === 'cli-server') {
     $file = __DIR__ . parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     if (is_file($file)) return false;
 }
-require __DIR__ . '/../framework/bootstrap.php';
+require __DIR__ . '/../src/framework/bootstrap.php';

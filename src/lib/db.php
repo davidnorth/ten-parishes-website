@@ -5,7 +5,7 @@ use Medoo\Medoo;
 function get_db(): Medoo {
     static $db = null;
     if ($db === null) {
-        $dbPath = getenv('APP_DB') ?: (realpath(__DIR__ . '/../storage') . '/db.sqlite');
+        $dbPath = getenv('APP_DB') ?: (realpath(__DIR__ . '/../../storage') . '/db.sqlite');
         $db = new Medoo([
             'type'     => 'sqlite',
             'database' => $dbPath,

@@ -3,7 +3,7 @@
 // Called by Playwright's globalSetup — expects APP_DB env var to be set.
 
 require_once __DIR__ . '/../vendor/autoload.php';
-require_once __DIR__ . '/../lib/db.php';
+require_once __DIR__ . '/../src/lib/db.php';
 
 $testDbPath = getenv('APP_DB');
 if (!$testDbPath) {

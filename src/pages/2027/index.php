@@ -18,7 +18,8 @@
         <em>one festival.</em></h1>
 
         <p class="lede mt-md">
-          A ten‑day open‑studios festival across the villages and hamlets of West Somerset. Painters, sculptors, ceramicists, printmakers and makers open their doors to the public — for free.
+          A ten‑day open‑studios festival across the villages and hamlets of West Somerset where
+          painters, sculptors, ceramicists, printmakers and makers open their doors to the public.
         </p>
 
         <div class="mt-lg">

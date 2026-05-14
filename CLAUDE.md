@@ -27,9 +27,9 @@ Medoo is approved. Tailwind for admin only. Ask before adding anything else — 
 
 ## Routing
 
-URL paths map directly to files under `pages/`. Examples:
-- `/register/step-1` → `pages/register/step-1.php`
-- `/admin/artists/[id]/edit` → `pages/admin/artists/[id]/edit.php`
+URL paths map directly to files under `src/pages/`. Examples:
+- `/register/step-1` → `src/pages/register/step-1.php`
+- `/admin/artists/[id]/edit` → `src/pages/admin/artists/[id]/edit.php`
 
 `[param_name]` in a directory or filename becomes a dynamic segment; the value lands in `$req->params['param_name']`.
 
@@ -42,30 +42,30 @@ URL paths map directly to files under `pages/`. Examples:
 - `$layout` — set to a filename in `layouts/` to wrap output (set by `_init.php`, not by pages)
 
 Admin pages additionally have:
-- `$currentUser` — logged-in user row, set by `pages/admin/_init.php`
+- `$currentUser` — logged-in user row, set by `src/pages/admin/_init.php`
 
 ## Key `_init.php` files
 
 | File | What it does |
 |---|---|
-| `pages/_init.php` | Sets `$layout = 'default'`, starts session |
-| `pages/admin/_init.php` | Sets `$layout = 'admin'`, enforces auth, sets `$currentUser` |
-| `pages/register/_init.php` | Ensures `$_SESSION['registration']` exists; sets `$reg = &$_SESSION['registration']` |
+| `src/pages/_init.php` | Sets `$layout = 'default'`, starts session |
+| `src/pages/admin/_init.php` | Sets `$layout = 'admin'`, enforces auth, sets `$currentUser` |
+| `src/pages/register/_init.php` | Ensures `$_SESSION['registration']` exists; sets `$reg = &$_SESSION['registration']` |
 
 ## Library functions
 
-**`lib/helpers.php`** (loaded globally via framework):
+**`src/lib/helpers.php`** (loaded globally via framework):
 - `redirect(string $url): never` — sends Location header and exits
 
-**`lib/slug.php`**:
+**`src/lib/slug.php`**:
 - `slugify(string $text): string`
 - `unique_slug(Medoo $db, string $table, string $text, ?int $excludeId = null): string` — appends `-2`, `-3` etc. to avoid collisions; pass `$excludeId` on edit
 
-**`lib/cloudinary.php`**:
+**`src/lib/cloudinary.php`**:
 - `cloudinary_upload(string $tmpPath, string $fileName): string` — uploads to Cloudinary, returns `public_id`; throws `RuntimeException` on failure
 - `cloudinary_url(string $publicId, string $transform = 'w_800,c_limit'): string` — builds CDN URL
 
-**`lib/db.php`**:
+**`src/lib/db.php`**:
 - `get_db(): Medoo` — singleton; calls `init_schema()` on first run
 - `init_schema(Medoo $db): void` — `CREATE TABLE IF NOT EXISTS` for every table, followed by additive `ALTER TABLE ADD COLUMN` migration blocks (see venues and artists blocks as the pattern)
 
@@ -79,7 +79,7 @@ To create an admin user: `php scripts/create-user.php`
 
 ## DB migration pattern
 
-When adding columns to an existing table, follow the pattern in `lib/db.php` after the venues block:
+When adding columns to an existing table, follow the pattern in `src/lib/db.php` after the venues block:
 
 ```php
 $artistColumns = array_column(
@@ -106,7 +106,7 @@ foreach (['new_col' => 'TEXT'] as $col => $def) {
 
 ## Admin CRUD pattern
 
-See `pages/admin/artists/new.php` and `pages/admin/artists/[id]/edit.php` as the canonical examples.
+See `src/pages/admin/artists/new.php` and `src/pages/admin/artists/[id]/edit.php` as the canonical examples.
 
 ```php
 if ($req->isPost()) {
@@ -121,7 +121,7 @@ Edit pages load the record first; 404 if not found. Redirect after POST.
 
 ## Admin dynamic forms (event dates, images)
 
-Repeating sections use JS to add/remove rows with indexed array names (`event_dates[0][date]`, `new_image_file[0]`). PHP iterates `$req->params['event_dates'] ?? []` and `$_FILES['new_image_file']['tmp_name']`. See `pages/admin/artists/new.php` for the full pattern including Quill setup.
+Repeating sections use JS to add/remove rows with indexed array names (`event_dates[0][date]`, `new_image_file[0]`). PHP iterates `$req->params['event_dates'] ?? []` and `$_FILES['new_image_file']['tmp_name']`. See `src/pages/admin/artists/new.php` for the full pattern including Quill setup.
 
 ## Cloudinary image upload pattern
 
@@ -136,9 +136,9 @@ Store the returned `public_id` string in the DB. Render with `cloudinary_url($pu
 
 ## Map / location picker
 
-Admin pages include a reusable partial `pages/admin/_location_picker.php` (uses Tailwind; Leaflet loaded by admin layout). Set `$locationLat` and `$locationLng` before requiring it. Outputs hidden inputs `latitude` and `longitude`.
+Admin pages include a reusable partial `src/pages/admin/_location_picker.php` (uses Tailwind; Leaflet loaded by admin layout). Set `$locationLat` and `$locationLng` before requiring it. Outputs hidden inputs `latitude` and `longitude`.
 
-Public pages use `pages/register/_location_picker.php` — identical logic, Tailwind classes stripped. The page must load Leaflet inline before including it:
+Public pages use `src/pages/register/_location_picker.php` — identical logic, Tailwind classes stripped. The page must load Leaflet inline before including it:
 
 ```html
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
@@ -148,7 +148,7 @@ Public pages use `pages/register/_location_picker.php` — identical logic, Tail
 
 ## Multi-step public forms (registration flow)
 
-See `pages/register/` as the canonical example.
+See `src/pages/register/` as the canonical example.
 
 State lives in `$_SESSION['registration']` (initialised by `_init.php` as `$reg`). Each step:
 - GET: render form pre-filled from session
@@ -178,9 +178,9 @@ Three layers used in the registration flow:
 ## Public pages and approved artists
 
 Any page that lists or loads artists must filter by `approved = 1`. Currently enforced in:
-- `pages/artists.php` — `WHERE artists.approved = 1`
-- `pages/artists/[artist_slug].php` — 404 if `!$artist['approved']`
-- `pages/parishes/[parish_slug]/index.php` — `AND artists.approved = 1`
+- `src/pages/artists.php` — `WHERE artists.approved = 1`
+- `src/pages/artists/[artist_slug].php` — 404 if `!$artist['approved']`
+- `src/pages/parishes/[parish_slug]/index.php` — `AND artists.approved = 1`
 
 ## SQLite MCP
 
