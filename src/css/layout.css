@@ -402,12 +402,6 @@ a.button {
   }
 }
 
-section {
-  img {
-    border: var(--standard-border);
-  }
-}
-
 section.breadcrumb {
   text-transform: uppercase;
   font-size: var(--text-sm);

@@ -14,7 +14,7 @@
 <body>
 
 <header>
-  <a href="/" class="site-title">10 Parishes 
+  <a href="/2027" class="site-title">10 Parishes 
   <span class="color-primary"> Festival </span> </a>
   <nav>
   </nav>
