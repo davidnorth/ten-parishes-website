@@ -1,6 +1,6 @@
 <div class="page-grid">
 
-  <section class="hero">
+  <section class="border-bottom">
 
   <div class="two-up items-center">
 
@@ -49,7 +49,7 @@
   </section>
 
 
-  <section class="about">
+  <section class="two-up">
     <div>
       <div class="eyebrow">About the festival</div>
       <h2>An open invitation, from one studio to the next.</h2>
@@ -59,7 +59,7 @@
         For ten days each July, the studios, sheds, kitchens and front rooms of ten Somerset parishes open to anyone who wants to walk in. Visitors meet the people behind the work, see how it's made, and — if they like — take something home.
       </p>
       <p>
-        <strong>The 2026 edition runs 1—10 July</strong>, organised by the Wiveliscombe Area Partnership. We're now collecting registrations from artists living or working in the ten parishes. Each artist gets a profile page, a printed trail‑map listing, and a spot on the festival route.
+        <strong>The 2026 festival runs 1—10 July</strong>, organised by the Wiveliscombe Area Partnership. We're now collecting registrations from artists living or working in the ten parishes. Each artist gets a profile page, a printed trail‑map listing, and a spot on the festival route.
       </p>
     </div>
   </section>

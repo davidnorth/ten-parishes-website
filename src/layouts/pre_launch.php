@@ -25,29 +25,30 @@
 </main>
 
 <footer>
-  <div>
-    <div class="brand-foot">Ten Parishes <em>Festival</em></div>
-    <p>An open‑studios festival across ten parishes of West Somerset. Organised by the Wiveliscombe Area Partnership, charity 1132983.</p>
-  </div>
-  <div>
-    <div class="col-label">Contact</div>
-    <ul>
-      <li><a href="mailto:hello@tenparishes.org">hello@tenparishes.org</a></li>
-      <li><a href="#">Volunteer with us</a></li>
-      <li><a href="#">Press &amp; partnerships</a></li>
-    </ul>
-  </div>
-  <div>
-    <div class="col-label">Festival</div>
-    <ul>
-      <li><a href="#">Previous editions</a></li>
-      <li><a href="#">Sponsors</a></li>
-      <li><a href="#">Privacy</a></li>
-    </ul>
+  <div class="grid gap-xl">
+    <div>
+      <div>Ten Parishes Festival</div>
+      <p>An open‑studios festival across ten parishes of West Somerset. Organised by the Wiveliscombe Area Partnership, charity 1132983.</p>
+    </div>
+    <div>
+      <div class="col-label">Contact</div>
+      <ul>
+        <li><a href="mailto:10parishesfestival.org.uk">hello@tenparishes.org</a></li>
+        <li><a href="#">Press &amp; partnerships</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="col-label">Festival</div>
+      <ul>
+        <li><a href="#">Previous editions</a></li>
+        <li><a href="#">Sponsors</a></li>
+        <li><a href="#">Privacy</a></li>
+      </ul>
+    </div>
   </div>
   <div class="legal">
-    <div>© 2026 Ten Parishes Festival · Wiveliscombe Area Partnership</div>
-    <div>Site goes fully live · May 2026</div>
+    <div>&copy; 2027 Ten Parishes Festival · Wiveliscombe Area Partnership</div>
+    <div>Full site launch · May 2026</div>
   </div>
 </footer>
 
