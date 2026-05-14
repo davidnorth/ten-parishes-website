@@ -27,7 +27,7 @@
 <footer>
   <div class="grid gap-xl">
     <div>
-      <div>Ten Parishes Festival</div>
+      <div class="col-label">10 Parishes Festival</div>
       <p>An open‑studios festival across ten parishes of West Somerset. Organised by the Wiveliscombe Area Partnership, charity 1132983.</p>
     </div>
     <div>
