@@ -13,9 +13,11 @@ h1 {
 }
 
 h2 { 
-font-size: var(--text-2xl); 
-font-weight: var(--weight-light);
+  font-size: var(--text-2xl); 
+  font-weight: var(--weight-light);
+  line-height: 1.2em;
 }
+
 h3 { font-size: var(--text-xl); }
 h4 { font-size: var(--text-lg); }
 

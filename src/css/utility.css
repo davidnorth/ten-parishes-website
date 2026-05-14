@@ -42,12 +42,18 @@
 .text-sm { font-size: var(--text-sm); }
 .text-md { font-size: var(--text-md); }
 .text-lg { font-size: var(--text-lg); }
+.text-xl { font-size: var(--text-xl); }
+.text-2xl { font-size: var(--text-2xl); }
+.text-3xl { font-size: var(--text-3xl); }
 
 
 /* ── Colour utilities ── */
 
 .color-primary { color: var(--primary-color); }
-.bg-primary       { background: var(--primary-color); }
+.bg-primary       { 
+  background: var(--primary-color); 
+  color: white;
+}
 .bg-primary-light { background: var(--primary-color-lighter); }
 .bg-secondary     { background: var(--secondary-color); }
 .bg-tertiary      { background: var(--tertiary-color); }
@@ -94,6 +100,22 @@
   font-size: var(--text-sm);
   display: flex;
   gap: var(--space-xs);
+  align-items: center;
+}
+
+
+
+
+/* two-up . 2 cols with standard gap. single on mobile*/
+.two-up {
+  display: grid;
+  gap: var(--space-2xl);
+  @media (--tablet) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.items-center {
   align-items: center;
 }
 

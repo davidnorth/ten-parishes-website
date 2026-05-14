@@ -63,7 +63,6 @@ footer {
   padding: var(--space-2xl) var(--space-xl);
   font-size: var(--text-xs);
   background: var(--surface-color-dark);
-  margin-top: var(--space-2xl);
 
   p {
     grid-column: content;
@@ -83,7 +82,7 @@ footer {
 
   >section {
     grid-column: content;
-    padding: var(--space-2xl) 0;
+    padding: var(--space-3xl) 0;
   }
 
   >.full-bleed {
@@ -169,6 +168,18 @@ form {
     line-height: 1.6;
   }
 
+  input.minimal {
+    border: none;
+    border-bottom: 1px solid #E9C3A6;
+    background: none;
+    color: white;
+    border-radius: 0;
+    &:focus {
+      outline: none;
+      border-bottom-color: white;
+    }
+  }
+
   .form-actions {
     display: flex;
     justify-content: space-between;
@@ -203,7 +214,6 @@ a.button {
   color: #fff;
   border: none;
   padding: var(--space-base) var(--space-lg);
-  border-radius: 4px;
   cursor: pointer;
   text-decoration: none;
   display: inline-block;
@@ -216,6 +226,10 @@ a.button {
   &.ghost {
     background: none;
     border: none;
+    color: var(--primary-color);
+  }
+  &.reverse {
+    background: white;
     color: var(--primary-color);
   }
 }
@@ -397,18 +411,6 @@ section#venue {
     font-weight: var(--weight-light);
     margin-bottom: var(--space-sm);
     color: var(--text-color-light);
-  }
-}
-
-
-
-
-/* two-up . 2 cols with standard gap. single on mobile*/
-.two-up {
-  display: grid;
-  gap: var(--space-2xl);
-  @media (--tablet) {
-    grid-template-columns: 1fr 1fr;
   }
 }
 

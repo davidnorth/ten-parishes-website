@@ -2,17 +2,17 @@
 
   <section class="hero">
 
-    <div class="eyebrow">
-      <span>2027 Edition</span>
-      <span class="dot"></span>
-      <span>1 — 10 July</span>
-      <span class="dot"></span>
-      <span>West Somerset</span>
-    </div>
-
-  <div class="two-up">
+  <div class="two-up items-center">
 
       <div>
+
+        <div class="eyebrow">
+          <span>2027 Edition</span>
+          <span class="dot"></span>
+          <span>1 — 10 July</span>
+          <span class="dot"></span>
+          <span>West Somerset</span>
+        </div>
 
         <h1>Ten parishes,<br>
         <em>one festival.</em></h1>
@@ -66,22 +66,26 @@
 
 
 
-  <section class="final-cta" aria-labelledby="final-cta-header">
-    <div class="wrap">
+  <section class="full-bleed bg-primary" id="final-cta" aria-labelledby="final-cta-header">
+    <div class="two-up items-center">
       <div>
-        <h2 id="final-cta-header">Ready to open<br>your studio?</h2>
+        <h2 id="final-cta-header" class="text-3xl">Ready to open<br>your studio?</h2>
         <p>Registration takes about five minutes.</p> 
         <div style="margin-top:32px">
-          <a class="button" href="#">
+          <a class="button reverse" href="#">
             Start your registration
           </a>
         </div>
       </div>
-      <form onsubmit="event.preventDefault()">
-        <label>Or just stay in the loop</label>
-        <input type="email" placeholder="you@example.com">
-        <button type="submit">Get festival updates</button>
-      </form>
+      <div>
+        <label>Subscribe for festival updates</label>
+        <form onsubmit="event.preventDefault()">
+          <input type="email" class="reverse minimal" placeholder="you@example.com">
+          <div>
+            <button type="submit" class="button reverse">Get festival updates</button>
+          </div>
+        </form>
+      </div>
     </div>
   </section>
 

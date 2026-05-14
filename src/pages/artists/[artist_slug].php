@@ -102,7 +102,7 @@ $otherArtistsInVenue = $artist['venue_id'] ? $db->select('artists', ['name', 'sl
     <div>
       <h1 id="name-heading"><?= htmlspecialchars($artist['name']) ?></h1>
       <?php if (!empty($artist['disciplines'])): ?>
-        <p class="flex gap-sm">
+        <p class="flex gap-sm mt-md">
           <?php foreach (explode(',', $artist['disciplines']) as $discipline): ?>
             <span class="chip"><?= htmlspecialchars(trim($discipline)) ?></span>
           <?php endforeach ?>
