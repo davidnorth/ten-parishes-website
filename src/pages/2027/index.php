@@ -14,15 +14,17 @@
           <span>West Somerset</span>
         </div>
 
-        <h1>Ten parishes,<br>
-        <em>one festival.</em></h1>
+        <h1>10 Parishes<br>
+        <em>Festival</em></h1>
 
-        <p class="lede mt-md">
-          A ten‑day open‑studios festival across the villages and hamlets of West Somerset where
-          painters, sculptors, ceramicists, printmakers and makers open their doors to the public.
+        <p class="lede mt-sm">
+          A ten‑day celebration of the arts across the villages and hamlets of West Somerset.
+          All types of artistic disciplines will be represented, from painting and textiles, photography, 
+          jewellery, ceramics, sculpture, music, installation and carving.
+
         </p>
 
-        <div class="mt-lg">
+        <div class="mt-xl">
           <a class="button" href="/2027/register">
             Register as an artist
           </a>
@@ -50,43 +52,21 @@
 
 
   <section class="two-up">
-    <div>
-      <div class="eyebrow">About the festival</div>
-      <h2>An open invitation, from one studio to the next.</h2>
-    </div>
-    <div class="about-body">
-      <p>
-        For ten days each July, the studios, sheds, kitchens and front rooms of ten Somerset parishes open to anyone who wants to walk in. Visitors meet the people behind the work, see how it's made, and — if they like — take something home.
-      </p>
-      <p>
-        <strong>The 2026 festival runs 1—10 July</strong>, organised by the Wiveliscombe Area Partnership. We're now collecting registrations from artists living or working in the ten parishes. Each artist gets a profile page, a printed trail‑map listing, and a spot on the festival route.
-      </p>
-    </div>
+
+<div>
+<h3>A feast of arts and crafts within the 10 Parishes.</h3>
+<p>The 10 Parishes Festival of Visual and Performing Arts is now firmly established as a major
+ West Somerset celebration in Wiveliscombe and the nine surrounding parishes.
+Started in September 2003, it is now a highly successful biennial event, supported by the large
+ number of artists, craftspeople and performers who have chosen to live and work in the area,
+ giving it a unique character and a widely acknowledged creative identity.</p>
+<p>The Festival grew out of the Wiveliscombe Area Market Town Initiative, which focuses on developing 
+local culture and creativity, employment, rural tourism and a sustainable, proactive approach to 
+the local environment and community life.</p>
+</div>
+
+
   </section>
 
-
-
-  <section class="full-bleed bg-primary" id="final-cta" aria-labelledby="final-cta-header">
-    <div class="two-up items-center">
-      <div>
-        <h2 id="final-cta-header" class="text-3xl">Ready to open<br>your studio?</h2>
-        <p>Registration takes about five minutes.</p> 
-        <div style="margin-top:32px">
-          <a class="button reverse" href="#">
-            Start your registration
-          </a>
-        </div>
-      </div>
-      <div>
-        <label>Subscribe for festival updates</label>
-        <form onsubmit="event.preventDefault()">
-          <input type="email" class="reverse minimal" placeholder="you@example.com">
-          <div>
-            <button type="submit" class="button reverse">Get festival updates</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </section>
 
 </div>

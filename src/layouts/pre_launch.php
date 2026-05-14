@@ -14,7 +14,7 @@
 <body>
 
 <header>
-  <a href="/" class="site-title">Ten Parishes 
+  <a href="/" class="site-title">10 Parishes 
   <span class="color-primary"> Festival </span> </a>
   <nav>
   </nav>
@@ -40,13 +40,12 @@
     <div>
       <div class="col-label">Festival</div>
       <ul>
-        <li><a href="#">Previous editions</a></li>
         <li><a href="#">Sponsors</a></li>
-        <li><a href="#">Privacy</a></li>
+        <li><a href="/2027/privacy">Privacy</a></li>
       </ul>
     </div>
   </div>
-  <div class="legal">
+  <div class="legal mt-xl">
     <div>&copy; 2027 Ten Parishes Festival · Wiveliscombe Area Partnership</div>
     <div>Full site launch · May 2026</div>
   </div>
