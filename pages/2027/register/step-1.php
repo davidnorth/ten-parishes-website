@@ -6,7 +6,7 @@ $values = $reg['artist'] ?? [];
 if ($req->isPost()) {
     // Honeypot check
     if (!empty($req->params['website'])) {
-        return redirect('/register/complete');
+        return redirect('/2027/register/complete');
     }
 
     $isFirstSubmission = empty($reg['artist_id']);
@@ -56,7 +56,7 @@ if ($req->isPost()) {
             $db->update('artists', $row, ['id' => $reg['artist_id']]);
         }
 
-        return redirect('/register/step-2');
+        return redirect('/2027/register/step-2');
     }
 
     $values = $artist;
@@ -84,7 +84,7 @@ if ($req->isPost()) {
 <p role="alert"><?= implode('<br>', array_map('htmlspecialchars', $errors)) ?></p>
 <?php endif ?>
 
-<form method="post" action="/register/step-1" enctype="multipart/form-data">
+<form method="post" action="/2027/register/step-1" enctype="multipart/form-data">
   <input type="text" name="website" value="" style="position:absolute;left:-9999px;top:-9999px;opacity:0" tabindex="-1" autocomplete="off" aria-hidden="true">
 
 

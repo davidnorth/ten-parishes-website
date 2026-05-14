@@ -1,4 +1,4 @@
-<form method="post" action="/register/step-2" id="venue-picker-form">
+<form method="post" action="/2027/register/step-2" id="venue-picker-form">
   <input type="hidden" name="mode" value="pick">
 
   <div>

@@ -1,6 +1,6 @@
 <?php
 if (empty($reg['artist_id'])) {
-    return redirect('/register/step-1');
+    return redirect('/2027/register/step-1');
 }
 
 $pageTitle = 'Register: Event Dates';
@@ -24,10 +24,10 @@ if ($req->isPost()) {
     }
 
     if ($req->params['action'] === 'back') {
-        return redirect('/register/step-2');
+        return redirect('/2027/register/step-2');
     }
 
-    return redirect('/register/step-4');
+    return redirect('/2027/register/step-4');
 }
 
 $existingCount = count($eventDates);
@@ -47,7 +47,7 @@ $existingCount = count($eventDates);
 
 <p>Please add the dates your event will be open to the public. This step is optional &mdash; you can come back and add them later.</p>
 
-<form method="post" action="/register/step-3">
+<form method="post" action="/2027/register/step-3">
 
     <legend>Dates</legend>
     <div id="event-dates">

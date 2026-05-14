@@ -1,6 +1,6 @@
 <?php
 if (empty($reg['artist_id'])) {
-    return redirect('/register/step-1');
+    return redirect('/2027/register/step-1');
 }
 
 $pageTitle = 'Register: Venue';
@@ -8,7 +8,7 @@ $parishes  = $db->select('parishes', ['id', 'name'], ['ORDER' => 'name']);
 
 if ($req->isPost()) {
     if ($req->params['action'] === 'back') {
-        return redirect('/register/step-1');
+        return redirect('/2027/register/step-1');
     }
 
     $mode     = $req->params['mode'] ?? 'pick';
@@ -57,7 +57,7 @@ if ($req->isPost()) {
 
     if ($venueId !== null) {
         $db->update('artists', ['venue_id' => $venueId], ['id' => $reg['artist_id']]);
-        return redirect('/register/step-3');
+        return redirect('/2027/register/step-3');
     }
 }
 

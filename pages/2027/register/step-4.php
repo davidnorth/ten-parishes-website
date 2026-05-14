@@ -1,12 +1,12 @@
 <?php
 if (empty($reg['artist_id'])) {
-    return redirect('/register/step-1');
+    return redirect('/2027/register/step-1');
 }
 
 $pageTitle = 'Register: Images';
 if ($req->isPost()) {
     if ($req->params['action'] === 'back') {
-        return redirect('/register/step-3');
+        return redirect('/2027/register/step-3');
     }
 
     $artistId = $reg['artist_id'];
@@ -28,7 +28,7 @@ if ($req->isPost()) {
     }
 
     unset($_SESSION['registration']);
-    return redirect('/register/complete');
+    return redirect('/2027/register/complete');
 }
 
 $artist = $reg['artist'] ?? [];
@@ -58,7 +58,7 @@ if (!empty($venue['id']) && empty($venue['name'])) {
 </p>
 <?php endif ?>
 
-<form method="post" action="/register/step-4" enctype="multipart/form-data">
+<form method="post" action="/2027/register/step-4" enctype="multipart/form-data">
 
   <div id="images"></div>
   <button type="button" onclick="addImage()">+ Add image</button>

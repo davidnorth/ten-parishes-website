@@ -4,7 +4,7 @@ $locationLat = $values['latitude'] ?? null;
 $locationLng = $values['longitude'] ?? null;
 $locationFieldPrefix = 'venue';
 ?>
-<form method="post" action="/register/step-2">
+<form method="post" action="/2027/register/step-2">
   <input type="hidden" name="mode" value="create">
 
   <p>Please enter the details of the venue where your event will take place. Any details you don't have yet, leave blank.</p>
