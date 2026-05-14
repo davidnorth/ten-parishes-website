@@ -1,3 +1,5 @@
+@custom-media --tablet (width >= 600px);
+
 :root {
 
   /* Ratio: 1.200 (Minor Third) */
@@ -63,4 +65,11 @@
   --border-color-light: #E6E2D9;
   --standard-border: 1px solid var(--border-color);
   --light-border: 1px solid var(--border-color-light);
+
+
+  /* Standard breakpoints */
+  --breakpoint-sm: 600px;
+  --breakpoint-md: 900px;
+  --breakpoint-lg: 1200px;
+
 }

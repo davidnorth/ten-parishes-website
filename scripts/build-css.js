@@ -8,9 +8,13 @@ const OUT = 'public/style.css';
 const WATCH  = process.argv.includes('--watch');
 const MINIFY = process.argv.includes('--minify');
 
+// Encode as (major << 16 | minor << 8 | patch) per lightningcss Targets spec
+const v = (major, minor = 0) => (major << 16) | (minor << 8);
+const TARGETS = { chrome: v(95), safari: v(15), firefox: v(90) };
+
 function build() {
   try {
-    const { code } = bundle({ filename: SRC, minify: MINIFY });
+    const { code } = bundle({ filename: SRC, minify: MINIFY, drafts: { customMedia: true }, targets: TARGETS });
     fs.writeFileSync(OUT, code);
     console.log(`[css] → ${OUT} (${code.length}b)`);
   } catch (e) {
