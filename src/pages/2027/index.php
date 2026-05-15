@@ -72,19 +72,19 @@ Started in September 2003, it is now a highly successful biennial event, support
 
   <section class="border-bottom">
     <h2 class="balance">Key Dates</h2>
-    <div class="three-up mt-2xl">
+    <div class="three-up mt-xl">
       <div>
-        <div class="eyebrow">January 20th</div>
+        <div class="eyebrow mb-xs">January 20th</div>
         <h3>Registrations open</h3>
         <p>Artists and makers can register their interest in taking part in the 2027 festival. Submit your details, venue, and the work you plan to show.</p>
       </div>
       <div>
-        <div class="eyebrow">May 20th</div>
+        <div class="eyebrow mb-xs">May 20th</div>
         <h3>Full site &amp; brochure</h3>
         <p>The full festival website and printed brochure go live, with the complete programme of venues, artists, and events across the ten parishes.</p>
       </div>
       <div>
-        <div class="eyebrow">July 1st</div>
+        <div class="eyebrow mb-xs">July 1st</div>
         <h3>Festival opens</h3>
         <p>Ten days of art, craft, music and performance across the villages and hamlets of West Somerset. Free to attend.</p>
       </div>
