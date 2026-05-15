@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title><?= isset($pageTitle) ? htmlspecialchars($pageTitle) . ' — Ten Parishes Festival' : 'Ten Parishes Festival' ?></title>
+  <title><?= isset($pageTitle) ? htmlspecialchars($pageTitle) . ' — 10 Parishes Festival' : '10 Parishes Festival' ?></title>
   <link rel="stylesheet" href="/style.css">
   <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -46,7 +46,7 @@
     </div>
   </div>
   <div class="legal mt-xl">
-    <div>&copy; 2027 Ten Parishes Festival · Wiveliscombe Area Partnership</div>
+    <div>&copy; 2027 10 Parishes Festival · Wiveliscombe Area Partnership</div>
     <div>Full site launch · May 2026</div>
   </div>
 </footer>

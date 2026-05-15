@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Ten Parishes — Admin</title>
+  <title>10 Parishes — Admin</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <link rel="stylesheet" href="https://cdn.quilljs.com/1.3.7/quill.snow.css">
   <script src="https://cdn.tailwindcss.com"></script>
@@ -15,7 +15,7 @@
 
   <aside class="w-56 bg-gray-900 text-gray-100 flex flex-col shrink-0">
     <div class="px-6 py-5 font-semibold text-white border-b border-gray-700">
-      Ten Parishes
+      10 Parishes
     </div>
     <nav class="flex-1 py-3">
       <?php

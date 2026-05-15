@@ -1,6 +1,7 @@
 @custom-media --tablet (width >= 600px);
 @custom-media --large (width >= 900px);
 
+@layer theme {
 :root {
 
   /* Ratio: 1.200 (Minor Third) */
@@ -79,4 +80,5 @@
   --breakpoint-md: 900px;
   --breakpoint-lg: 1200px;
 
+}
 }
