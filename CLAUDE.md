@@ -25,6 +25,17 @@ Medoo is approved. Tailwind for admin only. Ask before adding anything else — 
 - Admin pages: Tailwind utility classes throughout
 - Public multi-step forms (e.g. `/register`): plain HTML — no Tailwind, no Quill; plain `<textarea>` instead of rich text editor
 
+## CSS build
+
+Public CSS is compiled by lightningcss. **Never edit `public/style.css` directly** — it is the build output.
+
+- Source files: `src/css/` (`main.css` imports the others)
+- Output: `public/style.css`
+- Build once: `npm run css:build`
+- Watch mode: `npm run css:watch`
+- Custom media queries (`--tablet`, `--large`) are defined in `src/css/variables.css`
+- Layout utilities (`two-up`, `three-up`, etc.) live in `src/css/utility.css`
+
 ## Routing
 
 URL paths map directly to files under `src/pages/`. Examples:
