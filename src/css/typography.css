@@ -1,6 +1,6 @@
 h1 {
   font-weight: var(--weight-light);
-  font-size: var(--text-6xl);
+  font-size: var(--text-5);
   letter-spacing: -1.5px;
   word-spacing: 4px;
   margin-bottom: 0;
@@ -13,17 +13,17 @@ h1 {
 }
 
 h2 { 
-  font-size: var(--text-2xl); 
+  font-size: var(--text-3); 
   font-weight: var(--weight-light);
   line-height: 1.2em;
 }
 
 h3 { 
-  font-size: var(--text-xl); 
+  font-size: var(--text-2); 
   line-height: 1.2em;
 }
 
-h4 { font-size: var(--text-lg); }
+h4 { font-size: var(--text-1); }
 
 
 h2, h3, h4 {
@@ -44,16 +44,14 @@ a {
 
 
 /* Text size utilities */
-.text-xs   { font-size: var(--text-xs); }
-.text-sm   { font-size: var(--text-sm); }
-.text-base { font-size: var(--text-base); }
-.text-md   { font-size: var(--text-md); }
-.text-lg   { font-size: var(--text-lg); }
-.text-xl   { font-size: var(--text-xl); }
-.text-2xl  { font-size: var(--text-2xl); }
-.text-3xl  { font-size: var(--text-3xl); }
-.text-4xl  { font-size: var(--text-4xl); }
-.text-5xl  { font-size: var(--text-5xl); }
+.text--2 { font-size: var(--text--2); }
+.text--1 { font-size: var(--text--1); }
+.text-0  { font-size: var(--text-0); }
+.text-1  { font-size: var(--text-1); }
+.text-2  { font-size: var(--text-2); }
+.text-3  { font-size: var(--text-3); }
+.text-4  { font-size: var(--text-4); }
+.text-5  { font-size: var(--text-5); }
 
 /* Font weight utilities */
 .weight-light     { font-weight: var(--weight-light); }
@@ -64,7 +62,7 @@ a {
 
 
 .eyebrow {
-  font-size: var(--text-xs);
+  font-size: var(--text--2);
   letter-spacing: 0.14em; 
   text-transform: uppercase;
   font-weight: var(--weight-semi-bold);
@@ -83,7 +81,7 @@ a {
 
 
 .smallprint {
-  font-size: var(--text-sm);
+  font-size: var(--text--1);
   color: var(--text-color-light);
 }
 

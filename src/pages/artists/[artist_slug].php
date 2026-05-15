@@ -136,7 +136,7 @@ $otherArtistsInVenue = $artist['venue_id'] ? $db->select('artists', ['name', 'sl
 
       <?php if ($venue['address']): ?>
         <h3>Address</h3>
-        <p class="text-md"><?= nl2br(htmlspecialchars($venue['address'])) ?></p>
+        <p class="text-1"><?= nl2br(htmlspecialchars($venue['address'])) ?></p>
       <?php endif ?>
       <?php if ($venue['directions']): ?>
         <h3>Directions</h3>

@@ -4,30 +4,16 @@
 @layer theme {
 :root {
 
-  /* Ratio: 1.200 (Minor Third) */
-  --text-xs: 0.694rem;
-  /* 11.11px */
-  --text-sm: 0.833rem;
-  /* 13.33px */
-  --text-base: 1rem;
-  /* 16.00px (The Anchor) */
-  --text-md: 1.2rem;
-  /* 19.20px */
-  --text-lg: 1.44rem;
-  /* 23.04px */
-  --text-xl: 1.728rem;
-  /* 27.65px */
-  --text-2xl: 2.074rem;
-  /* 33.18px */
-  --text-3xl: 2.488rem;
-  /* 39.81px */
-  --text-4xl: 2.986rem;
-  /* 47.78px */
-  --text-5xl: 3.583rem;
-  /* 57.33px */
-  --text-6xl: 4.3rem;
-  /* ~68.8px */
-
+  /* https://utopia.fyi/type/calculator/?c=360,16,1.333,1240,16,1.333,6,2,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,l,xl,12 */
+  --text--2: clamp(0.5628rem, 0.5628rem + 0vw, 0.5628rem);
+  --text--1: clamp(0.7502rem, 0.7502rem + 0vw, 0.7502rem);
+  --text-0: clamp(1rem, 1rem + 0vw, 1rem);
+  --text-1: clamp(1.333rem, 1.333rem + 0vw, 1.333rem);
+  --text-2: clamp(1.7769rem, 1.7769rem + 0vw, 1.7769rem);
+  --text-3: clamp(2.3686rem, 2.3686rem + 0vw, 2.3686rem);
+  --text-4: clamp(3.1573rem, 3.1573rem + 0vw, 3.1573rem);
+  --text-5: clamp(4.2087rem, 4.2087rem + 0vw, 4.2087rem);
+  --text-6: clamp(5.6102rem, 5.6102rem + 0vw, 5.6102rem);
 
 
   /* Font weights */
