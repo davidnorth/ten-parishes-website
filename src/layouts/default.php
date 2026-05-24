@@ -13,13 +13,9 @@
 </head>
 <body>
   <header>
-    <a href="/" class="site-title">
-10 Parishes
-<span class="color-primary">
-Festival
-</span>
-
-  </a>
+    <a href="/">
+      <img src="/media/images/logo.svg" alt="10 Parishes Festival" height="60">
+    </a>
     <nav>
       <a href="/parishes" <?= ($nav_current ?? '') === 'parishes' ? 'class="active"' : '' ?>>Parishes</a>
       <a href="/artists"  <?= ($nav_current ?? '') === 'artists'  ? 'class="active"' : '' ?>>Artists</a>

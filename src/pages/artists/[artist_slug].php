@@ -83,7 +83,7 @@ $otherArtistsInVenue = $artist['venue_id'] ? $db->select('artists', ['name', 'sl
     <?= htmlspecialchars($artist['name']) ?>
   </section>
 
-  <section class="">
+  <section aria-labelledby="name-heading" class="border-bottom gap-2xl">
 
     <div class="hero-gallery spotlight-group">
       <?php foreach ($images as $img): ?>
@@ -96,9 +96,7 @@ $otherArtistsInVenue = $artist['venue_id'] ? $db->select('artists', ['name', 'sl
       <?php endforeach ?>
     </div>
 
-  </section>
-
-  <section aria-labelledby="name-heading" class="flex flex-end border-bottom gap-2xl">
+<div class="flex flex-end mt-xl gap-xl">
     <div>
       <h1 id="name-heading"><?= htmlspecialchars($artist['name']) ?></h1>
       <?php if (!empty($artist['disciplines'])): ?>
@@ -121,6 +119,7 @@ $otherArtistsInVenue = $artist['venue_id'] ? $db->select('artists', ['name', 'sl
       <?php if (!empty($artist['picture_id'])): ?>
         <?= cloudinary_image($artist['picture_id'], 400, 250, $artist['name']) ?>
       <?php endif ?>
+    </div>
     </div>
   </section>
 

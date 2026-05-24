@@ -14,17 +14,16 @@
           <span>West Somerset</span>
         </div>
 
-        <h1>10 Parishes<br>
+        <h1 class="mb-lg">10 Parishes<br>
         <em>Festival</em> 2027</h1>
 
-        <p class="lede mt-sm">
+        <p class="lede mb-xl">
           A ten‑day celebration of the arts across the villages and hamlets of West Somerset.
           All types of artistic disciplines will be represented, from painting and textiles, photography, 
           jewellery, ceramics, sculpture, music, installation and carving.
-
         </p>
 
-        <div class="mt-xl">
+        <div class="">
           <a class="button" href="/2027/register">
             Register as an artist
           </a>
@@ -54,7 +53,7 @@
   <section class="two-up items-center border-bottom">
 
     <div>
-      <img src="/media/images/ten_parishes_map.jpg" alt="10 Parishes Map" />
+      <img src="/media/images/ten_parishes_map.jpg" alt="10 Parishes Map" class="mx-auto" />
     </div>
 
 

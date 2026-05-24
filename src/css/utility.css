@@ -1,5 +1,7 @@
 /* ── Spacing utilities ── */
 
+@layer utilities {
+
 .p-xs   { padding: var(--space-xs); }
 .p-sm   { padding: var(--space-sm); }
 .p-base { padding: var(--space-base); }
@@ -29,6 +31,13 @@
 .mb-lg   { margin-bottom: var(--space-lg); }
 .mb-xl   { margin-bottom: var(--space-xl); }
 .mb-2xl  { margin-bottom: var(--space-2xl); }
+
+/* padding block  */
+.py-sm { padding-block: var(--space-sm); }
+.py-md { padding-block: var(--space-md); }
+.py-lg { padding-block: var(--space-lg); }
+.py-xl { padding-block: var(--space-xl); }
+.py-2xl { padding-block: var(--space-2xl); }
 
 
 .gap-xs   { gap: var(--space-xs); }
@@ -113,7 +122,7 @@
 /* two-up . 2 cols with standard gap. single on mobile*/
 .two-up {
   display: grid;
-  gap: var(--space-2xl);
+  column-gap: var(--space-2xl);
   @media (--large) {
     grid-template-columns: 1fr 1fr;
   }
@@ -122,7 +131,7 @@
 /* three-up . 3 cols with standard gap. single on mobile*/
 .three-up {
   display: grid;
-  gap: var(--space-2xl);
+  column-gap: var(--space-2xl);
   @media (--large) {
     grid-template-columns: 1fr 1fr 1fr;
   }
@@ -133,3 +142,9 @@
 }
 
 
+.mx-auto {
+  margin-inline: auto;
+}
+
+
+}

@@ -1,3 +1,5 @@
+@layer components {
+
 body {
   background: var(--surface-color);
   display: grid;
@@ -375,6 +377,17 @@ a.button {
   gap: var(--space-xs);
 }
 
+.hero-gallery figure {
+  flex: 1;
+  min-width: 0;
+}
+
+.hero-gallery figure img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
 
 
 .leaflet-popup-content-wrapper {
@@ -465,3 +478,4 @@ figure {
 }
 
 
+}
